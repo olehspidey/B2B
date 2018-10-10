@@ -5,4 +5,4 @@
 - Execute ***dotnet run*** comand or ***dotnet watch run*** for runtime watching changes
 - Project will start on **5000 port**
 
-###### You can find more information about exexuting here https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run?tabs=netcore21
+###### You can find more information about executing here https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run?tabs=netcore21
