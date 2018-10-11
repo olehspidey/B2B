@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
-class App extends Component {
-  render() {
+class App extends React.Component {
+  public render() {
     return (
       <div className="App">
         B2B Project
