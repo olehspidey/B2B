@@ -1,4 +1,5 @@
 ﻿using B2B.Extensions;
+using B2B.Filters.ActionFilters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,9 @@ namespace B2B
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options => { options.Filters.Add<ModelStateFilter>(); })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddDbContext(Configuration, Environment);
             services.AddServices();
             services.AddIdentity();
