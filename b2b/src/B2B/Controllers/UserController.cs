@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using B2B.BLL.Services;
 using B2B.Core.Models.DomainModels;
 using B2B.Core.Models.Dtos.User;
-using B2B.Extensions;
 using B2B.Filters.AuthorizationFilters;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,18 +41,6 @@ namespace B2B.Controllers
         }
 
         [JwtAuthorize(Roles = "Admin")]
-        [HttpGet("registrationForm/{id:int}")]
-        public async Task<IActionResult> GetRegistrationForm(int id)
-        {
-            var registrationUserForm = await _userService.GetRegistrationFormAsync(id);
-
-            if (registrationUserForm == null)
-                return NotFound("Form not found");
-
-            return Ok(_mapper.Map<RegistrationUserForm, RegistrationUserFormDto>(registrationUserForm));
-        }
-
-        [JwtAuthorize(Roles = "Admin")]
         [HttpGet("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
@@ -75,17 +61,7 @@ namespace B2B.Controllers
 
         #region POST
 
-        [HttpPost("createRegistrationForm")]
-        public async Task<IActionResult> CreateRegistrationForm([FromBody] CreateRegistrationUserFormDto formDto)
-        {
-            var mappedForm = _mapper.Map<CreateRegistrationUserFormDto, RegistrationUserForm>(formDto);
-            var creationResult = await _userService.CreateRegistrationUserFormAsync(mappedForm);
 
-            if (creationResult == null)
-                throw new ApplicationException("Can't create form");
-
-            return Created(Url.GetEntityByIdUrl(nameof(GetRegistrationForm), "User", creationResult.Id.ToString(), Request.Scheme), creationResult);
-        }
 
         #endregion
     }
