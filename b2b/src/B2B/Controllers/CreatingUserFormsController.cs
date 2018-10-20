@@ -45,7 +45,7 @@ namespace B2B.Controllers
             if (creationResult == null)
                 throw new ApplicationException("Can't create form");
 
-            return Created(Url.GetEntityByIdUrl(nameof(GetRegistrationForm), "User", creationResult.Id.ToString(), Request.Scheme), creationResult);
+            return Created(Url.GetEntityByIdUrl(nameof(GetRegistrationForm), "CreatingUserForms", creationResult.Id.ToString(), Request.Scheme), creationResult);
         }
     }
 }

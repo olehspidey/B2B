@@ -10,13 +10,14 @@ namespace B2B.Core.Models.DomainModels.Subscriptions
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         public DateTime? End { get; set; }
 
-        public SubscriptionType SubscriptionType { get; set; }
+        [Required]
+        public SubscriptionType? SubscriptionType { get; set; }
 
         public virtual User User { get; set; }
 
-        [ForeignKey(nameof(User))]
         public string UserId { get; set; }
     }
 }

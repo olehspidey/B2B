@@ -10,6 +10,8 @@ namespace B2B.Extensions
     {
         public static void AddServices(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddScoped<IPasswordRandomizerService, PasswordRandomizerService>();
+            serviceCollection.AddScoped<IEmailSendService, EmailSendService>();
             serviceCollection.AddScoped<IRepository<User, string>, Repository<User, string>>();
             serviceCollection.AddScoped<IRepository<RegistrationUserForm, int>, Repository<RegistrationUserForm, int>>();
             serviceCollection.AddScoped<IUserService, UserService>();
