@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using B2B.Mapper;
 
 namespace B2B
 {
@@ -25,6 +27,7 @@ namespace B2B
             services.AddMvc(options => { options.Filters.Add<ModelStateFilter>(); })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddAutoMapper(mapper => mapper.AddProfile(new AutoMapperProfile()));
             services.AddDbContext(Configuration, Environment);
             services.AddServices();
             services.AddIdentity();

@@ -14,6 +14,9 @@ namespace B2B.Core.Models.DomainModels.Subscriptions
 
         public SubscriptionType SubscriptionType { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
+
+        [ForeignKey(nameof(User))]
+        public string UserId { get; set; }
     }
 }
