@@ -13,6 +13,7 @@ namespace B2B.Extensions
             serviceCollection.AddScoped<IRepository<User, string>, Repository<User, string>>();
             serviceCollection.AddScoped<IRepository<RegistrationUserForm, int>, Repository<RegistrationUserForm, int>>();
             serviceCollection.AddScoped<IUserService, UserService>();
+            serviceCollection.AddScoped<ICreatingUserFormsService, CreateUserFormsService>();
         }
     }
 }
