@@ -7,11 +7,13 @@ using B2B.Core.Models.DomainModels;
 using B2B.Core.Models.DomainModels.Companies;
 using B2B.Core.Models.Dtos.Company;
 using B2B.Extensions;
+using B2B.Filters.AuthorizationFilters;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace B2B.Controllers
 {
+    [JwtAuthorize]
     [Produces("application/json")]
     [Route("api/companies")]
     public class CompanyController : ControllerBase
@@ -38,6 +40,17 @@ namespace B2B.Controllers
                 return NotFound("Company was not found");
 
             return Ok(_mapper.Map<Company, CompanyDto>(company));
+        }
+
+        [HttpGet("byCategory/{category:int}")]
+        public async Task<IActionResult> GetByCategory(CompanyCategory category)
+        {
+            var companies = await _userCompanyService.GetByCategoryAsync(category);
+
+            if (companies == null)
+                return NotFound("Companies was not found");
+
+            return Ok(companies);
         }
 
         [HttpPost("createCompany")]

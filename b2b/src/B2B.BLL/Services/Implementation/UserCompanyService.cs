@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using B2B.Core.Models.DomainModels;
 using B2B.Core.Models.DomainModels.Companies;
 using B2B.Core.Models.DomainModels.Subscriptions;
 using B2B.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace B2B.BLL.Services.Implementation
 {
@@ -47,5 +50,11 @@ namespace B2B.BLL.Services.Implementation
         public async Task<Company> GetCompanyByIdAsync(int id)
             => await _companyRepository.GetByIdAsync(id);
 
+        public async Task<ICollection<Company>> GetByCategoryAsync(CompanyCategory category)
+            => await _companyRepository
+                .Table
+                .Where(company => company.User.Subscription.End >= DateTime.Now
+                                  && company.Category == category)
+                .ToListAsync();
     }
 }
