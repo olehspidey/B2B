@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\B2B.BLL\B2B.BLL.csproj" />
+    <ProjectReference Include="..\B2B.Core\B2B.Core.csproj" />
     <ProjectReference Include="..\B2B.DAL\B2B.DAL.csproj" />
   </ItemGroup>
 

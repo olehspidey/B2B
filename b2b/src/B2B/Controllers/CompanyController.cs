@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using B2B.BLL.Services;
 using B2B.Core.Extensions;
@@ -47,7 +48,16 @@ namespace B2B.Controllers
                 return Unauthorized();
 
             var mappedCompany = _mapper.Map<CreateCompanyDto, Company>(dto);
-            var createdCompany = await _userCompanyService.AddCompanyToUserAsync(user, mappedCompany);
+            Company createdCompany;
+
+            try
+            {
+                createdCompany = await _userCompanyService.AddCompanyToUserAsync(user, mappedCompany);
+            }
+            catch (ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
 
             if (createdCompany == null)
                 return BadRequest("Can't create company");
