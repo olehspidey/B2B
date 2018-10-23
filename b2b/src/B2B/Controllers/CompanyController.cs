@@ -4,6 +4,7 @@ using AutoMapper;
 using B2B.BLL.Services;
 using B2B.Core.Extensions;
 using B2B.Core.Models.DomainModels;
+using B2B.Core.Models.DomainModels.Companies;
 using B2B.Core.Models.Dtos.Company;
 using B2B.Extensions;
 using Microsoft.AspNetCore.Identity;

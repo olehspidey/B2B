@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using B2B.Core.Models.DomainModels;
+using B2B.Core.Models.DomainModels.Companies;
 using B2B.Core.Models.DomainModels.Subscriptions;
 using B2B.DAL;
 

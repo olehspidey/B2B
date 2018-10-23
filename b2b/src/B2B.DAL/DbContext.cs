@@ -1,4 +1,5 @@
 ﻿using B2B.Core.Models.DomainModels;
+using B2B.Core.Models.DomainModels.Companies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

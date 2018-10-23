@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using B2B.Core.Models.DomainModels.Persons;
 
-namespace B2B.Core.Models.DomainModels
+namespace B2B.Core.Models.DomainModels.Companies
 {
     public class Company : IEntity<int>
     {
@@ -29,5 +29,7 @@ namespace B2B.Core.Models.DomainModels
         public string UserId { get; set; }
 
         public string Description { get; set; }
+
+        public CompanyCategory Category { get; set; }
     }
 }

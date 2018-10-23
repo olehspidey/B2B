@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using B2B.Core.Models.DomainModels;
+using B2B.Core.Models.DomainModels.Companies;
 
 namespace B2B.BLL.Services
 {

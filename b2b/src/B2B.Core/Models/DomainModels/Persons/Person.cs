@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using B2B.Core.Models.DomainModels.Companies;
 
 namespace B2B.Core.Models.DomainModels.Persons
 {
