@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -6,6 +7,9 @@ namespace B2B.DAL
 {
     public interface IRepository<TEntity, in TKey> where TEntity : class
     {
+        event Action OnGetEntity;
+        event Action OnCallTable;
+
         IQueryable<TEntity> Table { get; }
 
         Task<TEntity> GetByIdAsync(TKey id);

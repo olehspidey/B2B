@@ -18,12 +18,28 @@ namespace B2B.DAL
             _context = context;
         }
 
-        public IQueryable<TEntity> Table => Entities;
+        public virtual IQueryable<TEntity> Table
+        {
+            get
+            {
+                OnCallTable?.Invoke();
+
+                return Entities;
+            }
+        }
+
+        public event Action OnGetEntity;
+
+        public event Action OnCallTable;
 
         protected virtual DbSet<TEntity> Entities => _entities ?? (_entities = _context.Set<TEntity>());
 
         public virtual async Task<TEntity> GetByIdAsync(TKey id)
-            => await Entities.FindAsync(id);
+        {
+            OnGetEntity?.Invoke();
+
+            return await Entities.FindAsync(id);
+        }
 
         public virtual async Task<int> InsertAsync(IEnumerable<TEntity> entities)
         {
