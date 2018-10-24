@@ -32,6 +32,7 @@ namespace B2B
             services.AddServices();
             services.AddIdentity();
             services.AddBearerAuthentication(Configuration);
+            services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +44,8 @@ namespace B2B
             }
 
             app.UseAuthentication();
+            app.UseSwagger();
+            app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "B2B API V1"); });
             app.UseMvc();
         }
     }
