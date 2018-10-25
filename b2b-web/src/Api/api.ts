@@ -24,8 +24,9 @@ const getApiUrl = () => {
 export const API_URL = getApiUrl();
 
 export const headerToken = (token: string | null): IBearerAuthorization => {
-    if (token === null)
+    if (token === null) {
         throw new Error('Token can not be null');
+    }
 
     return {
         Authorization: `Bearer ${token}`
