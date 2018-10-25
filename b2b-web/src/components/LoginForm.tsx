@@ -46,10 +46,19 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     public onPasswordChange = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
         this.setState({ password: target.value });
 
+    public onLogin = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
+        this.props.onLogin({
+            password: this.state.password,
+            userName: this.state.login
+        });
+    }
+
     // private onCloseErrorMessage = () => this.setState({ isError: false });
 
     public render() {
-        const { classes, onLogin } = this.props;
+        const { classes } = this.props;
         const { login, password, canRedirect } = this.state;
 
         if (canRedirect) {
@@ -57,7 +66,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
         }
 
         return (
-            <form onSubmit={onLogin} className={classes.container}>
+            <form onSubmit={this.onLogin} className={classes.container}>
                 {
                     <div className={classes.formElems}>
                         <TextField

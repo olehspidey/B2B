@@ -1,11 +1,10 @@
 import * as React from 'react';
 import LoginForm from '../components/LoginForm';
+import { IFetchToken } from '../Actions/Token/IFetchToken';
 
 class LoginContainer extends React.Component {
-    public onLogin(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        
-        console.log(e);
+    public onLogin(body: IFetchToken) {
+        console.log(body);
     }
     public render() {
         return (

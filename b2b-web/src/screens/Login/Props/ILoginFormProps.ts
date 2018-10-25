@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { IFetchToken } from '../../../Actions/Token/IFetchToken';
 
 export interface ILoginFormProps {
     classes: {
@@ -9,5 +9,5 @@ export interface ILoginFormProps {
         link: string
     },
     loading: boolean,
-    onLogin(e: React.FormEvent<HTMLFormElement>): void
+    onLogin(body: IFetchToken): void
 }
