@@ -17,6 +17,10 @@
     ],
     "object-literal-sort-keys": [
       false
+    ],
+    "no-console": [
+      true,
+      "warning"
     ]
   }
 }
