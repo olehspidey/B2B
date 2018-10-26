@@ -20,9 +20,6 @@ namespace B2B.Core.Models.DomainModels.Companies
 
         public virtual Person Owner { get; set; }
 
-        [ForeignKey(nameof(Owner))]
-        public int OwnerId { get; set; }
-
         public virtual User User { get; set; }
 
         [ForeignKey(nameof(User))]
