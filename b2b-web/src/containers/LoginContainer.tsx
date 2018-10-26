@@ -8,20 +8,16 @@ import { fetchToken } from '../Actions/Token/token';
 import { ITokenState } from '../Reducers/Token/ITokenState';
 import { ThunkDispatch } from 'redux-thunk';
 import { IError } from '../Actions/IError';
-import { ITokenResponseAction } from '../Actions/Token/ITokenResponseAction';
-import { IBaseContainerState } from './states/IBaseContainerState';
+import { ILoginContainerProps } from './props/ILoginContainerProps';
+import { ILoginContainerState } from './states/ILoginContainerState';
+import { Redirect } from 'react-router-dom';
 
-interface ILoginContainerProps {
-    accessToken: string | null;
-    fetchToken(body: IFetchToken): Promise<ITokenResponseAction>;
-}
-
-class LoginContainer extends BaseContainer<ILoginContainerProps> {
+class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainerState> {
     constructor(props: ILoginContainerProps) {
         super(props);
     }
 
-    public componentDidUpdate(nextProps: ILoginContainerProps, nextState: IBaseContainerState) {
+    public componentDidUpdate(nextProps: ILoginContainerProps, nextState: ILoginContainerState) {
         super.componentWillUpdate(nextProps, nextState);
     }
 
@@ -29,11 +25,15 @@ class LoginContainer extends BaseContainer<ILoginContainerProps> {
         console.log(this.state.errorMessage);
 
         this.props.fetchToken(body)
-            .then((resp) => console.log('r', resp.token))
+            .then((resp) => this.setState({ canRedirect: true }))
             .catch((err: IError) => this.setState({ canRenderErrorMessage: true, errorMessage: err.message }));
     }
 
     public render() {
+        if (this.state.canRedirect === true) {
+            return (<Redirect to="/" />)
+        }
+        
         return (
             <div>
                 <LoginForm loading={false} onLogin={this.onLogin} />
