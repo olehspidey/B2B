@@ -25,7 +25,7 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
         console.log(this.state.errorMessage);
 
         this.props.fetchToken(body)
-            .then((resp) => this.setState({ canRedirect: true }))
+            .then(() => this.setState({ canRedirect: true }))
             .catch((err: IError) => this.setState({ canRenderErrorMessage: true, errorMessage: err.message }));
     }
 
@@ -33,7 +33,7 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
         if (this.state.canRedirect === true) {
             return (<Redirect to="/" />)
         }
-        
+
         return (
             <div>
                 <LoginForm loading={false} onLogin={this.onLogin} />
