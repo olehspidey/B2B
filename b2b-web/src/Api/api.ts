@@ -19,7 +19,9 @@ const getApiUrl = () => {
     return apiUrl;
 }
 
-
+export const logIn = (token: string) => {
+    localStorage.setItem(ACCESS_TOKE, token);
+}
 
 export const API_URL = getApiUrl();
 

@@ -11,6 +11,7 @@ import { IError } from '../Actions/IError';
 import { ILoginContainerProps } from './props/ILoginContainerProps';
 import { ILoginContainerState } from './states/ILoginContainerState';
 import { Redirect } from 'react-router-dom';
+import { logIn } from '../Api/api';
 
 class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainerState> {
     constructor(props: ILoginContainerProps) {
@@ -25,7 +26,10 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
         console.log(this.state.errorMessage);
 
         this.props.fetchToken(body)
-            .then(() => this.setState({ canRedirect: true }))
+            .then((resp) => {
+                logIn(resp.token.AccessToken);
+                this.setState({ canRedirect: true });
+            })
             .catch((err: IError) => this.setState({ canRenderErrorMessage: true, errorMessage: err.message }));
     }
 
