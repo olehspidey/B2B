@@ -27,7 +27,7 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
 
         this.props.fetchToken(body)
             .then((resp) => {
-                logIn(resp.token.AccessToken);
+                logIn(resp.token.accessToken);
                 this.setState({ canRedirect: true });
             })
             .catch((err: IError) => this.setState({ canRenderErrorMessage: true, errorMessage: err.message }));
@@ -35,7 +35,7 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
 
     public render() {
         if (this.state.canRedirect === true) {
-            return (<Redirect to="/" />)
+            return (<Redirect to="/user/settings" />)
         }
 
         return (

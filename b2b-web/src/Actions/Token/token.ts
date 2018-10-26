@@ -29,7 +29,7 @@ export const fetchToken = (body: IFetchToken) => async (dispatch: Dispatch) => {
 
     return tokenService.fetchToken(body)
         .then(
-            resp => dispatch(fetchTokenSuccess(resp.data.accessToken)),
+            resp => dispatch(fetchTokenSuccess(resp.data)),
             error => handleError(dispatch, error.response, fetchTokenFailure)
         );
 };

@@ -4,14 +4,16 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-import LoginScreen from './screens/LoginScreen';
+import LoginScreen from './screens/Login/LoginScreen';
+import UserPanelScreen from './screens/UserPanelScreen/UserPanelScreen';
 
 export default class App extends React.Component {
   public render() {
     return (
       <Router>
         <Switch>
-          <Route exact={true} path="/login" component={LoginScreen} />
+          <Route exact path="/login" component={LoginScreen} />
+          <Route path="/user" component={UserPanelScreen} />
         </Switch>
       </Router>
     );

@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import { Redirect, Link } from 'react-router-dom';
 // import Spinner from '../components/Spinner';
 import blue from '@material-ui/core/colors/blue';
-// import ErrorMessageSnackBar from '../components/Common/ErrorMessageSnackBar';
 import { ILoginFormProps } from '../screens/Login/Props/ILoginFormProps';
 import { ILoginFormState } from '../screens/Login/States/ILoginFormState';
 
@@ -54,8 +53,6 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
             userName: this.state.login
         });
     }
-
-    // private onCloseErrorMessage = () => this.setState({ isError: false });
 
     public render() {
         const { classes } = this.props;

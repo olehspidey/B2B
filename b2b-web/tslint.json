@@ -21,6 +21,7 @@
     "no-console": [
       true,
       "warning"
-    ]
+    ],
+    "jsx-boolean-value": false
   }
 }
