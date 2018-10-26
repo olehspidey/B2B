@@ -9,7 +9,7 @@ import { ITokenState } from './ITokenState';
 const tokenState: ITokenState = {
     accessToken: null,
     loading: false,
-    errors: []
+    error: null
 };
 
 export default (state = tokenState, action: ITokenAction) => {
@@ -28,7 +28,7 @@ export default (state = tokenState, action: ITokenAction) => {
         case FETCH_TOKE_FAILURE:
             return {
                 ...state,
-                errors: action.errors,
+                error: action.error,
                 loading: false
             }
         default:

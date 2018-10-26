@@ -27,6 +27,15 @@ namespace B2B
             services.AddMvc(options => { options.Filters.Add<ModelStateFilter>(); })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowCredentials();
+            }));
+
             services.AddAutoMapper(mapper => mapper.AddProfile(new AutoMapperProfile()));
             services.AddDbContext(Configuration, Environment);
             services.AddServices();
@@ -43,6 +52,7 @@ namespace B2B
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("CorsPolicy");
             app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "B2B API V1"); });

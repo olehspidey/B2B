@@ -45,6 +45,12 @@ const getPrivateApi = () => {
     }
 };
 
+export const authApi = api.create(
+    {
+        baseURL: API_URL
+    }
+);
+
 export const apiGet = (url: string) => {
     return getPrivateApi()
         .get(`${API_URL}${url}`)
