@@ -40,7 +40,7 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
 
         return (
             <div>
-                <LoginForm loading={false} onLogin={this.onLogin} />
+                <LoginForm loading={this.props.accessToken.loading} onLogin={this.onLogin} />
                 {
                     super.render()
                 }
@@ -49,9 +49,9 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
     }
 }
 
-const mapStateToProps = (state: ITokenState) => {
+const mapStateToProps = (state: any) => {
     return {
-        accessToken: state.accessToken
+        accessToken: state.token as ITokenState
     }
 }
 

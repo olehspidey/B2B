@@ -33,7 +33,7 @@ export default (state = tokenState, action: ITokenAction) => {
             }
         default:
             return {
-                AccessToken: null,
+                accessToken: null,
                 loading: false
             };
     }

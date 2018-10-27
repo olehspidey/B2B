@@ -3,7 +3,7 @@ import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Redirect, Link } from 'react-router-dom';
-// import Spinner from '../components/Spinner';
+import Spinner from '../components/common/Spinner';
 import blue from '@material-ui/core/colors/blue';
 import { ILoginFormProps } from '../screens/Login/Props/ILoginFormProps';
 import { ILoginFormState } from '../screens/Login/States/ILoginFormState';
@@ -47,7 +47,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
 
     public onLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+
         this.props.onLogin({
             password: this.state.password,
             userName: this.state.login
@@ -55,7 +55,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     }
 
     public render() {
-        const { classes } = this.props;
+        const { classes, loading } = this.props;
         const { login, password, canRedirect } = this.state;
 
         if (canRedirect) {
@@ -65,7 +65,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
         return (
             <form onSubmit={this.onLogin} className={classes.container}>
                 {
-                    <div className={classes.formElems}>
+                    loading ? <Spinner /> : <div className={classes.formElems}>
                         <TextField
                             label="Login"
                             className={classes.textField}
