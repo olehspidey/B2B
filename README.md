@@ -8,7 +8,7 @@
 ###### You can find more information about executing here https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run?tabs=netcore21
 
 ### How to execute front-end Web?
-- Got to B2B/b2b-web
+- Got to **B2B/b2b-web**
 - Open **cmd** on _OS_ _Windows_ or **terminal** on _MacOS/Linux_
 - Execute ***npm start*** or ***yarn start***
 - Project will start on **3000 port**
