@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using B2B.BLL.Services;
+using B2B.Core.Extensions;
 using B2B.Core.Models.DomainModels;
 using B2B.Core.Models.Dtos.User;
 using B2B.Extensions;
@@ -32,6 +33,18 @@ namespace B2B.Controllers
         }
 
         #region GET
+
+        [JwtAuthorize]
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var user = await _userManager.GetByIdentityAsync(this);
+
+            if (user == null)
+                return Unauthorized();
+
+            return Ok(_mapper.Map<User, ExternalUserDto>(user));
+        }
 
         [JwtAuthorize]
         [HttpGet("{id}")]
