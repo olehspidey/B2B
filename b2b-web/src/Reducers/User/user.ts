@@ -14,7 +14,7 @@ const userState: IUserState = {
     error: null
 };
 
-export default (state = userState, action: IUserAction) => {
+export default (state = userState, action: IUserAction): IUserState => {
     switch (action.type) {
         case FETCH_CURRENT_USER_REQUEST:
             return {

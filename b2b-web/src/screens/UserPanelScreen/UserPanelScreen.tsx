@@ -20,7 +20,7 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
 
     public render() {
         const { userState } = this.props;
-        console.log(this.props);
+
         return (
             <UserPanelLayout userLoading={userState.loading} user={userState.user}>
                 <Switch>
