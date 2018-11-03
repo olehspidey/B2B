@@ -18,6 +18,7 @@ class UserSettingsContainer extends React.Component<IUserSettingsContainerProps>
 
     public onSendEmailTokenClick = (body: ISendEmailToken) => {
         console.log(body);
+        this.props.fetchCurrentUser();
     }
 
     public onConfirmEmailToken = (body: IChangeEmail) => {

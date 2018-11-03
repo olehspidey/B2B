@@ -34,7 +34,7 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
     }
 
     public render() {
-        console.log('ac',this.props.accessToken);
+        
         if (this.state.canRedirect === true) {
             return (<Redirect to="/user/settings" />)
         }

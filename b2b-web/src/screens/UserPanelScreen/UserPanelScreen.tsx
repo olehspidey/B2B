@@ -7,22 +7,35 @@ import { fetchCurrentUser } from '../../Actions/User/user';
 import { ThunkDispatch } from 'redux-thunk';
 import { IUserState } from '../../Reducers/User/IUserState';
 import { Action } from 'redux';
-import { IUserPanelScreenProps } from './Props/IUserPanelScreenProps';
+import { IUserPanelScreenProps } from './IUserPanelScreenProps';
+import { IUserPanelScreenState } from './IUserPanelScreenState';
 
-class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
+// todo need fix user state to redux state
+class UserPanelScreen extends React.Component<IUserPanelScreenProps, IUserPanelScreenState> {
     constructor(props: IUserPanelScreenProps) {
         super(props);
+
+        this.state = {
+            currentUser: null,
+            userLoading: true
+        };
     }
 
-    public componentDidMount() {
-        this.props.fetchCurrentUserRequest();
+    public componentWillMount() {
+        this.props.fetchCurrentUser()
+            .then(resp => {
+                this.setState({
+                    currentUser: resp.currentUser,
+                    userLoading: false
+                })
+            });
     }
 
     public render() {
-        const { userState } = this.props;
+        const { currentUser, userLoading } = this.state;
 
         return (
-            <UserPanelLayout userLoading={userState.loading} user={userState.user}>
+            <UserPanelLayout userLoading={userLoading} user={currentUser}>
                 <Switch>
                     <Route exact path="/user/settings" component={UserSettingsContainer} />
                 </Switch>
@@ -35,8 +48,8 @@ const mapStateToProps = (state: any) => ({
     userState: state.users as IUserState
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<IUserState, void, Action>) => ({
-    fetchCurrentUserRequest: () => dispatch(fetchCurrentUser())
+const mapDispatchToProps = (dispatch: ThunkDispatch<IUserState, any, Action>) => ({
+    fetchCurrentUser: () => dispatch(fetchCurrentUser())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPanelScreen);
