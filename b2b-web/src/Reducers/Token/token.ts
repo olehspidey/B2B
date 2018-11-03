@@ -12,7 +12,7 @@ const tokenState: ITokenState = {
     error: null
 };
 
-export default (state = tokenState, action: ITokenAction) => {
+export default (state = tokenState, action: ITokenAction): ITokenState => {
     switch (action.type) {
         case FETCH_TOKE_REQUEST:
             return {
@@ -30,11 +30,8 @@ export default (state = tokenState, action: ITokenAction) => {
                 ...state,
                 error: action.error,
                 loading: false
-            }
-        default:
-            return {
-                accessToken: null,
-                loading: false
             };
+        default:
+            return { ...state };
     }
 };

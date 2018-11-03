@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import userService from '../../services/user';
 import { handleError } from '../handleError';
 
-export const FETCH_CURRENT_USER_REQUEST = 'FETCH_CURRENT_USER__REQUEST';
+export const FETCH_CURRENT_USER_REQUEST = 'FETCH_CURRENT_USER_REQUEST';
 export const FETCH_CURRENT_USER_SUCCESS = 'FETCH_CURRENT_USER_SUCCESS';
 export const FETCH_CURRENT_USER_FAILURE = 'FETCH_CURRENT_USER_FAILURE';
 
@@ -12,13 +12,13 @@ const fetchCurrentUserRequest = () => ({
     type: FETCH_CURRENT_USER_REQUEST
 });
 
-const fetchCurrentUserSuccess = (user: IUser) => ({
+const fetchCurrentUserSuccess = (currentUser: IUser) => ({
     type: FETCH_CURRENT_USER_SUCCESS,
-    user
+    currentUser
 });
 
 const fetchCurrentUserFailure = (error: IError) => ({
-    type: fetchCurrentUserFailure,
+    type: FETCH_CURRENT_USER_FAILURE,
     error
 });
 

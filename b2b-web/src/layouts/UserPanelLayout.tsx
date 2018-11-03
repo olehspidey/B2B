@@ -4,7 +4,7 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -112,8 +112,8 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
     }
 
     public render() {
-        const { classes, user, userLoading } = this.props;
-
+        const { classes, userLoading } = this.props;
+        
         return (
             <div className={classes.root}>
                 <AppBar
@@ -130,11 +130,11 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
                             <MenuIcon />
                         </IconButton>
                         <div className={classes.toolbarActions}>
-                            {
-                                userLoading === true ? <Spinner flex={true} color="secondary" /> : <Typography variant="title" color="inherit" noWrap>
+                            {/* {
+                                userLoading ? <Spinner flex={true} color="secondary" /> : <Typography variant="title" color="inherit" noWrap>
                                     {`${user.name} ${user.lastName}`}
                                 </Typography>
-                            }
+                            } */}
                             <Button
                                 color="primary"
                                 variant="contained"

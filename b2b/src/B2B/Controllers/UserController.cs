@@ -58,7 +58,6 @@ namespace B2B.Controllers
             return Ok(_mapper.Map<User, UserDto>(user));
         }
 
-        [JwtAuthorize(Roles = "Admin")]
         [HttpGet("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
@@ -79,6 +78,7 @@ namespace B2B.Controllers
 
         #region POST
 
+        [JwtAuthorize(Roles = "Admin")]
         [HttpPost("resetPassword")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetUserPasswordDto resetUserPasswordDto)
         {
@@ -93,6 +93,41 @@ namespace B2B.Controllers
                 return BadRequest(resetPassResult.Errors);
 
             return Ok(_mapper.Map<User, UserDto>(user));
+        }
+
+        [JwtAuthorize]
+        [HttpPost("sendResetEmailToken")]
+        public async Task<IActionResult> SendResetEmailToken([FromBody] SendResetEmailTokenDto dto)
+        {
+            var user = await _userManager.GetByIdentityAsync(this);
+
+            if (user == null)
+                return Unauthorized();
+
+            var token = await _userManager.GenerateChangeEmailTokenAsync(user, dto.NewEmail);
+            var sendResult = await _emailSendService.SendAsync(user.Email, "Email token", $"Your token for change email {token}");
+
+            if (!sendResult)
+                return BadRequest("Can't send email token");
+
+            return Ok();
+        }
+
+        [JwtAuthorize]
+        [HttpPost("changeEmail")]
+        public async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailDto changeEmailDto)
+        {
+            var user = await _userManager.GetByIdentityAsync(this);
+
+            if (user == null)
+                return Unauthorized();
+
+            var changeEmailResult = await _userManager.ChangeEmailAsync(user, changeEmailDto.NewEmail, changeEmailDto.Token);
+
+            if (!changeEmailResult.Succeeded)
+                return BadRequest("Can't change email");
+
+            return Ok(_mapper.Map<User, ExternalUserDto>(user));
         }
 
         [JwtAuthorize(Roles = "Admin")]

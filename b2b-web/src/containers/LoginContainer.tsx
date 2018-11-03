@@ -34,6 +34,7 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
     }
 
     public render() {
+        console.log('ac',this.props.accessToken);
         if (this.state.canRedirect === true) {
             return (<Redirect to="/user/settings" />)
         }
@@ -49,16 +50,12 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        accessToken: state.token as ITokenState
-    }
-}
+const mapStateToProps = (state: any) => ({
+    accessToken: state.token as ITokenState
+});
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<ITokenState, void, Action>) => {
-    return {
-        fetchToken: (body: IFetchToken) => dispatch(fetchToken(body))
-    }
-}
+const mapDispatchToProps = (dispatch: ThunkDispatch<ITokenState, void, Action>) => ({
+    fetchToken: (body: IFetchToken) => dispatch(fetchToken(body))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

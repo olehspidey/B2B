@@ -1,7 +1,7 @@
 import { IUser } from '../../Core/Models/ReducerModels/User/IUser';
 
 export interface IUserPanelLayoutProps {
-    user: IUser,
+    user: IUser | null,
     userLoading: boolean,
     classes: {
         root: string,

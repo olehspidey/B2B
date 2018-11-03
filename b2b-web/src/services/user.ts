@@ -2,6 +2,6 @@ import { apiGet } from '../Api/api';
 
 export default {
     fetchCurrentUser() {
-        return apiGet('/api/user');
+        return apiGet('/api/users');
     }
 }
