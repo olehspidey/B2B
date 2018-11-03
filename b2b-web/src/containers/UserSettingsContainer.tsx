@@ -9,6 +9,7 @@ import { withStyles, createStyles } from '@material-ui/core';
 import ChangeEmailComponent from '../components/ChangeEmailComponent';
 import { ISendEmailToken } from '../Actions/User/ISendEmailToken';
 import { IChangeEmail } from '../Actions/User/IChangeEmail';
+import Spinner from '../components/common/Spinner';
 
 const styles = createStyles({
 
@@ -18,7 +19,6 @@ class UserSettingsContainer extends React.Component<IUserSettingsContainerProps>
 
     public onSendEmailTokenClick = (body: ISendEmailToken) => {
         console.log(body);
-        this.props.fetchCurrentUser();
     }
 
     public onConfirmEmailToken = (body: IChangeEmail) => {
@@ -26,7 +26,7 @@ class UserSettingsContainer extends React.Component<IUserSettingsContainerProps>
     }
 
     public render() {
-        // const { classes } = this.props;
+        const { user, userLoading } = this.props;
 
         return (
             <div>
@@ -35,10 +35,12 @@ class UserSettingsContainer extends React.Component<IUserSettingsContainerProps>
                         <Typography>Change email</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                        <ChangeEmailComponent
-                            oldEmail="oldEmail@gmail.com"
-                            onSendEmailTokenClick={this.onSendEmailTokenClick}
-                            onConfirmEmailToken={this.onConfirmEmailToken} />
+                        {
+                            userLoading ? <Spinner /> : <ChangeEmailComponent
+                                oldEmail={user === null ? '' : user.email}
+                                onSendEmailTokenClick={this.onSendEmailTokenClick}
+                                onConfirmEmailToken={this.onConfirmEmailToken} />
+                        }
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
             </div>

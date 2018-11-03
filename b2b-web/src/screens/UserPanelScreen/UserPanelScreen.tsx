@@ -31,13 +31,19 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps, IUserPanelS
             });
     }
 
+    public renderUserSettingsContainer = () => (
+        <UserSettingsContainer
+            user={this.state.currentUser}
+            userLoading={this.state.userLoading} />
+    )
+
     public render() {
         const { currentUser, userLoading } = this.state;
 
         return (
             <UserPanelLayout userLoading={userLoading} user={currentUser}>
                 <Switch>
-                    <Route exact path="/user/settings" component={UserSettingsContainer} />
+                    <Route exact path="/user/settings" render={this.renderUserSettingsContainer} />
                 </Switch>
             </UserPanelLayout>
         )
