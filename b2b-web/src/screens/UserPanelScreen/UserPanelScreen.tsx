@@ -8,17 +8,11 @@ import { ThunkDispatch } from 'redux-thunk';
 import { IUserState } from '../../Reducers/User/IUserState';
 import { Action } from 'redux';
 import { IUserPanelScreenProps } from './IUserPanelScreenProps';
-import { IUserPanelScreenState } from './IUserPanelScreenState';
 
 // todo need fix user state to redux state
-class UserPanelScreen extends React.Component<IUserPanelScreenProps, IUserPanelScreenState> {
+class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
     constructor(props: IUserPanelScreenProps) {
         super(props);
-
-        this.state = {
-            currentUser: null,
-            userLoading: true
-        };
     }
 
     public componentWillMount() {
@@ -33,15 +27,15 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps, IUserPanelS
 
     public renderUserSettingsContainer = () => (
         <UserSettingsContainer
-            user={this.state.currentUser}
-            userLoading={this.state.userLoading} />
+            user={this.props.userState.currentUser}
+            userLoading={this.props.userState.loading} />
     )
 
     public render() {
-        const { currentUser, userLoading } = this.state;
+        const { userState } = this.props;
 
         return (
-            <UserPanelLayout userLoading={userLoading} user={currentUser}>
+            <UserPanelLayout userLoading={userState.loading} user={userState.currentUser}>
                 <Switch>
                     <Route exact path="/user/settings" render={this.renderUserSettingsContainer} />
                 </Switch>

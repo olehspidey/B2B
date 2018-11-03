@@ -11,5 +11,5 @@ export interface IChangeEmailProps {
     newEmail?: string;
     loading: boolean;
     onSendEmailTokenClick(body: ISendEmailToken): Promise<any>;
-    onConfirmEmailToken(body: IChangeEmail): void;
+    onConfirmEmailToken(body: IChangeEmail): Promise<any>;
 }

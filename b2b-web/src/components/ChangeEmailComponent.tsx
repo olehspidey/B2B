@@ -45,7 +45,8 @@ class ChangeEmailComponent extends React.Component<IChangeEmailProps, IChangeEma
         this.props.onConfirmEmailToken({
             newEmail,
             token
-        });
+        })
+            .then(() => this.setState({ canShowConfirmationForm: false }));
     }
 
     public onChangeNewEmail = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ newEmail: e.target.value });

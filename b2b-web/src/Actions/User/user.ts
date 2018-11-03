@@ -38,7 +38,7 @@ export const fetchCurrentUser = () => async (dispatch: Dispatch) => {
     return userService
         .fetchCurrentUser()
         .then(
-            response => fetchCurrentUserSuccess(response.data),
+            response => dispatch(fetchCurrentUserSuccess(response.data)),
             error => handleError(dispatch, error, fetchCurrentUserFailure)
         );
 };
@@ -62,7 +62,7 @@ export const sendResetEmailToken = (body: ISendEmailToken) => async (dispatch: D
     return userService
         .sendResetEmailToken(body)
         .then(
-            () => sendResetEmailTokenSuccess(),
+            () => (dispatch(sendResetEmailTokenSuccess())),
             error => handleError(dispatch, error, sendResetEmailTokenFailure)
         );
 };
@@ -87,7 +87,7 @@ export const changeEmail = (body: IChangeEmail) => async (dispatch: Dispatch) =>
     return userService
         .changeEmail(body)
         .then(
-            resp => changeEmailSuccess(resp.data),
+            resp => dispatch(changeEmailSuccess(resp.data)),
             error => handleError(dispatch, error, changeEmailFailure)
         );
 }
