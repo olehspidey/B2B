@@ -6,7 +6,7 @@ import PersonTypeSelect from '../components/common/PersonTypeSelect';
 import { ICreateCompanyComponentProps } from '../components/Props/ICreateCompanyComponentProps';
 import { withStyles, createStyles } from '@material-ui/core';
 // import { ICreateCompanyComponentState } from './State/ICreateCompanyComponentState';
-import {ICreateCompany} from '../Actions/Companies/ICreateCompany';
+import { ICreateCompany } from '../Actions/Companies/ICreateCompany';
 
 const styles = createStyles({
     root: {
@@ -49,6 +49,34 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
 
     public onChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ description: e.target.value });
 
+    public onChangeOwnerName = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { owner } = { ...this.state };
+
+        owner.name = e.target.value;
+        this.setState({ owner });
+    }
+
+    public onChangeOwnerLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { owner } = { ...this.state };
+
+        owner.lastName = e.target.value;
+        this.setState({ owner });
+    }
+
+    public onChangeOwnerPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { owner } = { ...this.state };
+
+        owner.phoneNumber = e.target.value;
+        this.setState({ owner });
+    }
+
+    public onChangeOwnerEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { owner } = { ...this.state };
+
+        owner.email = e.target.value;
+        this.setState({ owner });
+    }
+
     public onChangePersonType = (personType: number) => {
         const { owner } = { ...this.state };
 
@@ -88,16 +116,19 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                     <div className={classes.infoText}>Information about owner of company</div>
                     <TextField
                         label="Name"
-                        required />
+                        required
+                        onChange={this.onChangeOwnerName} />
                     <TextField
                         label="Last name"
-                        required />
+                        required
+                        onChange={this.onChangeOwnerLastName} />
                     <TextField
                         label="Phone number"
-                        required />
+                        required
+                        onChange={this.onChangeOwnerPhone} />
                     <TextField
                         label="Email"
-                        required />
+                        onChange={this.onChangeOwnerEmail} />
                     <PersonTypeSelect onChange={this.onChangePersonType} />
                 </div>
                 <Button

@@ -4,7 +4,7 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-// import Typography from '@material-ui/core/Typography';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -13,11 +13,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CompanyIcon from '@material-ui/icons/Work';
 import ListItemText from '@material-ui/core/ListItemText';
-// import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Tune';
 import Spinner from '../components/common/Spinner';
 import Button from '@material-ui/core/Button';
-// import { logOut } from '../../api/api';
+import { logOut } from '../Api/api';
 import { withStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { IUserPanelLayoutProps } from './Props/IUserPanelLayoutProps';
@@ -112,8 +111,26 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
         };
     }
 
+    public renderUserInfo = () => {
+        const { user, userLoading } = this.props;
+
+        if (user !== null && !userLoading) {
+            return (
+                <Typography variant="title" color="inherit" noWrap>
+                    {`${user.name} ${user.lastName}`}
+                </Typography>
+            );
+        }
+
+        if (userLoading) {
+            return (<Spinner flex={true} color="secondary" />);
+        }
+
+        return null;
+    }
+
     public render() {
-        const { classes, userLoading } = this.props;
+        const { classes } = this.props;
 
         return (
             <div className={classes.root}>
@@ -131,11 +148,9 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
                             <MenuIcon />
                         </IconButton>
                         <div className={classes.toolbarActions}>
-                            {/* {
-                                userLoading ? <Spinner flex={true} color="secondary" /> : <Typography variant="title" color="inherit" noWrap>
-                                    {`${user.name} ${user.lastName}`}
-                                </Typography>
-                            } */}
+                            {
+                                this.renderUserInfo()
+                            }
                             <Button
                                 color="primary"
                                 variant="contained"
@@ -157,26 +172,22 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
                     </div>
                     <Divider />
                     <List>
-                        {
-                            userLoading ? <Spinner flex /> : <div>
-                                <Link to={`/user/settings`} className={classes.link}>
-                                    <ListItem button>
-                                        <ListItemIcon>
-                                            <SettingsIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Settings" />
-                                    </ListItem>
-                                </Link>
-                                <Link to={`/user/companies`} className={classes.link}>
-                                    <ListItem button>
-                                        <ListItemIcon>
-                                            <CompanyIcon />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Settings" />
-                                    </ListItem>
-                                </Link>
-                            </div>
-                        }
+                        <Link to={`/user/companies`} className={classes.link}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <CompanyIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="My Companies" />
+                            </ListItem>
+                        </Link>
+                        <Link to={`/user/settings`} className={classes.link}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <SettingsIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Settings" />
+                            </ListItem>
+                        </Link>
                     </List>
                 </Drawer>
                 <main className={classes.content}>
@@ -189,17 +200,11 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
         );
     }
 
-    private handleDrawerOpen = () => {
-        this.setState({ open: true });
-    };
+    private handleDrawerOpen = () => this.setState({ open: true });
 
-    private handleDrawerClose = () => {
-        this.setState({ open: false });
-    };
+    private handleDrawerClose = () => this.setState({ open: false });
 
-    private onLogout = () => {
-        console.log();
-    };
+    private onLogout = () => logOut();
 }
 
 export default withStyles(styles)(AccountLayout);

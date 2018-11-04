@@ -17,7 +17,6 @@ namespace B2B.Core.Models.Dtos.Person
         [Phone]
         public string PhoneNumber { get; set; }
 
-        [EmailAddress]
         public string Email { get; set; }
 
         public PersonType PersonType { get; set; }

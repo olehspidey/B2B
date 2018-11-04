@@ -7,5 +7,6 @@ export interface ICreateCompanyComponentProps {
         but: string,
         infoText: string
     },
+    loading: boolean,
     onCreateCompany: (body: ICreateCompany) => void
 }

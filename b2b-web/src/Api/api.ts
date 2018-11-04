@@ -23,6 +23,11 @@ export const logIn = (token: string) => {
     localStorage.setItem(ACCESS_TOKE, token);
 }
 
+export const logOut = () => {
+    localStorage.removeItem(ACCESS_TOKE);
+    window.location.replace('/login');
+}
+
 export const API_URL = getApiUrl();
 
 export const headerToken = (token: string | null): IBearerAuthorization => {
