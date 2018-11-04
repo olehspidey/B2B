@@ -11,6 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import CompanyIcon from '@material-ui/icons/Work';
 import ListItemText from '@material-ui/core/ListItemText';
 // import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Tune';
@@ -113,7 +114,7 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
 
     public render() {
         const { classes, userLoading } = this.props;
-        
+
         return (
             <div className={classes.root}>
                 <AppBar
@@ -162,6 +163,14 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
                                     <ListItem button>
                                         <ListItemIcon>
                                             <SettingsIcon />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Settings" />
+                                    </ListItem>
+                                </Link>
+                                <Link to={`/user/companies`} className={classes.link}>
+                                    <ListItem button>
+                                        <ListItemIcon>
+                                            <CompanyIcon />
                                         </ListItemIcon>
                                         <ListItemText primary="Settings" />
                                     </ListItem>

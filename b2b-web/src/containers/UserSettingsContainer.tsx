@@ -7,6 +7,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChangeEmailComponent from '../components/ChangeEmailComponent';
 import Spinner from '../components/common/Spinner';
 import BaseContainer from './BaseContainer';
+import ChangePasswordComponent from '../components/ChangePasswordComponent';
+
 import { ISendEmailToken } from '../Actions/User/ISendEmailToken';
 import { IChangeEmail } from '../Actions/User/IChangeEmail';
 import { IUserSettingsContainerProps } from './props/IUserSettingsContainerProps';
@@ -58,15 +60,24 @@ class UserSettingsContainer extends BaseContainer<IUserSettingsContainerProps> {
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography>Change email</Typography>
                     </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        {
-                            userLoading ? <Spinner /> : <ChangeEmailComponent
+                    {
+                        userLoading ? <Spinner /> : <ExpansionPanelDetails>
+
+                            <ChangeEmailComponent
                                 oldEmail={user === null ? '' : user.email}
                                 onSendEmailTokenClick={this.onSendEmailTokenClick}
                                 onConfirmEmailToken={this.onConfirmEmailToken}
                                 loading={userState.editLoading}
                             />
-                        }
+                        </ExpansionPanelDetails>
+                    }
+                </ExpansionPanel>
+                <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography>Change password</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <ChangePasswordComponent />
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
                 {

@@ -63,7 +63,7 @@ export const sendResetEmailToken = (body: ISendEmailToken) => async (dispatch: D
         .sendResetEmailToken(body)
         .then(
             () => (dispatch(sendResetEmailTokenSuccess())),
-            error => handleError(dispatch, error, sendResetEmailTokenFailure)
+            error => handleError(dispatch, error.response, sendResetEmailTokenFailure)
         );
 };
 

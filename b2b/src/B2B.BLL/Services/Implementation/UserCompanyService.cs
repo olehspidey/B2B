@@ -47,6 +47,12 @@ namespace B2B.BLL.Services.Implementation
             return null;
         }
 
+        public async Task<ICollection<Company>> GetCompaniesAsync(User user)
+            => await _companyRepository
+                .Table
+                .Where(company => company.User.Id == user.Id)
+                .ToListAsync();
+
         public async Task<Company> GetCompanyByIdAsync(int id)
             => await _companyRepository.GetByIdAsync(id);
 
