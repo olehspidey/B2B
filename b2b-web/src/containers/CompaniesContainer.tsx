@@ -58,7 +58,9 @@ class CompaniesContainer extends React.Component<ICompaniesContainerProps> {
                         (companyState
                             .companies as ICompany[])
                             .map(company => (
-                                <ListItem>
+                                <ListItem
+                                    className={classes.list}
+                                    button>
                                     <ListItemText primary={company.shortName} />
                                 </ListItem>
                             ))

@@ -19,6 +19,7 @@ namespace B2B.Core.Models.Dtos.Person
 
         public string Email { get; set; }
 
+        [Range(0, 1)]
         public PersonType PersonType { get; set; }
     }
 }

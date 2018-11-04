@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using B2B.Core.Models.DomainModels;
+using B2B.Core.Models.DomainModels.Subscriptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
@@ -25,8 +27,13 @@ namespace B2B.DAL.Initializators
                 UserName = configuration["Users:User:UserName"],
                 Email = configuration["Users:User:Email"],
                 Name = configuration["Users:User:Name"],
-                LastName = configuration["Users:User:LastName"]
+                LastName = configuration["Users:User:LastName"],
+                Subscription = new Subscription
+                {
+                    End = DateTime.UtcNow.AddDays(30), SubscriptionType = SubscriptionType.Gold
+                }
             };
+            user.Subscription.User = user;
 
             await userManager.CreateAsync(admin, configuration["Users:Admin:Password"]);
             await userManager.CreateAsync(user, configuration["Users:User:Password"]);

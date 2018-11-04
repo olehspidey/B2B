@@ -3,6 +3,9 @@ import { ICompanyResponseAction } from '../../Actions/Companies/ICompanyResponse
 import { ICompaniesState } from "../../Reducers/Companies/ICompaniesState";
 
 export interface ICreateUserCompanyContainerProps {
+    classes:{
+        root: string
+    },
     companiesState: ICompaniesState,
     createCompanyRequest: (body: ICreateCompany) => Promise<ICompanyResponseAction>
 }

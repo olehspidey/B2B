@@ -1,5 +1,7 @@
 import * as React from 'react';
 import CreateCompanyForm from '../components/CreateCompanyForm';
+import BaseContainer from './BaseContainer';
+
 import { ICreateCompany } from '../Actions/Companies/ICreateCompany';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -7,23 +9,46 @@ import { createCompany } from '../Actions/Companies/companies';
 import { Action } from 'redux';
 import { ICompaniesState } from '../Reducers/Companies/ICompaniesState';
 import { ICreateUserCompanyContainerProps } from './props/ICreateUserCompanyContainerProps';
+import { IError } from '../Actions/IError';
+import { withStyles, createStyles } from '@material-ui/core';
 
-class CreateUserCompanyContainer extends React.Component<ICreateUserCompanyContainerProps> {
+const styles = createStyles({
+    root: {
+        width: '100%'
+    }
+});
 
-    public onCreateCompany = (body: ICreateCompany) => this.props.createCompanyRequest(body);
+class CreateUserCompanyContainer extends BaseContainer<ICreateUserCompanyContainerProps> {
+
+    public componentWillUpdate(nextProps: any, nextState: any) {
+        super.componentWillUpdate(nextProps, nextState);
+    }
+
+    public onCreateCompany = (body: ICreateCompany) => this
+        .props
+        .createCompanyRequest(body)
+        .catch((error: IError) => this.setState({
+            canRenderErrorMessage: true,
+            errorMessage: error.message
+        }));
 
     public render() {
-        const { companiesState } = this.props;
+        const { companiesState, classes } = this.props;
 
-        return (<CreateCompanyForm
-            onCreateCompany={this.onCreateCompany}
-            loading={companiesState.loading} />);
+        return (<div className={classes.root}>
+            <CreateCompanyForm
+                onCreateCompany={this.onCreateCompany}
+                loading={companiesState.loading} />
+            {
+                super.render()
+            }
+        </div>);
     }
 }
 
-export default connect(
+export default withStyles(styles)(connect(
     (state: any) => ({
         companiesState: state.companies as ICompaniesState
     }), (dispatch: ThunkDispatch<ICompaniesState, void, Action>) => ({
         createCompanyRequest: (body: ICreateCompany) => dispatch(createCompany(body))
-    }))(CreateUserCompanyContainer);
+    }))(CreateUserCompanyContainer));

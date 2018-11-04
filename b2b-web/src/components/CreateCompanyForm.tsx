@@ -5,12 +5,10 @@ import PersonTypeSelect from '../components/common/PersonTypeSelect';
 
 import { ICreateCompanyComponentProps } from '../components/Props/ICreateCompanyComponentProps';
 import { withStyles, createStyles } from '@material-ui/core';
-// import { ICreateCompanyComponentState } from './State/ICreateCompanyComponentState';
 import { ICreateCompany } from '../Actions/Companies/ICreateCompany';
 
 const styles = createStyles({
     root: {
-        width: '100%',
         padding: '0 20%'
     },
     info: {
@@ -91,7 +89,7 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
     }
 
     public render() {
-        const { classes } = this.props;
+        const { classes, loading } = this.props;
 
         return (
             <form className={classes.root} onSubmit={this.onSubmit}>
@@ -135,7 +133,8 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                     className={classes.but}
                     type="submit"
                     variant="contained"
-                    color="primary">Create</Button>
+                    color="primary"
+                    disabled={loading}>Create</Button>
             </form>
         );
     }

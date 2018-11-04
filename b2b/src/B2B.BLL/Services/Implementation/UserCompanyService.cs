@@ -30,12 +30,9 @@ namespace B2B.BLL.Services.Implementation
             company.User = user;
             company.UserId = user.Id;
 
-            if ((!userCompaniesCount.HasValue || userCompaniesCount.Value == 0) && userCompaniesCount < GoldSubscriptionCompaniesCount)
-            {
-                var insertResult = await _companyRepository.InsertAsync(company);
-
-                return insertResult >= 0 ? null : company;
-            }
+            if ((!userCompaniesCount.HasValue || userCompaniesCount.Value == 0) &&
+                userCompaniesCount < GoldSubscriptionCompaniesCount)
+                return await InsertCompanyAsync(company);
 
             if (userCompaniesCount == BaseSubscriptionCompaniesCount && subscriptionType == SubscriptionType.Base)
                 throw new ApplicationException($"{SubscriptionType.Base} can have only {BaseSubscriptionCompaniesCount} companies");
@@ -44,7 +41,7 @@ namespace B2B.BLL.Services.Implementation
             if (userCompaniesCount == GoldSubscriptionCompaniesCount && subscriptionType == SubscriptionType.Gold)
                 throw new ApplicationException($"{SubscriptionType.Gold} can have only {GoldSubscriptionCompaniesCount} companies");
 
-            return null;
+            return await InsertCompanyAsync(company);
         }
 
         public async Task<ICollection<Company>> GetCompaniesAsync(User user)
@@ -62,5 +59,8 @@ namespace B2B.BLL.Services.Implementation
                 .Where(company => company.User.Subscription.End >= DateTime.Now
                                   && company.Category == category)
                 .ToListAsync();
+
+        private async Task<Company> InsertCompanyAsync(Company company)
+            => await _companyRepository.InsertAsync(company) >= 0 ? company : null;
     }
 }

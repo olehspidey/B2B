@@ -14,6 +14,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CompanyIcon from '@material-ui/icons/Work';
 import ListItemText from '@material-ui/core/ListItemText';
 import SettingsIcon from '@material-ui/icons/Tune';
+import SubscriptionIcon from '@material-ui/icons/Assignment';
 import Spinner from '../components/common/Spinner';
 import Button from '@material-ui/core/Button';
 import { logOut } from '../Api/api';
@@ -178,6 +179,14 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
                                     <CompanyIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="My Companies" />
+                            </ListItem>
+                        </Link>
+                        <Link to={`/user/subscription`} className={classes.link}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <SubscriptionIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="My subscription" />
                             </ListItem>
                         </Link>
                         <Link to={`/user/settings`} className={classes.link}>

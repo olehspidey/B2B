@@ -20,5 +20,9 @@
         // Summary:
         //     Gets or sets a telephone number for the user.
         public string PhoneNumber { get; set; }
+
+        public SubscriptionDto Subscription { get; set; }
+
+        public double Bill { get; set; }
     }
 }
