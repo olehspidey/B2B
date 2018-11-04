@@ -2,6 +2,7 @@ import * as React from 'react';
 import UserPanelLayout from '../../layouts/UserPanelLayout';
 import UserSettingsContainer from '../../containers/UserSettingsContainer';
 import CompaniesContainer from '../../containers/CompaniesContainer';
+import CreateUserCompanyContainer from '../../containers/CreateUserCompanyContainer';
 
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -33,10 +34,6 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
             userLoading={this.props.userState.loading} />
     );
 
-    public renderCompaniesContainer = () => (
-        <CompaniesContainer />
-    );
-
     public render() {
         const { userState } = this.props;
 
@@ -44,7 +41,8 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
             <UserPanelLayout userLoading={userState.loading} user={userState.currentUser}>
                 <Switch>
                     <Route exact path="/user/settings" render={this.renderUserSettingsContainer} />
-                    <Route exact path="/user/companies" render={this.renderCompaniesContainer} />
+                    <Route exact path="/user/companies" component={CompaniesContainer} />
+                    <Route exact path="/user/companies/create" component={CreateUserCompanyContainer} />
                 </Switch>
             </UserPanelLayout>
         )
