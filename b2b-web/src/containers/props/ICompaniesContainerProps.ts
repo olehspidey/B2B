@@ -7,7 +7,8 @@ export interface ICompaniesContainerProps {
         list: string,
         emptyBox: string,
         but: string,
-        link: string
+        link: string,
+        createBut: string
     },
     companyState: ICompaniesState,
     fetchCompanies: () => Promise<ICompaniesReponseAction>

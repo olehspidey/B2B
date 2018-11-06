@@ -4,6 +4,7 @@ import UserSettingsContainer from '../../containers/UserSettingsContainer';
 import CompaniesContainer from '../../containers/CompaniesContainer';
 import CreateUserCompanyContainer from '../../containers/CreateUserCompanyContainer';
 import SubscriptionContainer from '../../containers/SubscriptionContainer';
+import CompanyContainer from '../../containers/CompanyContainer';
 
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -49,6 +50,7 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
                 <Switch>
                     <Route exact path="/user/settings" render={this.renderUserSettingsContainer} />
                     <Route exact path="/user/subscription" render={this.renderSubscriptionContainer} />
+                    <Route exact path="/user/company/:id" component={CompanyContainer} />
                     <Route exact path="/user/companies" component={CompaniesContainer} />
                     <Route exact path="/user/companies/create" component={CreateUserCompanyContainer} />
                 </Switch>

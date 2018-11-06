@@ -10,6 +10,10 @@ export const FETCH_COMPANIES_REQUEST = 'FETCH_COMPANIES_REQUEST';
 export const FETCH_COMPANIES_SUCCESS = 'FETCH_COMPANIES_SUCCESS';
 export const FETCH_COMPANIES_FAILURE = 'FETCH_COMPANIES_FAILURE';
 
+export const FETCH_COMPANY_REQUEST = 'FETCH_COMPANY_REQUEST';
+export const FETCH_COMPANY_SUCCESS = 'FETCH_COMPANY_SUCCESS';
+export const FETCH_COMPANY_FAILURE = 'FETCH_COMPANY_FAILURE';
+
 export const CREATE_COMPANY_REQUEST = 'CREATE_COMPANY_REQUEST';
 export const CREATE_COMPANY_SUCCESS = 'CREATE_COMPANY_SUCCESS';
 export const CREATE_COMPANY_FAILURE = 'CREATE_COMPANY_FAILURE';
@@ -57,5 +61,30 @@ export const createCompany = (body: ICreateCompany) => (dispatch: Dispatch) => {
         .then(
             resp => dispatch(createCompanySucess(resp.data)),
             error => handleError(dispatch, error, fetchCompaniesFailure)
+        );
+}
+
+const fetchCompanyRequest = () => ({
+    type: FETCH_COMPANY_REQUEST
+});
+
+const fetchCompanySucccess = (company: ICompany) => ({
+    type: FETCH_COMPANY_SUCCESS,
+    company
+});
+
+const fetchCompanyFailure = (error: IError) => ({
+    type: FETCH_COMPANY_FAILURE,
+    error
+});
+
+export const fetchCompany = (id: string) => (dispatch: Dispatch) => {
+    dispatch(fetchCompanyRequest());
+
+    return companiesService
+        .fetchCompany(id)
+        .then(
+            resp => dispatch(fetchCompanySucccess(resp.data)),
+            error => handleError(dispatch, error, fetchCompanyFailure)
         );
 }

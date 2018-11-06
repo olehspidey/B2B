@@ -5,6 +5,9 @@ export default {
     fetchCompanies() {
         return apiGet('/api/companies');
     },
+    fetchCompany(id: string) {
+        return apiGet(`/api/companies/${id}`);
+    },
     createCompany(body: ICreateCompany) {
         return apiPost('/api/companies/createCompany', body);
     }

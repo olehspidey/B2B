@@ -10,3 +10,14 @@ export const mapSubscriptionType = (type: number) => {
             return 'None';
     }
 }
+
+export const mapPersonType = (type: number) => {
+    switch (type) {
+        case 0:
+            return 'Physical';
+        case 1:
+            return 'Legal';
+        default:
+            return 'None';
+    }
+}

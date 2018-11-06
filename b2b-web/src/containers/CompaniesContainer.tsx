@@ -4,6 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import Spinner from '../components/common/Spinner';
+import classNames from 'classnames';
 
 import { withStyles, createStyles, Theme } from '@material-ui/core';
 import { ICompaniesContainerProps } from './props/ICompaniesContainerProps';
@@ -33,6 +34,10 @@ const styles = (theme: Theme) => createStyles({
     },
     link: {
         textDecoration: 'none'
+    },
+    createBut: {
+        display: 'flex',
+        justifyContent: 'center'
     }
 });
 
@@ -53,32 +58,37 @@ class CompaniesContainer extends React.Component<ICompaniesContainerProps> {
 
         if (!companyState.loading && companyState.companies.length > 0) {
             return (
-                <List>
+                <div>
                     {
-                        (companyState
-                            .companies as ICompany[])
-                            .map(company => (
-                                <ListItem
-                                    className={classes.list}
-                                    button>
-                                    <ListItemText primary={company.shortName} />
-                                </ListItem>
-                            ))
+                        this.renderCreateCompanyBut()
                     }
-                </List>
+                    <List>
+                        {
+                            (companyState
+                                .companies as ICompany[])
+                                .map(company => (
+                                    <Link
+                                        className={classes.link}
+                                        to={`/user/company/${company.id}`}>
+                                        <ListItem
+                                            className={classes.list}
+                                            button>
+                                            <ListItemText primary={company.shortName} />
+                                        </ListItem>
+                                    </Link>
+                                ))
+                        }
+                    </List>
+                </div>
             );
         }
 
         return (
             <div className={classes.emptyBox}>
                 <div>You havn't companies yet</div>
-                <Link
-                    className={classes.link}
-                    to="/user/companies/create">
-                    <Button
-                        className={classes.but}
-                        variant="outlined">Create new company</Button>
-                </Link>
+                {
+                    this.renderCreateCompanyBut()
+                }
             </div>
         );
     }
@@ -94,6 +104,16 @@ class CompaniesContainer extends React.Component<ICompaniesContainerProps> {
             </div>
         );
     }
+
+    private renderCreateCompanyBut = () => (
+        <Link
+            className={classNames(this.props.classes.link, this.props.classes.createBut)}
+            to="/user/companies/create">
+            <Button
+                className={this.props.classes.but}
+                variant="outlined">Create new company</Button>
+        </Link>
+    );
 }
 
 export default withStyles(styles)(connect(
