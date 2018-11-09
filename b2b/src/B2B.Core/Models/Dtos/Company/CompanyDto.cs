@@ -1,4 +1,5 @@
-﻿using B2B.Core.Models.Dtos.Person;
+﻿using B2B.Core.Models.DomainModels.Companies;
+using B2B.Core.Models.Dtos.Person;
 
 namespace B2B.Core.Models.Dtos.Company
 {
@@ -13,5 +14,7 @@ namespace B2B.Core.Models.Dtos.Company
         public PersonDto Owner { get; set; }
 
         public string Description { get; set; }
+
+        public CompanyCategory Category { get; set; }
     }
 }

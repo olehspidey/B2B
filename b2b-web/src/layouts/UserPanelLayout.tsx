@@ -15,8 +15,10 @@ import CompanyIcon from '@material-ui/icons/Work';
 import ListItemText from '@material-ui/core/ListItemText';
 import SettingsIcon from '@material-ui/icons/Tune';
 import SubscriptionIcon from '@material-ui/icons/Assignment';
+import SearchIcon from '@material-ui/icons/Search';
 import Spinner from '../components/common/Spinner';
 import Button from '@material-ui/core/Button';
+
 import { logOut } from '../Api/api';
 import { withStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -181,12 +183,20 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
                                 <ListItemText primary="My Companies" />
                             </ListItem>
                         </Link>
+                        <Link to={`/user/search`} className={classes.link}>
+                            <ListItem button>
+                                <ListItemIcon>
+                                    <SearchIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Search Companies" />
+                            </ListItem>
+                        </Link>
                         <Link to={`/user/subscription`} className={classes.link}>
                             <ListItem button>
                                 <ListItemIcon>
                                     <SubscriptionIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="My subscription" />
+                                <ListItemText primary="My Subscription" />
                             </ListItem>
                         </Link>
                         <Link to={`/user/settings`} className={classes.link}>

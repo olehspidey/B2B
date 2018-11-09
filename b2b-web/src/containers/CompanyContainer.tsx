@@ -11,6 +11,7 @@ import { ICompaniesState } from '../Reducers/Companies/ICompaniesState';
 import { Action } from 'redux';
 import { fetchCompany } from '../Actions/Companies/companies';
 import { mapPersonType } from '../utils/mappers/userMappers';
+import { mapCompanyType } from '../utils/mappers/companyMappers';
 
 const styles = createStyles({
     root: {
@@ -59,6 +60,7 @@ class CompanyContainer extends React.Component<ICompanyContainerProps> {
                     <Typography variant="title">Company information:</Typography>
                     <Typography variant="subtitle1">{`Company full name: ${company.fullName}`}</Typography>
                     <Typography variant="subtitle1">{`Company short name: ${company.shortName}`}</Typography>
+                    <Typography variant="subtitle1">{`Company category: ${mapCompanyType(company.category)}`}</Typography>
                     <Typography variant="subtitle1">{`Description: ${company.description}`}</Typography>
                 </div>
             );
@@ -75,12 +77,13 @@ class CompanyContainer extends React.Component<ICompanyContainerProps> {
         if (!loading && company !== null) {
             return (
                 <div>
-                    <Typography variant="title">Company information:</Typography>
+                    <Typography variant="title">Company owner information:</Typography>
                     <Typography variant="subtitle1">{`Company owner name: ${company.owner.name}`}</Typography>
                     <Typography variant="subtitle1">{`Company owner last name: ${company.owner.lastName}`}</Typography>
                     <Typography variant="subtitle1">{`Company owner email: ${company.owner.email}`}</Typography>
                     <Typography variant="subtitle1">{`Company owner phone number: ${company.owner.phoneNumber}`}</Typography>
                     <Typography variant="subtitle1">{`Company owner person type: ${mapPersonType(company.owner.personType)}`}</Typography>
+
                 </div>
             );
         }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PersonTypeSelect from '../components/common/PersonTypeSelect';
+import CountryAutocomplateComponent from './common/CountryAutocomplateComponent';
 
 import { ICreateCompanyComponentProps } from '../components/Props/ICreateCompanyComponentProps';
 import { withStyles, createStyles } from '@material-ui/core';
@@ -128,6 +129,9 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                         label="Email"
                         onChange={this.onChangeOwnerEmail} />
                     <PersonTypeSelect onChange={this.onChangePersonType} />
+                </div>
+                <div className={classes.info}>
+                    <CountryAutocomplateComponent />
                 </div>
                 <Button
                     className={classes.but}

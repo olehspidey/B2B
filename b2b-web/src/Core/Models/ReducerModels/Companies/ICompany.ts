@@ -5,5 +5,6 @@ export interface ICompany {
     shortName: string,
     fullName: string,
     owner: IPerson,
-    description: string | null
+    description: string | null,
+    category: number
 }
