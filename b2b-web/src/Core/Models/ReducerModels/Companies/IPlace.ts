@@ -1,4 +1,4 @@
-export interface ICountry {
+export interface IPlace {
     placeId: string,
     reference: string,
     name: string

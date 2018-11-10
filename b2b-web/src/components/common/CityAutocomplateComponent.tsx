@@ -1,20 +1,21 @@
 import * as React from 'react';
 import * as Autosuggest from 'react-autosuggest';
+
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import './CountryAutocomplateComponent.css';
 
+import { ICityAutocomplateComponentProps } from './Props/ICityAutocomplateComponentProps';
+import { ICityAutocomplateComponentState } from './States/ICityAutocomplateComponentState';
 import {
     SuggestionsFetchRequestedParams,
     InputProps,
     ChangeEvent,
     SuggestionSelectedEventData
 } from 'react-autosuggest';
-import { IAddressAutocomplateComponentState } from './States/IAddressAutocomplateComponentState';
 import { withStyles, createStyles, Theme } from '@material-ui/core';
-import { ICountryAutocomplateComponentProps } from './Props/ICountryAutocomplateComponentProps';
 
 const styles = (theme: Theme) => createStyles({
     suggestion: {
@@ -25,15 +26,14 @@ const styles = (theme: Theme) => createStyles({
 
 const getSuggestionValue = (suggestion: google.maps.places.AutocompletePrediction) => suggestion.structured_formatting.main_text;
 
-
-class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateComponentProps, IAddressAutocomplateComponentState> {
+class CityAutocomplateComponent extends React.Component<ICityAutocomplateComponentProps, ICityAutocomplateComponentState> {
     private autocompleteService: google.maps.places.AutocompleteService | null = null;
 
-    constructor(props: ICountryAutocomplateComponentProps) {
+    constructor(props: ICityAutocomplateComponentProps) {
         super(props);
 
         this.state = {
-            countryName: '',
+            cityName: '',
             suggestions: []
         }
     }
@@ -44,7 +44,7 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
 
     public render() {
         const inputProps = {
-            value: this.state.countryName,
+            value: this.state.cityName,
             onChange: this.onChange
         } as InputProps<any>;
 
@@ -67,7 +67,7 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
 
         return (
             <TextField
-                label="Choose your country"
+                label="Choose your city"
                 required
                 fullWidth
                 {...otherProps}
@@ -84,7 +84,13 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
             }, (results: google.maps.places.AutocompletePrediction[],
                 status: google.maps.places.PlacesServiceStatus) => {
                     if (results !== null) {
-                        results = results.filter(result => result.types.some(type => type === 'country'));
+                        results = results.filter(result =>
+                            !result.types.some(type =>
+                                type === 'administrative_area_level_1' ||
+                                type === 'administrative_area_level_2' ||
+                                type === 'administrative_area_level_3' ||
+                                type === 'sublocality'));
+
                         this.setState({ suggestions: results });
                     }
                 })
@@ -108,7 +114,7 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
 
     private onSuggestionsClearRequested = () => this.setState({ suggestions: [] });
 
-    private onChange = (_: React.FormEvent<any>, params: ChangeEvent) => this.setState({ countryName: params.newValue });
+    private onChange = (_: React.FormEvent<any>, params: ChangeEvent) => this.setState({ cityName: params.newValue });
 
     private onSelected = (_: any, { suggestion }: SuggestionSelectedEventData<google.maps.places.AutocompletePrediction>) => {
         if (suggestion !== null) {
@@ -121,4 +127,4 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
     }
 }
 
-export default withStyles(styles)(CountryAutocomplateComponent);
+export default withStyles(styles)(CityAutocomplateComponent);

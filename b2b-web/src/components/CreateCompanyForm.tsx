@@ -3,11 +3,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PersonTypeSelect from '../components/common/PersonTypeSelect';
 import CountryAutocomplateComponent from './common/CountryAutocomplateComponent';
+import CityAutocomplateComponent from './common/CityAutocomplateComponent';
 
 import { ICreateCompanyComponentProps } from '../components/Props/ICreateCompanyComponentProps';
 import { withStyles, createStyles } from '@material-ui/core';
 import { ICreateCompany } from '../Actions/Companies/ICreateCompany';
-import { ICountry } from '../Core/Models/ReducerModels/Companies/ICountry';
+import { IPlace } from '../Core/Models/ReducerModels/Companies/IPlace';
 
 const styles = createStyles({
     root: {
@@ -39,7 +40,9 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                 name: '',
                 personType: -1,
                 phoneNumber: ''
-            }
+            },
+            city: null,
+            country: null
         }
     }
 
@@ -84,8 +87,16 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
         this.setState({ owner })
     }
 
-    public onCountrySelected = (country: ICountry) => {
-        console.log('sel', country)
+    public onCountrySelected = (country: IPlace) => {
+        console.log('sel', country);
+
+        this.setState({ country });
+    }
+
+    public onCitySelected = (city: IPlace) => {
+        console.log('city sel', city);
+
+        this.setState({ city });
     }
 
     public onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -137,6 +148,7 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                 </div>
                 <div className={classes.info}>
                     <CountryAutocomplateComponent onSelected={this.onCountrySelected} />
+                    <CityAutocomplateComponent onSelected={this.onCitySelected} />
                 </div>
                 <Button
                     className={classes.but}

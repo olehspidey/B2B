@@ -22,6 +22,8 @@ namespace B2B.Core.Models.DomainModels.Companies
 
         public virtual User User { get; set; }
 
+        public virtual Address Address { get; set; }
+
         [ForeignKey(nameof(User))]
         public string UserId { get; set; }
 

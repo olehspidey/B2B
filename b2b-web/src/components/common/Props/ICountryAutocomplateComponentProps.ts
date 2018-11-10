@@ -1,8 +1,9 @@
-import { ICountry } from '../../../Core/Models/ReducerModels/Companies/ICountry';
+import { IPlace } from '../../../Core/Models/ReducerModels/Companies/IPlace';
 
 export interface ICountryAutocomplateComponentProps {
     classes: {
-        suggestion: string
+        suggestion: string,
+        list: string
     },
-    onSelected: (country: ICountry) => void
+    onSelected: (country: IPlace) => void
 }
