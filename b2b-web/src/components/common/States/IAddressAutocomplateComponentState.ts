@@ -1,6 +1,4 @@
-import { IAddress } from '../../../Core/Models/Google/IAddress';
-
 export interface IAddressAutocomplateComponentState {
-    country: string,
-    suggestions: IAddress[]
+    countryName: string,
+    suggestions: google.maps.places.AutocompletePrediction[]
 }

@@ -83,7 +83,6 @@ class CompanyContainer extends React.Component<ICompanyContainerProps> {
                     <Typography variant="subtitle1">{`Company owner email: ${company.owner.email}`}</Typography>
                     <Typography variant="subtitle1">{`Company owner phone number: ${company.owner.phoneNumber}`}</Typography>
                     <Typography variant="subtitle1">{`Company owner person type: ${mapPersonType(company.owner.personType)}`}</Typography>
-
                 </div>
             );
         }

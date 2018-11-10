@@ -7,6 +7,7 @@ import CountryAutocomplateComponent from './common/CountryAutocomplateComponent'
 import { ICreateCompanyComponentProps } from '../components/Props/ICreateCompanyComponentProps';
 import { withStyles, createStyles } from '@material-ui/core';
 import { ICreateCompany } from '../Actions/Companies/ICreateCompany';
+import { ICountry } from '../Core/Models/ReducerModels/Companies/ICountry';
 
 const styles = createStyles({
     root: {
@@ -83,6 +84,10 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
         this.setState({ owner })
     }
 
+    public onCountrySelected = (country: ICountry) => {
+        console.log('sel', country)
+    }
+
     public onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -131,7 +136,7 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                     <PersonTypeSelect onChange={this.onChangePersonType} />
                 </div>
                 <div className={classes.info}>
-                    <CountryAutocomplateComponent />
+                    <CountryAutocomplateComponent onSelected={this.onCountrySelected} />
                 </div>
                 <Button
                     className={classes.but}

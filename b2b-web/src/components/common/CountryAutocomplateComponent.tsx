@@ -1,84 +1,107 @@
 import * as React from 'react';
-import axios from 'axios';
 import * as Autosuggest from 'react-autosuggest';
+import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper';
+import './CountryAutocomplateComponent.css';
 
-import { SuggestionsFetchRequestedParams, InputProps, ChangeEvent } from 'react-autosuggest';
+import { SuggestionsFetchRequestedParams, InputProps, ChangeEvent, SuggestionSelectedEventData } from 'react-autosuggest';
 import { IAddressAutocomplateComponentState } from './States/IAddressAutocomplateComponentState';
-// import { IAddressResponse } from '../../Core/Models/Google/IAddressResponse';
-import { IAddress } from '../../Core/Models/Google/IAddress';
-// import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core';
+import { ICountryAutocomplateComponentProps } from './Props/ICountryAutocomplateComponentProps';
 
-// const getAutocomplateCountryUrl = (country: string) => `https://maps.googleapis.com/maps/api/geocode/json?address=${country}&key=AIzaSyCOAn0E4G4GEXQHZtEa12ctXyDow8k5QhE&types=country`;
+const styles = createStyles({
+    suggestion: {
+        padding: '.5rem',
+        cursor: 'pointer',
+        'suggestion:hover': {
+            background: 'red'
+        }
+    }
+});
 
-const getAutocomplateCountryUrl = (country: string) => `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${country}&types=(regions)&key=AIzaSyCOAn0E4G4GEXQHZtEa12ctXyDow8k5QhE&sessiontoken=1234567890&language=uk`;
+const getSuggestionValue = (suggestion: google.maps.places.AutocompletePrediction) => suggestion.structured_formatting.main_text;
 
-// const filterCountries = (data: IAddressResponse) => {
-//     if (data.results && data.results.length) {
-//         return data
-//             .results[0]
-//             .address_components
-//             .filter(d => d.types.some(t => t === 'country'));
-//     }
 
-//     return [];
-// }
+class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateComponentProps, IAddressAutocomplateComponentState> {
+    private autocompleteService: google.maps.places.AutocompleteService | null = null;
 
-const getSuggestionValue = (suggestion: IAddress) => suggestion.long_name;
-
-const renderSuggestion = (suggestion: IAddress) => (<div>{suggestion.long_name}</div>);
-
-class CountryAutocomplateComponent extends React.Component<{}, IAddressAutocomplateComponentState> {
     constructor(props: any) {
         super(props);
 
         this.state = {
-            country: '',
-            suggestions: new Array<IAddress>()
+            countryName: '',
+            suggestions: []
         }
     }
 
-    public onLoad = () => {
-        console.log('loaded');
+    public componentDidMount() {
+        this.autocompleteService = new google.maps.places.AutocompleteService();
     }
 
     public render() {
         const inputProps = {
-            value: this.state.country,
+            value: this.state.countryName,
             onChange: this.onChange
         } as InputProps<any>;
 
         return (
-            <div>
-                <Autosuggest
-                    suggestions={this.state.suggestions}
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                    getSuggestionValue={getSuggestionValue}
-                    renderSuggestion={renderSuggestion}
-                    inputProps={inputProps} />
-            </div>
+            <Autosuggest
+                suggestions={this.state.suggestions}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={this.renderSuggestion}
+                inputProps={inputProps}
+                renderInputComponent={this.renderTextField}
+                onSuggestionSelected={this.onSelected} />
         );
     }
 
-    private onSuggestionsFetchRequested = ({ value }: SuggestionsFetchRequestedParams) => {
-        console.log('val', getAutocomplateCountryUrl(value))
-        axios
-            .get(getAutocomplateCountryUrl(value))
-            .then(resp => {
-                // const filteredData = filterCountries(resp.data);
+    private renderTextField = (inputProps: any) => {
+        const { ref, ...otherProps } = inputProps;
 
-                console.log('data', resp.data);
-                // console.log('filtered', filteredData);
-
-                this.setState({
-                    suggestions: []
-                });
-            });
+        return (
+            <TextField
+                label="Choose your country"
+                required
+                fullWidth
+                {...otherProps}
+                inputRef={ref} />
+        );
     };
+
+    private onSuggestionsFetchRequested = ({ value }: SuggestionsFetchRequestedParams) => {
+        if (this.autocompleteService !== null) {
+            this.autocompleteService.getPlacePredictions({
+                input: value,
+                types: ['(regions)'],
+
+            }, (results: google.maps.places.AutocompletePrediction[],
+                status: google.maps.places.PlacesServiceStatus) => {
+                    results = results.filter(result => result.types.some(type => type === 'country'));
+
+                    this.setState({ suggestions: results });
+                })
+        }
+    };
+
+    private renderSuggestion = (suggestion: google.maps.places.AutocompletePrediction) => (
+        <Paper className={this.props.classes.suggestion}>{suggestion.structured_formatting.main_text}</Paper>
+    );
 
     private onSuggestionsClearRequested = () => this.setState({ suggestions: [] });
 
-    private onChange = (event: React.FormEvent<any>, params: ChangeEvent) => this.setState({ country: params.newValue });
+    private onChange = (_: React.FormEvent<any>, params: ChangeEvent) => this.setState({ countryName: params.newValue });
+
+    private onSelected = (_: any, { suggestion }: SuggestionSelectedEventData<google.maps.places.AutocompletePrediction>) => {
+        if (suggestion !== null) {
+            this.props.onSelected({
+                placeId: suggestion.place_id,
+                name: suggestion.structured_formatting.main_text,
+                reference: suggestion.reference
+            });
+        }
+    }
 }
 
-export default CountryAutocomplateComponent;
+export default withStyles(styles)(CountryAutocomplateComponent);
