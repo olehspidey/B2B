@@ -45,6 +45,11 @@ class CompanyContainer extends React.Component<ICompanyContainerProps> {
                         this.renderOwnerInfo(companiesState)
                     }
                 </Paper>
+                <Paper className={classes.paper}>
+                    {
+                        this.renderAddressInfo(companiesState)
+                    }
+                </Paper>
             </div>
         );
     }
@@ -58,9 +63,9 @@ class CompanyContainer extends React.Component<ICompanyContainerProps> {
             return (
                 <div>
                     <Typography variant="title">Company information:</Typography>
-                    <Typography variant="subtitle1">{`Company full name: ${company.fullName}`}</Typography>
-                    <Typography variant="subtitle1">{`Company short name: ${company.shortName}`}</Typography>
-                    <Typography variant="subtitle1">{`Company category: ${mapCompanyType(company.category)}`}</Typography>
+                    <Typography variant="subtitle1">{`Full name: ${company.fullName}`}</Typography>
+                    <Typography variant="subtitle1">{`Short name: ${company.shortName}`}</Typography>
+                    <Typography variant="subtitle1">{`Category: ${mapCompanyType(company.category)}`}</Typography>
                     <Typography variant="subtitle1">{`Description: ${company.description}`}</Typography>
                 </div>
             );
@@ -78,11 +83,29 @@ class CompanyContainer extends React.Component<ICompanyContainerProps> {
             return (
                 <div>
                     <Typography variant="title">Company owner information:</Typography>
-                    <Typography variant="subtitle1">{`Company owner name: ${company.owner.name}`}</Typography>
-                    <Typography variant="subtitle1">{`Company owner last name: ${company.owner.lastName}`}</Typography>
-                    <Typography variant="subtitle1">{`Company owner email: ${company.owner.email}`}</Typography>
-                    <Typography variant="subtitle1">{`Company owner phone number: ${company.owner.phoneNumber}`}</Typography>
-                    <Typography variant="subtitle1">{`Company owner person type: ${mapPersonType(company.owner.personType)}`}</Typography>
+                    <Typography variant="subtitle1">{`Name: ${company.owner.name}`}</Typography>
+                    <Typography variant="subtitle1">{`Last name: ${company.owner.lastName}`}</Typography>
+                    <Typography variant="subtitle1">{`Email: ${company.owner.email}`}</Typography>
+                    <Typography variant="subtitle1">{`Phone number: ${company.owner.phoneNumber}`}</Typography>
+                    <Typography variant="subtitle1">{`Person type: ${mapPersonType(company.owner.personType)}`}</Typography>
+                </div>
+            );
+        }
+
+        return null;
+    }
+
+    private renderAddressInfo = ({ company, loading }: ICompaniesState) => {
+        if (loading) {
+            return (<Spinner flex />);
+        }
+
+        if (!loading && company !== null) {
+            return (
+                <div>
+                    <Typography variant="title">Company address information:</Typography>
+                    <Typography variant="subtitle1">{`Country: ${company.address.country}`}</Typography>
+                    <Typography variant="subtitle1">{`City: ${company.address.city}`}</Typography>
                 </div>
             );
         }

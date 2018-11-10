@@ -1,11 +1,10 @@
 import { ICreatePerson } from "../../Actions/Companies/ICreatePerson";
-import { IPlace } from '../../Core/Models/ReducerModels/Companies/IPlace';
+import { ICreateAddress } from './ICreateAddress';
 
 export interface ICreateCompany {
     shortName: string,
     fullName: string,
     owner: ICreatePerson,
     description?: string,
-    country: IPlace | null,
-    city: IPlace | null
+    address: ICreateAddress
 }

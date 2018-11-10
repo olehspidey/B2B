@@ -12,12 +12,12 @@ namespace B2B.Core.Models.Dtos.Company
         [MinLength(2)]
         public string CountryId { get; set; }
 
-        //[Required]
-        //[MinLength(2)]
+        [Required]
+        [MinLength(2)]
         public string City { get; set; }
 
-        //[Required]
-        //[MinLength(2)]
+        [Required]
+        [MinLength(2)]
         public string CityId { get; set; }
     }
 }

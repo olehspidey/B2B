@@ -17,6 +17,8 @@ namespace B2B.Mapper
             CreateMap<CreateCompanyDto, Company>();
 
             CreateMap<CreatePersonDto, Person>();
+
+            CreateMap<CreateAddresDto, Address>();
         }
     }
 }

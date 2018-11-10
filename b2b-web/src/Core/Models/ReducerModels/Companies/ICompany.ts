@@ -1,4 +1,5 @@
 import { IPerson } from '../../../Models/ReducerModels/Companies/IPerson';
+import { IAddress } from './IAddress';
 
 export interface ICompany {
     id: number,
@@ -6,5 +7,6 @@ export interface ICompany {
     fullName: string,
     owner: IPerson,
     description: string | null,
-    category: number
+    category: number,
+    address: IAddress
 }

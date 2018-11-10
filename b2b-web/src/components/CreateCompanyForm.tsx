@@ -41,8 +41,12 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                 personType: -1,
                 phoneNumber: ''
             },
-            city: null,
-            country: null
+            address: {
+                city: '',
+                cityId: '',
+                country: '',
+                countryId: ''
+            }
         }
     }
 
@@ -89,14 +93,22 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
 
     public onCountrySelected = (country: IPlace) => {
         console.log('sel', country);
+        const { address } = { ...this.state };
 
-        this.setState({ country });
+        address.country = country.name;
+        address.countryId = country.placeId;
+
+        this.setState({address});
     }
 
     public onCitySelected = (city: IPlace) => {
         console.log('city sel', city);
+        const { address } = { ...this.state };
 
-        this.setState({ city });
+        address.city = city.name;
+        address.cityId = city.placeId;
+
+        this.setState({ address });
     }
 
     public onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

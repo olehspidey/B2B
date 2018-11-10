@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace B2B.Core.Models.DomainModels
+namespace B2B.Core.Models.DomainModels.Companies
 {
     public class Address : IEntity<int>
     {

@@ -13,6 +13,8 @@ namespace B2B.Core.Models.Dtos.Company
 
         public PersonDto Owner { get; set; }
 
+        public AddressDto Address { get; set; }
+
         public string Description { get; set; }
 
         public CompanyCategory Category { get; set; }

@@ -17,7 +17,7 @@ namespace B2B.Core.Models.Dtos.Company
         [Required]
         public CreatePersonDto Owner { get; set; }
 
-        public Address Address { get; set; }
+        public CreateAddresDto Address { get; set; }
 
         public string Description { get; set; }
     }
