@@ -7,15 +7,11 @@ import {
 import LoginScreen from './screens/Login/LoginScreen';
 import UserPanelScreen from './screens/UserPanelScreen/UserPanelScreen';
 
-export default class App extends React.Component {
-  public render() {
-    return (
-      <Router>
-        <Switch>
-          <Route exact path="/login" component={LoginScreen} />
-          <Route path="/user" component={UserPanelScreen} />
-        </Switch>
-      </Router>
-    );
-  }
-}
+export default () => (
+  <Router>
+    <Switch>
+      <Route exact path="/login" component={LoginScreen} />
+      <Route path="/user" component={UserPanelScreen} />
+    </Switch>
+  </Router>
+);

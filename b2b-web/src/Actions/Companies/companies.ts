@@ -44,6 +44,17 @@ export const fetchCompanies = () => (dispatch: Dispatch) => {
         );
 };
 
+export const fetchCompaniesByFilters = (s: string, companyCategory: string | number, countryId: string, cityId: string) => (dispatch: Dispatch) => {
+    dispatch(fetchCompaniesRequest());
+
+    return companiesService
+        .fetchByFilters(s, companyCategory, countryId, cityId)
+        .then(
+            resp => dispatch(fetchCompaniesSuccess(resp.data)),
+            error => handleError(dispatch, error, fetchCompaniesFailure)
+        );
+}
+
 const createComapanyRequest = () => ({
     type: CREATE_COMPANY_REQUEST
 });

@@ -8,6 +8,9 @@ export default {
     fetchCompany(id: string) {
         return apiGet(`/api/companies/${id}`);
     },
+    fetchByFilters(s: string, companyCategory: string | number, countryId: string, cityId: string) {
+        return apiGet(`/api/companies/${s}/${companyCategory}/${countryId}/${cityId}/`);
+    },
     createCompany(body: ICreateCompany) {
         return apiPost('/api/companies/createCompany', body);
     }

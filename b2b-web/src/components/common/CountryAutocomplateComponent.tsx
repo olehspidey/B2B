@@ -70,18 +70,18 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
             <TextField
                 label={this.props.label}
                 required={this.props.required}
-                onBlurCapture={this.onBlure}
+                // onBlurCapture={this.onBlure}
                 fullWidth
                 {...otherProps}
                 inputRef={ref} />
         );
     };
 
-    private onBlure = (e: React.FocusEvent<HTMLDivElement>) => {
-        if (this.state.selected === null) {
-            this.setState({ countryName: '', suggestions: [] });
-        }
-    }
+    // private onBlure = (e: React.FocusEvent<HTMLDivElement>) => {
+    //     if (this.state.selected === null) {
+    //         this.setState({ countryName: '', suggestions: [] });
+    //     }
+    // }
 
     private onSuggestionsFetchRequested = ({ value }: SuggestionsFetchRequestedParams) => {
         if (this.autocompleteService !== null) {
@@ -121,6 +121,7 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
 
     private onSelected = (_: any, { suggestion }: SuggestionSelectedEventData<google.maps.places.AutocompletePrediction>) => {
         if (suggestion !== null) {
+            this.setState({ selected: suggestion });
             this.props.onSelected({
                 placeId: suggestion.place_id,
                 name: suggestion.structured_formatting.main_text,

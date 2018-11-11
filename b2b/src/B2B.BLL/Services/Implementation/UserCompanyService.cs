@@ -76,6 +76,32 @@ namespace B2B.BLL.Services.Implementation
 
         }
 
+        public async Task<ICollection<Company>> GetByFiltersAsync(string s, CompanyCategory? companyCategory, string countryId, string cityId)
+        {
+            var companies = _companyRepository
+                .Table
+                .Where(x => x.Suggestion &&
+                            x.User.Subscription.End.Value > DateTime.UtcNow);
+
+            if (s != null && await companies.AnyAsync())
+                companies = companies
+                    .Where(x => x.Description.Contains(s));
+
+            if (companyCategory != null && await companies.AnyAsync())
+                companies = companies
+                    .Where(x => x.Category == companyCategory);
+
+            if (countryId != null && await companies.AnyAsync())
+                companies = companies
+                    .Where(x => x.Address.CountryId == countryId);
+
+            if (cityId != null && await companies.AnyAsync())
+                companies = companies
+                    .Where(x => x.Address.CityId == cityId);
+
+            return await companies.ToListAsync();
+        }
+
         private async Task<Company> InsertCompanyAsync(Company company)
             => await _companyRepository.InsertAsync(company) >= 0 ? company : null;
     }

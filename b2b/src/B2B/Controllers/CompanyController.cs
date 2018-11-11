@@ -53,6 +53,14 @@ namespace B2B.Controllers
             return Ok(_mapper.Map<Company, CompanyDto>(company));
         }
 
+        [HttpGet("{s}/{companyCategory}/{countryId}/{cityId}")]
+        public async Task<IActionResult> GetByFilter(string s = null, CompanyCategory? companyCategory = null, string countryId = null, string cityId = null)
+        {
+            var companies = await _userCompanyService.GetByFiltersAsync(s, companyCategory, countryId, cityId);
+
+            return Ok(_mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(companies));
+        }
+
         [HttpGet("byCategory/{category:int}")]
         public async Task<IActionResult> GetByCategory(CompanyCategory category)
         {

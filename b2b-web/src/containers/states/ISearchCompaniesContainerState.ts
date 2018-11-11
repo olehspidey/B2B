@@ -1,3 +1,3 @@
 export interface ISearchCompaniesContainerState {
-    filterQuery: string
+    keyWords: string
 }

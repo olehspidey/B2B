@@ -63,11 +63,11 @@ class CityAutocomplateComponent extends React.Component<ICityAutocomplateCompone
         );
     }
 
-    private onBlure = (e: React.FocusEvent<HTMLDivElement>) => {
-        if (this.state.selected === null) {
-            this.setState({ cityName: '', suggestions: [] });
-        }
-    }
+    // private onBlure = (e: React.FocusEvent<HTMLDivElement>) => {
+    //     if (this.state.selected === null) {
+    //         this.setState({ cityName: '', suggestions: [] });
+    //     }
+    // }
 
     private renderTextField = (inputProps: any) => {
         const { ref, ...otherProps } = inputProps;
@@ -77,7 +77,7 @@ class CityAutocomplateComponent extends React.Component<ICityAutocomplateCompone
                 label={this.props.label}
                 required={this.props.required}
                 fullWidth
-                onBlurCapture={this.onBlure}
+                // onBlurCapture={this.onBlure}
                 {...otherProps}
                 inputRef={ref} />
         );
