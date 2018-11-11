@@ -7,5 +7,6 @@ export interface IUser {
     userName: string,
     email: string,
     subscription: ISubscription,
-    bill: number
+    bill: number,
+    userRoles: string[]
 }

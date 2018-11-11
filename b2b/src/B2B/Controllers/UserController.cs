@@ -43,7 +43,10 @@ namespace B2B.Controllers
             if (user == null)
                 return Unauthorized();
 
-            return Ok(_mapper.Map<User, ExternalUserDto>(user));
+            var mappedUser = _mapper.Map<User, ExternalUserDto>(user);
+            mappedUser.UserRoles = await _userManager.GetRolesAsync(user);
+
+            return Ok(mappedUser);
         }
 
         [JwtAuthorize]

@@ -1,4 +1,6 @@
-﻿namespace B2B.Core.Models.Dtos.User
+﻿using System.Collections.Generic;
+
+namespace B2B.Core.Models.Dtos.User
 {
     public class ExternalUserDto : UserDto
     {
@@ -24,5 +26,7 @@
         public SubscriptionDto Subscription { get; set; }
 
         public double Bill { get; set; }
+
+        public ICollection<string> UserRoles { get; set; }
     }
 }

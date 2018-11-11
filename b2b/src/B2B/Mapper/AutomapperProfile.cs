@@ -19,6 +19,9 @@ namespace B2B.Mapper
             CreateMap<CreatePersonDto, Person>();
 
             CreateMap<CreateAddresDto, Address>();
+
+            CreateMap<User, ExternalUserDto>()
+                .ForMember(x => x.UserRoles, expression => expression.AllowNull());
         }
     }
 }
