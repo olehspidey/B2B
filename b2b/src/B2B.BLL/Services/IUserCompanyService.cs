@@ -11,5 +11,6 @@ namespace B2B.BLL.Services
         Task<Company> GetCompanyByIdAsync(int id);
         Task<ICollection<Company>> GetCompaniesAsync(User user);
         Task<ICollection<Company>> GetByCategoryAsync(CompanyCategory category);
+        Task<Company> CreateSuggestionAsync(int companyId, User user);
     }
 }

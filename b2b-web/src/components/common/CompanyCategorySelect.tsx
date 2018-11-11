@@ -4,14 +4,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import { withStyles, createStyles } from '@material-ui/core/styles';
 import { ICompanyCategorySelectProps } from './Props/ICompanyCategorySelectProps';
 import { ICompanyCategorySelectState } from './States/ICompanyCategorySelectState';
 import { mapCompanyType } from '../../utils/mappers/companyMappers';
-
-const styles = createStyles({
-
-});
 
 const companyCategories = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -34,8 +29,6 @@ class CompanyCategorySelect extends React.Component<ICompanyCategorySelectProps,
     }
 
     public render() {
-        // const { classes } = this.props;
-
         return (
             <FormControl fullWidth>
                 <InputLabel htmlFor="companyCategory">Company category</InputLabel>
@@ -52,7 +45,9 @@ class CompanyCategorySelect extends React.Component<ICompanyCategorySelectProps,
                     {
                         companyCategories
                             .map(category => (
-                                <MenuItem value={category}>{mapCompanyType(category)}</MenuItem>
+                                <MenuItem
+                                    key={category}
+                                    value={category}>{mapCompanyType(category)}</MenuItem>
                             ))
                     }
                 </Select>
@@ -61,4 +56,4 @@ class CompanyCategorySelect extends React.Component<ICompanyCategorySelectProps,
     }
 }
 
-export default withStyles(styles)(CompanyCategorySelect);
+export default CompanyCategorySelect;

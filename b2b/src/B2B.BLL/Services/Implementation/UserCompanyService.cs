@@ -24,22 +24,8 @@ namespace B2B.BLL.Services.Implementation
 
         public async Task<Company> AddCompanyToUserAsync(User user, Company company)
         {
-            var subscriptionType = user.Subscription.SubscriptionType;
-            var userCompaniesCount = user.Companies?.Count;
-
             company.User = user;
             company.UserId = user.Id;
-
-            if ((!userCompaniesCount.HasValue || userCompaniesCount.Value == 0) &&
-                userCompaniesCount < GoldSubscriptionCompaniesCount)
-                return await InsertCompanyAsync(company);
-
-            if (userCompaniesCount == BaseSubscriptionCompaniesCount && subscriptionType == SubscriptionType.Base)
-                throw new ApplicationException($"{SubscriptionType.Base} can have only {BaseSubscriptionCompaniesCount} companies");
-            if (userCompaniesCount == LiteSubscriptionCompaniesCount && subscriptionType == SubscriptionType.Lite)
-                throw new ApplicationException($"{SubscriptionType.Lite} can have only {LiteSubscriptionCompaniesCount} companies");
-            if (userCompaniesCount == GoldSubscriptionCompaniesCount && subscriptionType == SubscriptionType.Gold)
-                throw new ApplicationException($"{SubscriptionType.Gold} can have only {GoldSubscriptionCompaniesCount} companies");
 
             return await InsertCompanyAsync(company);
         }
@@ -59,6 +45,36 @@ namespace B2B.BLL.Services.Implementation
                 .Where(company => company.User.Subscription.End >= DateTime.Now
                                   && company.Category == category)
                 .ToListAsync();
+
+        public async Task<Company> CreateSuggestionAsync(int companyId, User user)
+        {
+            var company = await _companyRepository.GetByIdAsync(companyId);
+
+            if (company == null)
+                return null;
+
+            if (company.Suggestion)
+                throw new ApplicationException("This company olready is suggestion");
+
+            var suggestionsCount = _companyRepository
+                .Table
+                .Count(x => x.Suggestion);
+            var subscriptionType = user
+                .Subscription
+                .SubscriptionType;
+
+            if (subscriptionType == SubscriptionType.Base && suggestionsCount == BaseSubscriptionCompaniesCount)
+                throw new ApplicationException($"{SubscriptionType.Base} can have only {BaseSubscriptionCompaniesCount} company suggestions");
+            if (subscriptionType == SubscriptionType.Lite && suggestionsCount == LiteSubscriptionCompaniesCount)
+                throw new ApplicationException($"{SubscriptionType.Lite} can have only {LiteSubscriptionCompaniesCount} company suggestions");
+            if (subscriptionType == SubscriptionType.Gold && suggestionsCount == GoldSubscriptionCompaniesCount)
+                throw new ApplicationException($"{SubscriptionType.Gold} can have only {GoldSubscriptionCompaniesCount} company suggestions");
+
+            company.Suggestion = true;
+
+            return await _companyRepository.UpdateAsync(company) >= 0 ? company : null;
+
+        }
 
         private async Task<Company> InsertCompanyAsync(Company company)
             => await _companyRepository.InsertAsync(company) >= 0 ? company : null;

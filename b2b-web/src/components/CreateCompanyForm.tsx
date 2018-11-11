@@ -98,7 +98,7 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
         address.country = country.name;
         address.countryId = country.placeId;
 
-        this.setState({address});
+        this.setState({ address });
     }
 
     public onCitySelected = (city: IPlace) => {
@@ -159,8 +159,14 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                     <PersonTypeSelect onChange={this.onChangePersonType} />
                 </div>
                 <div className={classes.info}>
-                    <CountryAutocomplateComponent onSelected={this.onCountrySelected} />
-                    <CityAutocomplateComponent onSelected={this.onCitySelected} />
+                    <CountryAutocomplateComponent
+                        label="Choose your country"
+                        onSelected={this.onCountrySelected}
+                        required />
+                    <CityAutocomplateComponent
+                        label="Choose the city"
+                        onSelected={this.onCitySelected}
+                        required />
                 </div>
                 <Button
                     className={classes.but}

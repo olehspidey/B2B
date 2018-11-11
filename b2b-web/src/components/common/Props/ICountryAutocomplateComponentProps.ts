@@ -5,5 +5,7 @@ export interface ICountryAutocomplateComponentProps {
         suggestion: string,
         list: string
     },
+    required?: boolean,
+    label?: string,
     onSelected: (country: IPlace) => void
 }

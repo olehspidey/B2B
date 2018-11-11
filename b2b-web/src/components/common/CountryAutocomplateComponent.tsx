@@ -34,7 +34,8 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
 
         this.state = {
             countryName: '',
-            suggestions: []
+            suggestions: [],
+            selected: null
         }
     }
 
@@ -67,13 +68,20 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
 
         return (
             <TextField
-                label="Choose your country"
-                required
+                label={this.props.label}
+                required={this.props.required}
+                onBlurCapture={this.onBlure}
                 fullWidth
                 {...otherProps}
                 inputRef={ref} />
         );
     };
+
+    private onBlure = (e: React.FocusEvent<HTMLDivElement>) => {
+        if (this.state.selected === null) {
+            this.setState({ countryName: '', suggestions: [] });
+        }
+    }
 
     private onSuggestionsFetchRequested = ({ value }: SuggestionsFetchRequestedParams) => {
         if (this.autocompleteService !== null) {
@@ -101,7 +109,8 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
         <ListItem
             className={this.props.classes.suggestion}
             component="div"
-            button>
+            button
+            key={suggestion.place_id}>
             <ListItemText primary={suggestion.structured_formatting.main_text} />
         </ListItem>
     );

@@ -22,6 +22,7 @@ namespace B2B.Core.Models.DomainModels.Companies
 
         public virtual User User { get; set; }
 
+        [Required]
         public virtual Address Address { get; set; }
 
         [ForeignKey(nameof(User))]
@@ -29,6 +30,9 @@ namespace B2B.Core.Models.DomainModels.Companies
 
         public string Description { get; set; }
 
+        [Range((int)CompanyCategory.IndustrialChemistry, (int)CompanyCategory.ConstructionAndRepair)]
         public CompanyCategory Category { get; set; }
+
+        public bool Suggestion { get; set; }
     }
 }

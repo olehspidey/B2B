@@ -3,6 +3,7 @@ export interface ISearchCompaniesContainerProp {
         root: string,
         resultBlock: string,
         filterBlock: string,
-        block: string
+        block: string,
+        but: string
     }
 }

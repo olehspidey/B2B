@@ -20,6 +20,9 @@ namespace B2B.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly IUserCompanyService _userCompanyService;
+        private readonly UserManager<User> _userManager;
+
         public CompanyController(IMapper mapper,
             IUserCompanyService userCompanyService,
             UserManager<User> userManager)
@@ -28,8 +31,6 @@ namespace B2B.Controllers
             _userCompanyService = userCompanyService;
             _userManager = userManager;
         }
-        private readonly IUserCompanyService _userCompanyService;
-        private readonly UserManager<User> _userManager;
 
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -69,16 +70,7 @@ namespace B2B.Controllers
                 return Unauthorized();
 
             var mappedCompany = _mapper.Map<CreateCompanyDto, Company>(dto);
-            Company createdCompany;
-
-            try
-            {
-                createdCompany = await _userCompanyService.AddCompanyToUserAsync(user, mappedCompany);
-            }
-            catch (ApplicationException e)
-            {
-                return BadRequest(e.Message);
-            }
+            var createdCompany = await _userCompanyService.AddCompanyToUserAsync(user, mappedCompany);
 
             if (createdCompany == null)
                 return BadRequest("Can't create company");
@@ -88,6 +80,30 @@ namespace B2B.Controllers
                 createdCompany.Id.ToString(),
                 Request.Scheme),
                 _mapper.Map<Company, CompanyDto>(createdCompany));
+        }
+
+        [HttpPost("createSuggestion")]
+        public async Task<IActionResult> CreateSuggestion([FromBody] CreateSuggestionDto suggestionDto)
+        {
+            var user = await _userManager.GetByIdentityAsync(this);
+
+            if (user == null)
+                return Unauthorized();
+            Company company;
+
+            try
+            {
+                company = await _userCompanyService.CreateSuggestionAsync(suggestionDto.CompanyId, user);
+            }
+            catch (ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            if (company == null)
+                return BadRequest("Can't create suggestion");
+
+            return Ok(_mapper.Map<Company, CompanyDto>(company));
         }
     }
 }

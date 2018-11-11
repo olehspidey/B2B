@@ -34,7 +34,8 @@ class CityAutocomplateComponent extends React.Component<ICityAutocomplateCompone
 
         this.state = {
             cityName: '',
-            suggestions: []
+            suggestions: [],
+            selected: null
         }
     }
 
@@ -62,14 +63,21 @@ class CityAutocomplateComponent extends React.Component<ICityAutocomplateCompone
         );
     }
 
+    private onBlure = (e: React.FocusEvent<HTMLDivElement>) => {
+        if (this.state.selected === null) {
+            this.setState({ cityName: '', suggestions: [] });
+        }
+    }
+
     private renderTextField = (inputProps: any) => {
         const { ref, ...otherProps } = inputProps;
 
         return (
             <TextField
-                label="Choose your city"
-                required
+                label={this.props.label}
+                required={this.props.required}
                 fullWidth
+                onBlurCapture={this.onBlure}
                 {...otherProps}
                 inputRef={ref} />
         );
@@ -85,11 +93,10 @@ class CityAutocomplateComponent extends React.Component<ICityAutocomplateCompone
                 status: google.maps.places.PlacesServiceStatus) => {
                     if (results !== null) {
                         results = results.filter(result =>
-                            !result.types.some(type =>
-                                type === 'administrative_area_level_1' ||
-                                type === 'administrative_area_level_2' ||
-                                type === 'administrative_area_level_3' ||
-                                type === 'sublocality'));
+                            result.types.some(type =>
+                                (type === 'locality' ||
+                                    type === 'political' ||
+                                    type === 'geocode')));
 
                         this.setState({ suggestions: results });
                     }
@@ -107,7 +114,8 @@ class CityAutocomplateComponent extends React.Component<ICityAutocomplateCompone
         <ListItem
             className={this.props.classes.suggestion}
             component="div"
-            button>
+            button
+            key={suggestion.place_id}>
             <ListItemText primary={suggestion.structured_formatting.main_text} />
         </ListItem>
     );

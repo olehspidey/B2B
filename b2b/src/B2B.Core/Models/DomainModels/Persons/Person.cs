@@ -25,6 +25,7 @@ namespace B2B.Core.Models.DomainModels.Persons
         [EmailAddress]
         public string Email { get; set; }
 
+        [Range((int)PersonType.Physical, (int)PersonType.Legal)]
         public PersonType PersonType { get; set; }
 
         public virtual Company Company { get; set; }

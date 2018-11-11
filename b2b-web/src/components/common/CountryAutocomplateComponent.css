@@ -5,3 +5,8 @@
 .react-autosuggest__suggestions-list {
     padding: 0;
 }
+
+.react-autosuggest__suggestions-container {
+    position: absolute !important;
+    z-index: 10;
+}
