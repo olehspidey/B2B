@@ -102,6 +102,9 @@ namespace B2B.BLL.Services.Implementation
             return await companies.ToListAsync();
         }
 
+        public async Task<Company> EditCompanyAsync(Company company, User user)
+            => await _companyRepository.UpdateAsync(company) >= 0 ? company : null;
+
         private async Task<Company> InsertCompanyAsync(Company company)
             => await _companyRepository.InsertAsync(company) >= 0 ? company : null;
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using B2B.BLL.Services;
@@ -32,6 +33,8 @@ namespace B2B.Controllers
             _userManager = userManager;
         }
 
+        #region GET
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -45,10 +48,18 @@ namespace B2B.Controllers
             return Ok(_mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(companies));
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{id:int}/{edit?}")]
+        public async Task<IActionResult> Get(int id, bool edit = false)
         {
+            var user = await _userManager.GetByIdentityAsync(this);
+
+            if (user == null)
+                return Unauthorized();
+
             var company = await _userCompanyService.GetCompanyByIdAsync(id);
+
+            if (edit && company.User.Id != user.Id)
+                return Forbid();
 
             return Ok(_mapper.Map<Company, CompanyDto>(company));
         }
@@ -68,6 +79,10 @@ namespace B2B.Controllers
 
             return Ok(_mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(companies));
         }
+
+        #endregion
+
+        #region POST
 
         [HttpPost("createCompany")]
         public async Task<IActionResult> CreateCompanyToUser([FromBody] CreateCompanyDto dto)
@@ -113,5 +128,36 @@ namespace B2B.Controllers
 
             return Ok(_mapper.Map<Company, CompanyDto>(company));
         }
+
+        #endregion
+
+        #region PUT
+
+        [HttpPut("edit")]
+        public async Task<IActionResult> Edit([FromBody] CreateCompanyDto companyDto)
+        {
+            var user = await _userManager.GetByIdentityAsync(this);
+
+            if (user == null)
+                return Unauthorized();
+
+            var company = _mapper.Map<CreateCompanyDto, Company>(companyDto);
+            var userCompaniesIds = user
+                .Companies
+                .Select(x => x.Id)
+                .ToList();
+
+            if (userCompaniesIds.Any() && userCompaniesIds.Contains(company.Id))
+            {
+                var updatedCompany = await _userCompanyService.AddCompanyToUserAsync(user, company);
+
+                if (updatedCompany == null)
+                    return BadRequest("Can't update company");
+            }
+
+            return Forbid();
+        }
+
+        #endregion
     }
 }

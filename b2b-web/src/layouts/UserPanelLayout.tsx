@@ -13,7 +13,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CompanyIcon from '@material-ui/icons/Work';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalanceWallet';
-import AdminIcon from '@material-ui/icons/AccountBox';
 import ListItemText from '@material-ui/core/ListItemText';
 import SettingsIcon from '@material-ui/icons/Tune';
 import SearchIcon from '@material-ui/icons/Search';
@@ -208,18 +207,6 @@ class AccountLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLay
                                 <ListItemText primary="Settings" />
                             </ListItem>
                         </Link>
-                        {
-                            this.props.user !== null &&
-                            this.props.user.userRoles.some(v => v === 'Admin') &&
-                            <Link to={`/user/admin`} className={classes.link}>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <AdminIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Admin" />
-                                </ListItem>
-                            </Link>
-                        }
                     </List>
                 </Drawer>
                 <main className={classes.content}>

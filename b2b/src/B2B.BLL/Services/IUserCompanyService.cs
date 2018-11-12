@@ -12,7 +12,7 @@ namespace B2B.BLL.Services
         Task<ICollection<Company>> GetCompaniesAsync(User user);
         Task<ICollection<Company>> GetByCategoryAsync(CompanyCategory category);
         Task<Company> CreateSuggestionAsync(int companyId, User user);
-
+        Task<Company> EditCompanyAsync(Company company, User user);
         Task<ICollection<Company>> GetByFiltersAsync(string s, CompanyCategory? companyCategory = null, string countryId = null, string cityId = null);
     }
 }
