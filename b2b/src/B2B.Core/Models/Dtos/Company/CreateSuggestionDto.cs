@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace B2B.Core.Models.DomainModels.Companies
+namespace B2B.Core.Models.Dtos.Company
 {
     public class CreateSuggestionDto
     {

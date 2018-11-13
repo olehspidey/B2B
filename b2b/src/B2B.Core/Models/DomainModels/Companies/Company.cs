@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using B2B.Core.Models.DomainModels.Persons;
 
@@ -34,5 +35,7 @@ namespace B2B.Core.Models.DomainModels.Companies
         public CompanyCategory Category { get; set; }
 
         public bool Suggestion { get; set; }
+
+        public virtual List<KeyWord> KeyWords { get; set; }
     }
 }

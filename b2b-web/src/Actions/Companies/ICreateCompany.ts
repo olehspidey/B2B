@@ -5,6 +5,6 @@ export interface ICreateCompany {
     shortName: string,
     fullName: string,
     owner: ICreatePerson,
-    description?: string,
+    description?: string | null,
     address: ICreateAddress
 }

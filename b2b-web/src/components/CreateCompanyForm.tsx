@@ -136,7 +136,7 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                         onChange={this.onChangeCompanyShortName} />
                     <TextField
                         label="Enter description"
-                        value={this.state.description}
+                        value={this.state.description || ''}
                         onChange={this.onChangeDescription} />
                 </div>
                 <div className={classes.info}>

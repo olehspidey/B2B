@@ -4,8 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import Spinner from '../components/common/Spinner';
 import BaseContainer from './BaseContainer';
 import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/EditOutlined';
+import ShareIcon from '@material-ui/icons/Share';
 
-import { withStyles, createStyles } from '@material-ui/core';
+import { withStyles, createStyles, Theme } from '@material-ui/core';
 import { ICompanyContainerProps } from './props/ICompanyContainerProps'
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -17,7 +19,7 @@ import { mapCompanyType } from '../utils/mappers/companyMappers';
 import { IError } from '../Actions/IError';
 import { Redirect, Link } from 'react-router-dom';
 
-const styles = createStyles({
+const styles = (theme: Theme) => createStyles({
     root: {
         width: '100%',
         padding: '0 20%'
@@ -29,7 +31,8 @@ const styles = createStyles({
     editButBox: {
         display: 'flex',
         justifyContent: 'flex-end',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        marginBottom: theme.spacing.unit
     }
 });
 
@@ -57,10 +60,10 @@ class CompanyContainer extends BaseContainer<ICompanyContainerProps> {
 
         return (
             <div className={classes.root}>
+                {
+                    this.renderEditButton(companiesState)
+                }
                 <Paper className={classes.paper}>
-                    {
-                        this.renderEditButton(companiesState)
-                    }
                     {
                         this.renderCompanyInfo(companiesState)
                     }
@@ -78,6 +81,9 @@ class CompanyContainer extends BaseContainer<ICompanyContainerProps> {
                 {
                     super.render()
                 }
+                {
+                    this.renderMoveToSuggests(companiesState)
+                }
             </div>
         );
     }
@@ -88,7 +94,22 @@ class CompanyContainer extends BaseContainer<ICompanyContainerProps> {
                 <Link to={`${this.props.match.url}/edit`} className={this.props.classes.editButBox}>
                     <Button
                         variant="outlined"
-                        color="primary">Edit</Button>
+                        color="primary">Edit<EditIcon />
+                    </Button>
+                </Link>
+            );
+        }
+
+        return null;
+    }
+
+    private renderMoveToSuggests = ({ company, loading }: ICompaniesState) => {
+        if (!loading && company !== null) {
+            return (
+                <Link to={`${this.props.match.url}/edit`} className={this.props.classes.editButBox}>
+                    <Button
+                        variant="contained"
+                        color="primary">Move to suggests<ShareIcon /></Button>
                 </Link>
             );
         }

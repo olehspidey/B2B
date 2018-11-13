@@ -1,5 +1,6 @@
 import { IPerson } from '../../../Models/ReducerModels/Companies/IPerson';
 import { IAddress } from './IAddress';
+import { IKeyWord } from './IKeyWord';
 
 export interface ICompany {
     id: number,
@@ -9,5 +10,7 @@ export interface ICompany {
     description: string | null,
     category: number,
     address: IAddress,
-    canEdit: boolean
+    canEdit: boolean,
+    canMoveToSuggests: boolean,
+    keyWords: IKeyWord[]
 }

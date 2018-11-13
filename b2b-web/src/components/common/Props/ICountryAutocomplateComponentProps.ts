@@ -7,5 +7,6 @@ export interface ICountryAutocomplateComponentProps {
     },
     required?: boolean,
     label?: string,
+    country?: google.maps.places.AutocompletePrediction,
     onSelected: (country: IPlace) => void
 }

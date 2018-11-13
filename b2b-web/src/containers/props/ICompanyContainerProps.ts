@@ -1,12 +1,9 @@
 import { ICompanyResponseAction } from '../../Actions/Companies/ICompanyResponseAction';
 import { RouteComponentProps } from 'react-router-dom';
 import { ICompaniesState } from '../../Reducers/Companies/ICompaniesState';
+import { ICompanyRouteParams } from './ICompanyRouteParams';
 
-interface IParams {
-    id: string
-}
-
-export interface ICompanyContainerProps extends RouteComponentProps<IParams> {
+export interface ICompanyContainerProps extends RouteComponentProps<ICompanyRouteParams> {
     companiesState: ICompaniesState,
     classes: {
         root: string,

@@ -98,4 +98,15 @@ export const fetchCompany = (id: string) => (dispatch: Dispatch) => {
             resp => dispatch(fetchCompanySucccess(resp.data)),
             error => handleError(dispatch, error, fetchCompanyFailure)
         );
-}
+};
+
+export const fetchEditCompany = (id: string, edit: boolean) => (dispatch: Dispatch) => {
+    dispatch(fetchCompanyRequest());
+
+    return companiesService
+        .fetchEditCompany(id, edit)
+        .then(
+            resp => dispatch(fetchCompanySucccess(resp.data)),
+            error => handleError(dispatch, error, fetchCompanyFailure)
+        );
+} 

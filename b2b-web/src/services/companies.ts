@@ -8,6 +8,9 @@ export default {
     fetchCompany(id: string) {
         return apiGet(`/api/companies/${id}`);
     },
+    fetchEditCompany(id: string, edit: boolean) {
+        return apiGet(`/api/companies/${id}/${edit}/false`);
+    },
     fetchByFilters(s: string, companyCategory: string | number, countryId: string, cityId: string) {
         return apiGet(`/api/companies/${s}/${companyCategory}/${countryId}/${cityId}/`);
     },

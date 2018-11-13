@@ -43,6 +43,15 @@ class CityAutocomplateComponent extends React.Component<ICityAutocomplateCompone
         this.autocompleteService = new google.maps.places.AutocompleteService();
     }
 
+    public componentWillReceiveProps(nextProps: ICityAutocomplateComponentProps) {
+        if (this.props.city && !this.props.city.structured_formatting.main_text && nextProps.city && nextProps.city.structured_formatting.main_text) {
+            this.setState({
+                selected: nextProps.city,
+                cityName: nextProps.city.structured_formatting.main_text
+            });
+        }
+    }
+
     public render() {
         const inputProps = {
             value: this.state.cityName,

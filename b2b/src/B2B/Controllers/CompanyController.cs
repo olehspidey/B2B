@@ -48,8 +48,8 @@ namespace B2B.Controllers
             return Ok(_mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(companies));
         }
 
-        [HttpGet("{id:int}/{edit?}")]
-        public async Task<IActionResult> Get(int id, bool edit = false)
+        [HttpGet("{id:int}/{edit?}/{moveToSuggests?}")]
+        public async Task<IActionResult> Get(int id, bool edit = false, bool moveToSuggests = false)
         {
             var user = await _userManager.GetByIdentityAsync(this);
 
@@ -63,15 +63,22 @@ namespace B2B.Controllers
 
             var mappedCompany = _mapper.Map<Company, CompanyDto>(company);
 
-            if (company.User.Id != user.Id)
+            if (edit && company.User.Id != user.Id)
             {
-                if (edit)
-                    mappedCompany.CanEdit = false;
+                mappedCompany.CanEdit = false;
+
+                return Forbid();
+            }
+
+            if (moveToSuggests && company.Suggestion)
+            {
+                mappedCompany.CanMoveToSuggests = false;
 
                 return Forbid();
             }
 
             mappedCompany.CanEdit = true;
+            mappedCompany.CanMoveToSuggests = true;
 
             return Ok(mappedCompany);
         }
@@ -161,7 +168,7 @@ namespace B2B.Controllers
 
             if (userCompaniesIds.Any() && userCompaniesIds.Contains(company.Id))
             {
-                var updatedCompany = await _userCompanyService.AddCompanyToUserAsync(user, company);
+                var updatedCompany = await _userCompanyService.EditCompanyAsync(company, user);
 
                 if (updatedCompany == null)
                     return BadRequest("Can't update company");
