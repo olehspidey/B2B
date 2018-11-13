@@ -22,6 +22,9 @@ namespace B2B.Mapper
 
             CreateMap<User, ExternalUserDto>()
                 .ForMember(x => x.UserRoles, expression => expression.AllowNull());
+
+            CreateMap<Company, CompanyDto>()
+                .ForMember(x => x.CanEdit, expression => expression.UseValue(false));
         }
     }
 }

@@ -18,5 +18,7 @@ namespace B2B.Core.Models.Dtos.Company
         public string Description { get; set; }
 
         public CompanyCategory Category { get; set; }
+
+        public bool CanEdit { get; set; } = false;
     }
 }

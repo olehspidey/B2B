@@ -10,7 +10,8 @@ export interface ICompanyContainerProps extends RouteComponentProps<IParams> {
     companiesState: ICompaniesState,
     classes: {
         root: string,
-        paper: string
+        paper: string,
+        editButBox: string
     },
     fetchCompany: (id: string) => Promise<ICompanyResponseAction>
 }

@@ -1,4 +1,5 @@
 export interface IBaseContainerState {
     errorMessage: string,
-    canRenderErrorMessage: boolean
+    canRenderErrorMessage: boolean,
+    statusCode: number | null
 }

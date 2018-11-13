@@ -58,10 +58,22 @@ namespace B2B.Controllers
 
             var company = await _userCompanyService.GetCompanyByIdAsync(id);
 
-            if (edit && company.User.Id != user.Id)
-                return Forbid();
+            if (company == null)
+                return NotFound($"Company with id: {id} was not found");
 
-            return Ok(_mapper.Map<Company, CompanyDto>(company));
+            var mappedCompany = _mapper.Map<Company, CompanyDto>(company);
+
+            if (company.User.Id != user.Id)
+            {
+                if (edit)
+                    mappedCompany.CanEdit = false;
+
+                return Forbid();
+            }
+
+            mappedCompany.CanEdit = true;
+
+            return Ok(mappedCompany);
         }
 
         [HttpGet("{s}/{companyCategory}/{countryId}/{cityId}")]

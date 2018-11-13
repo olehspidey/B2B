@@ -8,5 +8,6 @@ export interface ICompany {
     owner: IPerson,
     description: string | null,
     category: number,
-    address: IAddress
+    address: IAddress,
+    canEdit: boolean
 }

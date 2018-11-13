@@ -6,6 +6,7 @@ import CreateUserCompanyContainer from '../../containers/CreateUserCompanyContai
 import SubscriptionContainer from '../../containers/SubscriptionContainer';
 import CompanyContainer from '../../containers/CompanyContainer';
 import SearchCompaniesContainer from '../../containers/SearchCompaniesContainer';
+import NotFound from '../../components/common/NotFound';
 
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -22,13 +23,7 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
     }
 
     public componentWillMount() {
-        this.props.fetchCurrentUser()
-            .then(resp => {
-                this.setState({
-                    currentUser: resp.currentUser,
-                    userLoading: false
-                })
-            });
+        this.props.fetchCurrentUser();
     }
 
     public renderUserSettingsContainer = () => (
@@ -55,6 +50,8 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
                     <Route exact path="/user/companies/create" component={CreateUserCompanyContainer} />
                     <Route exact path="/user/search" component={SearchCompaniesContainer} />
                     <Route exact path="/user/settings" render={this.renderUserSettingsContainer} />
+                    <Route path="/user/notFound" component={NotFound} />
+                    <Route component={NotFound} />
                 </Switch>
             </UserPanelLayout>
         )
