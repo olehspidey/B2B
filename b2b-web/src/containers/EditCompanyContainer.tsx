@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 import { fetchEditCompany } from '../Actions/Companies/companies';
 import { IError } from '../Actions/IError';
 import { IEditCompany } from '../Actions/Companies/IEditCompany';
+import { IBaseContainerState } from './states/IBaseContainerState';
+import { Redirect } from 'react-router-dom';
 
 const styles = createStyles({
     root: {
@@ -18,25 +20,41 @@ const styles = createStyles({
     }
 });
 
-class EditCompanyContainer extends BaseContainer<IEditCompanyProps>{
+interface IEditContainerState extends IBaseContainerState {
+    canForbidRedirect: boolean
+}
+
+class EditCompanyContainer extends BaseContainer<IEditCompanyProps, IEditContainerState>{
 
     public componentWillMount() {
         this
             .props
             .fetchCompany(this.props.match.params.id, true)
-            .catch((error: IError) => this.setState({
-                canRenderErrorMessage: true,
-                errorMessage: error.message,
-                statusCode: error.status
-            }));
-    }
+            .then(() => this.setState({
+                canRenderAlertMessage: true,
+                alertMessage: 'Success updated'
+            }))
+            .catch((error: IError) => {
+                if (error.status === 403) {
+                    this.setState({ canForbidRedirect: true });
 
-    public componentWillUpdate(nextProps: IEditCompanyProps, nextState: any) {
-        super.componentWillUpdate(nextProps, nextState);
+                    return;
+                }
+
+                this.setState({
+                    canRenderErrorMessage: true,
+                    errorMessage: error.message,
+                    statusCode: error.status
+                });
+            });
     }
 
     public render() {
         const { companiesState, classes } = this.props;
+
+        if (this.state.canForbidRedirect) {
+            return (<Redirect to='/user/forbid' />);
+        }
 
         return (
             <div className={classes.root}>

@@ -19,7 +19,7 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
     }
 
     public componentDidUpdate(nextProps: ILoginContainerProps, nextState: ILoginContainerState) {
-        super.componentWillUpdate(nextProps, nextState);
+        // super.componentWillUpdate(nextProps, nextState);
     }
 
     public onLogin = (body: IFetchToken) => {

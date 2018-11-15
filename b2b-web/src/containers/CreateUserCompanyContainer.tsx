@@ -20,10 +20,6 @@ const styles = createStyles({
 
 class CreateUserCompanyContainer extends BaseContainer<ICreateUserCompanyContainerProps> {
 
-    public componentWillUpdate(nextProps: any, nextState: any) {
-        super.componentWillUpdate(nextProps, nextState);
-    }
-
     public onCreateCompany = (body: ICreateCompany) => this
         .props
         .createCompanyRequest(body)

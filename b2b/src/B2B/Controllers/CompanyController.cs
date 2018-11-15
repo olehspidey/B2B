@@ -63,22 +63,29 @@ namespace B2B.Controllers
 
             var mappedCompany = _mapper.Map<Company, CompanyDto>(company);
 
-            if (edit && company.User.Id != user.Id)
+            if (company.User.Id != user.Id)
             {
+                if (!company.Suggestion)
+                    return NotFound();
+
                 mappedCompany.CanEdit = false;
 
-                return Forbid();
+                if (edit)
+                    return StatusCode(403);
             }
+            else mappedCompany.CanEdit = true;
 
-            if (moveToSuggests && company.Suggestion)
+            if (!company.Suggestion && company.User.Id != user.Id)
+                return NotFound();
+
+            if (company.Suggestion)
             {
                 mappedCompany.CanMoveToSuggests = false;
 
-                return Forbid();
+                if (moveToSuggests)
+                    return Forbid();
             }
-
-            mappedCompany.CanEdit = true;
-            mappedCompany.CanMoveToSuggests = true;
+            else mappedCompany.CanMoveToSuggests = true;
 
             return Ok(mappedCompany);
         }

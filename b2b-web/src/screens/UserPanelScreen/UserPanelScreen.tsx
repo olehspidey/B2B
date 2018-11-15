@@ -8,6 +8,7 @@ import CompanyContainer from '../../containers/CompanyContainer';
 import SearchCompaniesContainer from '../../containers/SearchCompaniesContainer';
 import NotFound from '../../components/common/NotFound';
 import EditCompanyContainer from '../../containers/EditCompanyContainer';
+import Forbid from '../../components/common/Forbid';
 
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -53,6 +54,7 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
                     <Route exact path="/user/search" component={SearchCompaniesContainer} />
                     <Route exact path="/user/settings" render={this.renderUserSettingsContainer} />
                     <Route path="/user/notFound" component={NotFound} />
+                    <Route path="/user/forbid" component={Forbid} />
                     <Route component={NotFound} />
                 </Switch>
             </UserPanelLayout>

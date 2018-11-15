@@ -62,7 +62,7 @@ export const apiGet = (url: string) => {
     return getPrivateApi()
         .get(`${API_URL}${url}`)
         .then(resp => resp, ({ response }) => {
-            if (response.status === 401 || response.status === 403) {
+            if (response.status === 401) {
                 window.location.replace('/login');
                 return response;
             }
@@ -74,7 +74,7 @@ export const apiPost = (url: string, body: any) => {
     return getPrivateApi()
         .post(`${API_URL}${url}`, body)
         .then(resp => resp, ({ response }) => {
-            if (response.status === 401 || response.status === 403) {
+            if (response.status === 401) {
                 window.location.replace('/login');
                 return response;
             }
@@ -86,7 +86,7 @@ export const apiPut = (url: string, body: any) => {
     return getPrivateApi()
         .put(`${API_URL}${url}`, body)
         .then(resp => resp, ({ response }) => {
-            if (response.status === 401 || response.status === 403) {
+            if (response.status === 401) {
                 window.location.replace('/login');
                 return response;
             }
@@ -98,7 +98,7 @@ export const apiDelete = (url: string) => {
     return getPrivateApi()
         .delete(`${API_URL}${url}`)
         .then(resp => resp, ({ response }) => {
-            if (response.status === 401 || response.status === 403) {
+            if (response.status === 401) {
                 window.location.replace('/login');
                 return response;
             }

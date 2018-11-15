@@ -158,7 +158,7 @@ class EditCompanyForm extends React.Component<IEditCompanyFormProps, IEditCompan
                     type="submit"
                     variant="contained"
                     color="primary"
-                    disabled={companiesState.loading}>Create</Button>
+                    disabled={companiesState.loading}>Edit</Button>
             </form>
         );
     }

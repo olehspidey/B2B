@@ -38,6 +38,10 @@ const styles = (theme: Theme) => createStyles({
 
 //  todo need fix unmounted state
 class CompanyContainer extends BaseContainer<ICompanyContainerProps> {
+    constructor(props: ICompanyContainerProps) {
+        super(props);
+    }
+
     public componentWillMount() {
         this.props.fetchCompany(this.props.match.params.id)
             .catch((error: IError) => this.setState({
@@ -45,10 +49,6 @@ class CompanyContainer extends BaseContainer<ICompanyContainerProps> {
                 errorMessage: error.message,
                 statusCode: error.status
             }));
-    }
-
-    public componentWillUpdate(nextProps: ICompanyContainerProps, nextState: any) {
-        super.componentWillUpdate(nextProps, nextState);
     }
 
     public render() {
@@ -89,7 +89,7 @@ class CompanyContainer extends BaseContainer<ICompanyContainerProps> {
     }
 
     private renderEditButton = ({ company, loading }: ICompaniesState) => {
-        if (!loading && company !== null) {
+        if (!loading && company !== null && company.canEdit) {
             return (
                 <Link to={`${this.props.match.url}/edit`} className={this.props.classes.editButBox}>
                     <Button
@@ -104,13 +104,24 @@ class CompanyContainer extends BaseContainer<ICompanyContainerProps> {
     }
 
     private renderMoveToSuggests = ({ company, loading }: ICompaniesState) => {
-        if (!loading && company !== null) {
+        if (!loading && company !== null && company.canMoveToSuggests) {
             return (
                 <Link to={`${this.props.match.url}/edit`} className={this.props.classes.editButBox}>
                     <Button
                         variant="contained"
                         color="primary">Move to suggests<ShareIcon /></Button>
                 </Link>
+            );
+        }
+
+        if (!loading && company !== null && !company.canMoveToSuggests) {
+            return (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disabled>
+                    Your company already in suggests
+                </Button>
             );
         }
 
