@@ -9,7 +9,11 @@ import {
 
     CREATE_COMPANY_REQUEST,
     CREATE_COMPANY_SUCCESS,
-    CREATE_COMPANY_FAILURE
+    CREATE_COMPANY_FAILURE,
+
+    EDIT_COMPANY_REQUEST,
+    EDIT_COMPANY_SUCCESS,
+    EDIT_COMPANY_FAILURE
 } from '../../Actions/Companies/companies';
 import { ICompaniesState } from '../Companies/ICompaniesState';
 import { ICompaniesAction } from '../../Actions/Companies/ICompaniesAction';
@@ -26,6 +30,7 @@ export default (state = initialState, action: ICompaniesAction): ICompaniesState
         case FETCH_COMPANIES_REQUEST:
         case CREATE_COMPANY_REQUEST:
         case FETCH_COMPANY_REQUEST:
+        case EDIT_COMPANY_REQUEST:
             return {
                 ...state,
                 loading: true
@@ -37,12 +42,8 @@ export default (state = initialState, action: ICompaniesAction): ICompaniesState
                 companies: action.companies
             };
         case FETCH_COMPANY_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                company: action.company
-            };
         case CREATE_COMPANY_SUCCESS:
+        case EDIT_COMPANY_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -51,6 +52,7 @@ export default (state = initialState, action: ICompaniesAction): ICompaniesState
         case FETCH_COMPANIES_FAILURE:
         case CREATE_COMPANY_FAILURE:
         case FETCH_COMPANY_FAILURE:
+        case EDIT_COMPANY_FAILURE:
             return {
                 ...state,
                 loading: false,

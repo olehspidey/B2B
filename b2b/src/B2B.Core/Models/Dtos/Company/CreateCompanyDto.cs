@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using B2B.Core.Models.DomainModels;
+using B2B.Core.Models.DomainModels.Companies;
 using B2B.Core.Models.Dtos.Person;
 
 namespace B2B.Core.Models.Dtos.Company
@@ -18,6 +19,9 @@ namespace B2B.Core.Models.Dtos.Company
         public CreatePersonDto Owner { get; set; }
 
         public CreateAddresDto Address { get; set; }
+
+        [Range((int)CompanyCategory.IndustrialChemistry, (int)CompanyCategory.ConstructionAndRepair)]
+        public CompanyCategory Category { get; set; }
 
         public string Description { get; set; }
     }

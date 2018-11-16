@@ -9,6 +9,7 @@ import SearchCompaniesContainer from '../../containers/SearchCompaniesContainer'
 import NotFound from '../../components/common/NotFound';
 import EditCompanyContainer from '../../containers/EditCompanyContainer';
 import Forbid from '../../components/common/Forbid';
+import CreateCompanySuggestContainer from '../../containers/CreateCompanySuggestContainer';
 
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -49,6 +50,7 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
                     <Route exact path="/user/subscription" render={this.renderSubscriptionContainer} />
                     <Route exact path="/user/company/:id" component={CompanyContainer} />
                     <Route exact path="/user/company/:id/edit" component={EditCompanyContainer} />
+                    <Route exact path="/user/company/:id/create-suggest" component={CreateCompanySuggestContainer} />
                     <Route exact path="/user/companies" component={CompaniesContainer} />
                     <Route exact path="/user/companies/create" component={CreateUserCompanyContainer} />
                     <Route exact path="/user/search" component={SearchCompaniesContainer} />

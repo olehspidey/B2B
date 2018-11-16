@@ -19,6 +19,12 @@ class CompanyCategorySelect extends React.Component<ICompanyCategorySelectProps,
         }
     }
 
+    public componentWillReceiveProps(nextProps: ICompanyCategorySelectProps) {
+        if (nextProps.value !== undefined) {
+            this.setState({ category: nextProps.value });
+        }
+    }
+
     public onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const category = Number(e.target.value);
 

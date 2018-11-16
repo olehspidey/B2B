@@ -12,5 +12,6 @@ export interface ICompany {
     address: IAddress,
     canEdit: boolean,
     canMoveToSuggests: boolean,
-    keyWords: IKeyWord[]
+    keyWords: IKeyWord[],
+    suggestion: boolean
 }

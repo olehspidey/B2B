@@ -5,7 +5,7 @@ import { ISpinnerProps } from './Props/ISpinnerProps';
 
 const styles = {
     root: {
-        padding: '20% calc(50% - 1rem)'
+        padding: '20% calc(50% - 2rem)'
     },
     progress: {
         height: "20rem"

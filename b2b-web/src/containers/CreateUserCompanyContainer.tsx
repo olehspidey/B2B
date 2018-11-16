@@ -23,6 +23,10 @@ class CreateUserCompanyContainer extends BaseContainer<ICreateUserCompanyContain
     public onCreateCompany = (body: ICreateCompany) => this
         .props
         .createCompanyRequest(body)
+        .then(() => this.setState({
+            canRenderAlertMessage: true,
+            alertMessage: 'Company success created'
+        }))
         .catch((error: IError) => this.setState({
             canRenderErrorMessage: true,
             errorMessage: error.message

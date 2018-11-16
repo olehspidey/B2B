@@ -68,24 +68,17 @@ namespace B2B.Controllers
                 if (!company.Suggestion)
                     return NotFound();
 
-                mappedCompany.CanEdit = false;
-
-                if (edit)
+                if (edit || moveToSuggests)
                     return StatusCode(403);
-            }
-            else mappedCompany.CanEdit = true;
 
-            if (!company.Suggestion && company.User.Id != user.Id)
-                return NotFound();
-
-            if (company.Suggestion)
-            {
+                mappedCompany.CanEdit = false;
                 mappedCompany.CanMoveToSuggests = false;
-
-                if (moveToSuggests)
-                    return Forbid();
             }
-            else mappedCompany.CanMoveToSuggests = true;
+            else
+            {
+                mappedCompany.CanEdit = true;
+                mappedCompany.CanMoveToSuggests = true;
+            }
 
             return Ok(mappedCompany);
         }
@@ -160,30 +153,52 @@ namespace B2B.Controllers
         #region PUT
 
         [HttpPut("edit")]
-        public async Task<IActionResult> Edit([FromBody] CreateCompanyDto companyDto)
+        public async Task<IActionResult> Edit([FromBody] EditCompanyDto companyDto)
         {
             var user = await _userManager.GetByIdentityAsync(this);
 
             if (user == null)
                 return Unauthorized();
 
-            var company = _mapper.Map<CreateCompanyDto, Company>(companyDto);
+            var selectedCompany = await _userCompanyService.GetCompanyByIdAsync(companyDto.Id);
+            var mappedCompany = MapEdit(selectedCompany, companyDto);
+
             var userCompaniesIds = user
                 .Companies
                 .Select(x => x.Id)
                 .ToList();
 
-            if (userCompaniesIds.Any() && userCompaniesIds.Contains(company.Id))
+            if (userCompaniesIds.Any() && userCompaniesIds.Contains(mappedCompany.Id))
             {
-                var updatedCompany = await _userCompanyService.EditCompanyAsync(company, user);
+                var updatedCompany = await _userCompanyService.EditCompanyAsync(mappedCompany, user);
 
                 if (updatedCompany == null)
                     return BadRequest("Can't update company");
+
+                return Ok(_mapper.Map<Company, CompanyDto>(updatedCompany));
             }
 
-            return Forbid();
+            return StatusCode(403);
         }
 
         #endregion
+
+        private Company MapEdit(Company company, EditCompanyDto companyDto)
+        {
+            company.Address.City = companyDto.Address.City;
+            company.Address.CityId = companyDto.Address.CityId;
+            company.Address.Country = companyDto.Address.Country;
+            company.Address.CountryId = companyDto.Address.CountryId;
+            company.Description = companyDto.Description;
+            company.FullName = companyDto.FullName;
+            company.ShortName = companyDto.ShortName;
+            company.Category = companyDto.Category;
+            company.Owner.Email = companyDto.Owner.Email;
+            company.Owner.Name = companyDto.Owner.Name;
+            company.Owner.LastName = companyDto.Owner.LastName;
+            company.Owner.PersonType = companyDto.Owner.PersonType;
+
+            return company;
+        }
     }
 }

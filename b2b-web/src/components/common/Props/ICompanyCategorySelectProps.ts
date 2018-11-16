@@ -1,3 +1,4 @@
 export interface ICompanyCategorySelectProps {
-    onChange?: (category: number) => void
+    onChange: (category: number) => void,
+    value?: number
 }

@@ -104,17 +104,7 @@ class CompanyContainer extends BaseContainer<ICompanyContainerProps> {
     }
 
     private renderMoveToSuggests = ({ company, loading }: ICompaniesState) => {
-        if (!loading && company !== null && company.canMoveToSuggests) {
-            return (
-                <Link to={`${this.props.match.url}/edit`} className={this.props.classes.editButBox}>
-                    <Button
-                        variant="contained"
-                        color="primary">Move to suggests<ShareIcon /></Button>
-                </Link>
-            );
-        }
-
-        if (!loading && company !== null && !company.canMoveToSuggests) {
+        if (!loading && company !== null && company.suggestion && company.canMoveToSuggests) {
             return (
                 <Button
                     variant="contained"
@@ -123,6 +113,20 @@ class CompanyContainer extends BaseContainer<ICompanyContainerProps> {
                     Your company already in suggests
                 </Button>
             );
+        }
+
+        if (!loading && company !== null && company.canMoveToSuggests) {
+            return (
+                <Link to={`${this.props.match.url}/create-suggest`} className={this.props.classes.editButBox}>
+                    <Button
+                        variant="contained"
+                        color="primary">Move to suggests<ShareIcon /></Button>
+                </Link>
+            );
+        }
+
+        if (!loading && company !== null && !company.canMoveToSuggests) {
+            return null;
         }
 
         return null;

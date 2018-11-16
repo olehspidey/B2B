@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import PersonTypeSelect from '../components/common/PersonTypeSelect';
 import CountryAutocomplateComponent from './common/CountryAutocomplateComponent';
 import CityAutocomplateComponent from './common/CityAutocomplateComponent';
+import CompanyCategorySelect from './common/CompanyCategorySelect';
 
 import { ICreateCompanyComponentProps } from '../components/Props/ICreateCompanyComponentProps';
 import { withStyles, createStyles } from '@material-ui/core';
@@ -46,13 +47,16 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                 cityId: '',
                 country: '',
                 countryId: ''
-            }
+            },
+            category: -1
         }
     }
 
     public onChangeCompanyFullName = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ fullName: e.target.value });
 
     public onChangeCompanyShortName = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ shortName: e.target.value });
+
+    public onChangeCompanyCategoty = (category: number) => this.setState({ category });
 
     public onChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ description: e.target.value });
 
@@ -134,6 +138,7 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
                         required
                         value={this.state.shortName}
                         onChange={this.onChangeCompanyShortName} />
+                    <CompanyCategorySelect onChange={this.onChangeCompanyCategoty} />
                     <TextField
                         label="Enter description"
                         value={this.state.description || ''}

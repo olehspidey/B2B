@@ -44,7 +44,10 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
     }
 
     public componentWillReceiveProps(nextProps: ICountryAutocomplateComponentProps) {
-        if (this.props.country && !this.props.country.structured_formatting.main_text && nextProps.country && nextProps.country.structured_formatting.main_text) {
+        if (this.props.country &&
+            !this.props.country.structured_formatting.main_text &&
+            nextProps.country &&
+            nextProps.country.structured_formatting.main_text) {
             this.setState({
                 selected: nextProps.country,
                 countryName: nextProps.country.structured_formatting.main_text

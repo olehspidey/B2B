@@ -4,11 +4,13 @@ import Button from '@material-ui/core/Button';
 import PersonTypeSelect from '../components/common/PersonTypeSelect';
 import CountryAutocomplateComponent from './common/CountryAutocomplateComponent';
 import CityAutocomplateComponent from './common/CityAutocomplateComponent';
+import CompanyCategorySelect from './common/CompanyCategorySelect';
 
 import { withStyles, createStyles } from '@material-ui/core';
 import { IPlace } from '../Core/Models/ReducerModels/Companies/IPlace';
 import { IEditCompanyFormProps } from './Props/IEditCompanyFormProps';
 import { IEditCompanyState } from './State/IEditCompanyState';
+import Spinner from './common/Spinner';
 
 const styles = createStyles({
     root: {
@@ -47,7 +49,9 @@ class EditCompanyForm extends React.Component<IEditCompanyFormProps, IEditCompan
                 country: '',
                 countryId: ''
             },
-            keyWords: []
+            keyWords: [],
+            id: NaN,
+            category: -1
         }
     }
 
@@ -67,13 +71,18 @@ class EditCompanyForm extends React.Component<IEditCompanyFormProps, IEditCompan
                 keyWords: company.keyWords,
                 owner: company.owner,
                 shortName: company.shortName,
-                description: company.description
+                description: company.description,
+                category: company.category
             });
         }
     }
 
     public render() {
         const { classes, companiesState } = this.props;
+
+        if (companiesState.loading) {
+            return (<Spinner />);
+        }
 
         return (
             <form className={classes.root} onSubmit={this.onSubmit}>
@@ -93,6 +102,9 @@ class EditCompanyForm extends React.Component<IEditCompanyFormProps, IEditCompan
                         label="Enter description"
                         value={this.state.description || ''}
                         onChange={this.onChangeDescription} />
+                    <CompanyCategorySelect
+                        onChange={this.onChangeCompanyCategory}
+                        value={this.state.category} />
                 </div>
                 <div className={classes.info}>
                     <div className={classes.infoText}>Information about owner of company</div>
@@ -168,6 +180,8 @@ class EditCompanyForm extends React.Component<IEditCompanyFormProps, IEditCompan
     private onChangeCompanyShortName = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ shortName: e.target.value });
 
     private onChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ description: e.target.value });
+
+    private onChangeCompanyCategory = (category: number) => this.setState({ category });
 
     private onChangeOwnerName = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { owner } = { ...this.state };

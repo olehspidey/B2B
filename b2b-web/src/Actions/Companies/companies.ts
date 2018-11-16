@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 import { handleError } from '../handleError';
 import { ICompany } from '../../Core/Models/ReducerModels/Companies/ICompany';
 import { ICreateCompany } from './ICreateCompany';
+import { IEditCompany } from './IEditCompany';
 
 export const FETCH_COMPANIES_REQUEST = 'FETCH_COMPANIES_REQUEST';
 export const FETCH_COMPANIES_SUCCESS = 'FETCH_COMPANIES_SUCCESS';
@@ -17,6 +18,10 @@ export const FETCH_COMPANY_FAILURE = 'FETCH_COMPANY_FAILURE';
 export const CREATE_COMPANY_REQUEST = 'CREATE_COMPANY_REQUEST';
 export const CREATE_COMPANY_SUCCESS = 'CREATE_COMPANY_SUCCESS';
 export const CREATE_COMPANY_FAILURE = 'CREATE_COMPANY_FAILURE';
+
+export const EDIT_COMPANY_REQUEST = 'EDIT_COMPANY_REQUEST';
+export const EDIT_COMPANY_SUCCESS = 'EDIT_COMPANY_SUCCESS';
+export const EDIT_COMPANY_FAILURE = 'EDIT_COMPANY_FAILURE';
 
 
 const fetchCompaniesRequest = () => ({
@@ -100,13 +105,38 @@ export const fetchCompany = (id: string) => (dispatch: Dispatch) => {
         );
 };
 
-export const fetchEditCompany = (id: string, edit: boolean) => (dispatch: Dispatch) => {
+export const fetchEditCompany = (id: string, edit: boolean, moveToSuggests: boolean) => (dispatch: Dispatch) => {
     dispatch(fetchCompanyRequest());
 
     return companiesService
-        .fetchEditCompany(id, edit)
+        .fetchEditCompany(id, edit, moveToSuggests)
         .then(
             resp => dispatch(fetchCompanySucccess(resp.data)),
             error => handleError(dispatch, error, fetchCompanyFailure)
         );
-} 
+};
+
+const editCompanyRequest = () => ({
+    type: EDIT_COMPANY_REQUEST
+});
+
+const editCompanySuccess = (company: ICompany) => ({
+    type: EDIT_COMPANY_SUCCESS,
+    company
+});
+
+const editCompanyFailure = (error: IError) => ({
+    type: EDIT_COMPANY_FAILURE,
+    error
+});
+
+export const editCompany = (body: IEditCompany) => (dispatch: Dispatch) => {
+    dispatch(editCompanyRequest());
+
+    return companiesService
+        .editCompany(body)
+        .then(
+            resp => dispatch(editCompanySuccess(resp.data)),
+            error => handleError(dispatch, error, editCompanyFailure)
+        );
+}
