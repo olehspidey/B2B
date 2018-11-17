@@ -3,5 +3,5 @@ import { IUserState } from '../../Reducers/User/IUserState';
 
 export interface IUserPanelScreenProps {
     userState: IUserState,
-    fetchCurrentUser(): Promise<IUserResponseAction>
+    fetchCurrentUser: () => Promise<IUserResponseAction>
 }
