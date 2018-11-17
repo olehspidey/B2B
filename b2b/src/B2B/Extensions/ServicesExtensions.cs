@@ -16,9 +16,11 @@ namespace B2B.Extensions
             serviceCollection.AddScoped<IRepository<User, string>, Repository<User, string>>();
             serviceCollection.AddScoped<IRepository<Company, int>, Repository<Company, int>>();
             serviceCollection.AddScoped<IRepository<RegistrationUserForm, int>, Repository<RegistrationUserForm, int>>();
+            serviceCollection.AddScoped<IRepository<KeyWord, int>, Repository<KeyWord, int>>();
             serviceCollection.AddScoped<IUserCompanyService, UserCompanyService>();
             serviceCollection.AddScoped<IUserService, UserService>();
             serviceCollection.AddScoped<ICreatingUserFormsService, CreateUserFormsService>();
+            serviceCollection.AddScoped<IKeyWordService, KeyWordService>();
         }
     }
 }

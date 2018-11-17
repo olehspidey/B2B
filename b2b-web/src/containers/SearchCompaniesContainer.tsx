@@ -8,6 +8,7 @@ import CountryAutocomplateComponent from '../components/common/CountryAutocompla
 import CityAutocomplateComponent from '../components/common/CityAutocomplateComponent';
 import Button from '@material-ui/core/Button';
 import CompaniesList from '../components/common/CompaniesList';
+import KeyWordsMultiSelectComponent from '../components/common/KeyWordsMultiSelectComponent';
 
 import { withStyles, createStyles, Theme } from '@material-ui/core';
 import { ISearchCompaniesContainerProp } from './props/ISearchCompaniesContainerProp';
@@ -54,7 +55,7 @@ class SearchCompaniesContainer extends React.Component<ISearchCompaniesContainer
         super(props);
 
         this.state = {
-            keyWords: ''
+            keyWords: []
         }
     }
 
@@ -67,7 +68,8 @@ class SearchCompaniesContainer extends React.Component<ISearchCompaniesContainer
                     <TextField
                         label="Key words"
                         fullWidth
-                        onChange={this.onChangeKeyWords} />
+                    // onChange={this.onChangeKeyWords} 
+                    />
                     <CompaniesList
                         space
                         renderCreateBut={false}
@@ -86,6 +88,8 @@ class SearchCompaniesContainer extends React.Component<ISearchCompaniesContainer
                         <CityAutocomplateComponent
                             label="Choose the city"
                             onSelected={this.onCitySelected} />
+                        <KeyWordsMultiSelectComponent
+                            loading={false} />
                         <Button
                             className={classes.but}
                             variant="contained"
@@ -104,7 +108,7 @@ class SearchCompaniesContainer extends React.Component<ISearchCompaniesContainer
         queryParams.companyCategory = category;
     }
 
-    private onChangeKeyWords = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ keyWords: e.target.value });
+    // private onChangeKeyWords = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ keyWords: e.target.value });
 
     private onCountrySelected = (country: IPlace) => {
         queryParams.countryId = country.placeId;

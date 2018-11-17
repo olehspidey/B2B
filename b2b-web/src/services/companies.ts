@@ -28,5 +28,8 @@ export default {
     },
     addToSuggest(body: IAddToSuggest) {
         return apiPut('/api/companies/addToSuggest', body);
+    },
+    fetchKeyWordsByWord(word: string) {
+        return apiGet(`/api/companies/keyWords/${word}`);
     }
 }

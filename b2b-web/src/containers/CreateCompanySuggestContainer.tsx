@@ -13,6 +13,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Spinner from '../components/common/Spinner';
 
 import { createStyles, withStyles, Theme } from '@material-ui/core';
 import { ICreateCompanySuggestContainerProps } from './props/ICreateCompanySuggestContainerProps';
@@ -27,7 +28,6 @@ import { Redirect } from 'react-router-dom';
 import { IAddKeyWords } from '../Actions/Companies/IAddKeyWords';
 import { IKeyWord } from '../Core/Models/ReducerModels/Companies/IKeyWord';
 import { IAddToSuggest } from '../Actions/Companies/IAddToSuggest';
-import Spinner from '../components/common/Spinner';
 
 const styles = (theme: Theme) => createStyles({
     paper: {
@@ -48,6 +48,8 @@ const styles = (theme: Theme) => createStyles({
 });
 
 class CreateCompanySuggestContainer extends BaseContainer<ICreateCompanySuggestContainerProps, ICreateCompanySuggestContainerState> {
+    private keyWords: IKeyWord[];
+
     constructor(props: ICreateCompanySuggestContainerProps) {
         super(props);
 
@@ -60,9 +62,9 @@ class CreateCompanySuggestContainer extends BaseContainer<ICreateCompanySuggestC
             canRenderErrorMessage: false,
             errorMessage: '',
             keyWordsDialogOpen: false,
-            statusCode: NaN,
-            keyWords: []
+            statusCode: NaN
         }
+        this.keyWords = [];
     }
     public componentWillMount() {
         this
@@ -103,6 +105,10 @@ class CreateCompanySuggestContainer extends BaseContainer<ICreateCompanySuggestC
             return (<Spinner />);
         }
 
+        if (companiesState.company && companiesState.company.suggestion) {
+            return this.renderAlreadyInSuggests(classes.paper);
+        }
+
         return (
             <Paper className={classes.paper}>
                 {
@@ -128,6 +134,14 @@ class CreateCompanySuggestContainer extends BaseContainer<ICreateCompanySuggestC
             </Paper>
         );
     }
+
+    private renderAlreadyInSuggests = (paperClass: string) => (
+        <Paper className={paperClass}>
+            <Typography
+                variant="title"
+                color="textPrimary">Your company already in suggest list</Typography>
+        </Paper>
+    );
 
     private renderWarningKeyWords = () => {
         const { companiesState, classes } = this.props;
@@ -169,7 +183,8 @@ class CreateCompanySuggestContainer extends BaseContainer<ICreateCompanySuggestC
                         <DialogContent>
                             <KeyWordsMultiSelectComponent
                                 keyWords={companiesState.company.keyWords}
-                                onAddKeyWord={this.onAddKeyWord}
+                                onChangeKeyWords={this.onChangeKeyWords}
+                                withButton
                                 loading={false} />
                         </DialogContent>
                         <DialogActions>
@@ -195,7 +210,7 @@ class CreateCompanySuggestContainer extends BaseContainer<ICreateCompanySuggestC
     private onCloseKeyWordsDialog = () => this.setState({ keyWordsDialogOpen: false });
 
     private onSave = () => {
-        const words = this.state.keyWords.map(keyWord => keyWord.word);
+        const words = this.keyWords.map(keyWord => keyWord.word);
 
         this.props.addKeyWords({
             id: Number(this.props.match.params.id),
@@ -212,7 +227,9 @@ class CreateCompanySuggestContainer extends BaseContainer<ICreateCompanySuggestC
             }));
     }
 
-    private onAddKeyWord = (keyWords: IKeyWord[]) => this.setState({ keyWords });
+    private onChangeKeyWords = (keyWords: IKeyWord[]) => {
+        this.keyWords = keyWords;
+    }
 
     private onAddToSuggest = () => this
         .props

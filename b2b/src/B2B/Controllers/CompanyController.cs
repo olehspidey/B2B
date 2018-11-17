@@ -22,15 +22,18 @@ namespace B2B.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUserCompanyService _userCompanyService;
+        private readonly IKeyWordService _keyWordService;
         private readonly UserManager<User> _userManager;
 
         public CompanyController(IMapper mapper,
             IUserCompanyService userCompanyService,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IKeyWordService keyWordService)
         {
             _mapper = mapper;
             _userCompanyService = userCompanyService;
             _userManager = userManager;
+            _keyWordService = keyWordService;
         }
 
         #region GET
@@ -97,6 +100,17 @@ namespace B2B.Controllers
             var companies = await _userCompanyService.GetByCategoryAsync(category);
 
             return Ok(_mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(companies));
+        }
+
+        [HttpGet("keyWords/{word}")]
+        public async Task<IActionResult> GetKeyWordsByWord(string word)
+        {
+            if (string.IsNullOrWhiteSpace(word))
+                return BadRequest("Invalid word");
+
+            var keyWords = await _keyWordService.GetByWordAsync(word);
+
+            return Ok(_mapper.Map<IEnumerable<KeyWord>, IEnumerable<KeyWordDto>>(keyWords));
         }
 
         #endregion
