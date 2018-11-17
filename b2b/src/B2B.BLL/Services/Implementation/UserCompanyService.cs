@@ -54,7 +54,7 @@ namespace B2B.BLL.Services.Implementation
                 return null;
 
             if (company.Suggestion)
-                throw new ApplicationException("This company olready is suggestion");
+                throw new ApplicationException("This company already is suggestion");
 
             var suggestionsCount = _companyRepository
                 .Table
@@ -104,6 +104,38 @@ namespace B2B.BLL.Services.Implementation
 
         public async Task<Company> EditCompanyAsync(Company company, User user)
             => await _companyRepository.UpdateAsync(company) >= 0 ? company : null;
+
+        public async Task<Company> AddKeyWordsAsync(int companyId, ICollection<string> words)
+        {
+            var company = await _companyRepository.GetByIdAsync(companyId);
+
+            if (company == null)
+                return null;
+
+            company.KeyWords.AddRange(words.Select(word => new KeyWord
+            {
+                Company = company,
+                CompanyId = company.Id,
+                Word = word
+            }));
+
+            return await _companyRepository.UpdateAsync(company) >= 0 ? company : null;
+        }
+
+        public async Task<Company> AddToSuggestAsync(int companyId)
+        {
+            var company = await _companyRepository.GetByIdAsync(companyId);
+
+            if (company == null)
+                return null;
+
+            if (company.Suggestion)
+                return null;
+
+            company.Suggestion = true;
+
+            return await _companyRepository.UpdateAsync(company) >= 0 ? company : null;
+        }
 
         private async Task<Company> InsertCompanyAsync(Company company)
             => await _companyRepository.InsertAsync(company) >= 0 ? company : null;

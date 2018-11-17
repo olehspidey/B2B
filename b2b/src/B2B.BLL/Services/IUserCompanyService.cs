@@ -14,5 +14,7 @@ namespace B2B.BLL.Services
         Task<Company> CreateSuggestionAsync(int companyId, User user);
         Task<Company> EditCompanyAsync(Company company, User user);
         Task<ICollection<Company>> GetByFiltersAsync(string s, CompanyCategory? companyCategory = null, string countryId = null, string cityId = null);
+        Task<Company> AddKeyWordsAsync(int companyId, ICollection<string> words);
+        Task<Company> AddToSuggestAsync(int companyId);
     }
 }

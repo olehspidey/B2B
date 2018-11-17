@@ -6,6 +6,8 @@ import { handleError } from '../handleError';
 import { ICompany } from '../../Core/Models/ReducerModels/Companies/ICompany';
 import { ICreateCompany } from './ICreateCompany';
 import { IEditCompany } from './IEditCompany';
+import { IAddKeyWords } from './IAddKeyWords';
+import { IAddToSuggest } from './IAddToSuggest';
 
 export const FETCH_COMPANIES_REQUEST = 'FETCH_COMPANIES_REQUEST';
 export const FETCH_COMPANIES_SUCCESS = 'FETCH_COMPANIES_SUCCESS';
@@ -22,6 +24,14 @@ export const CREATE_COMPANY_FAILURE = 'CREATE_COMPANY_FAILURE';
 export const EDIT_COMPANY_REQUEST = 'EDIT_COMPANY_REQUEST';
 export const EDIT_COMPANY_SUCCESS = 'EDIT_COMPANY_SUCCESS';
 export const EDIT_COMPANY_FAILURE = 'EDIT_COMPANY_FAILURE';
+
+export const ADD_KEY_WORDS_REQUEST = 'ADD_KEY_WORDS_REQUEST';
+export const ADD_KEY_WORDS_SUCCESS = 'ADD_KEY_WORDS_SUCCESS';
+export const ADD_KEY_WORDS_FAILURE = 'ADD_KEY_WORDS_FAILURE';
+
+export const ADD_TO_SUGGESTS_REQUEST = 'ADD_TO_SUGGESTS_REQUEST';
+export const ADD_TO_SUGGESTS_SUCCESS = 'ADD_TO_SUGGESTS_SUCCESS';
+export const ADD_TO_SUGGESTS_FAILURE = 'ADD_TO_SUGGESTS_FAILURE';
 
 
 const fetchCompaniesRequest = () => ({
@@ -138,5 +148,55 @@ export const editCompany = (body: IEditCompany) => (dispatch: Dispatch) => {
         .then(
             resp => dispatch(editCompanySuccess(resp.data)),
             error => handleError(dispatch, error, editCompanyFailure)
+        );
+};
+
+const addKeyWordsRequest = () => ({
+    type: ADD_KEY_WORDS_REQUEST
+});
+
+const addKeyWordsSuccess = (company: ICompany) => ({
+    type: ADD_KEY_WORDS_SUCCESS,
+    company
+});
+
+const addKeyWordsFailure = (error: IError) => ({
+    type: ADD_KEY_WORDS_FAILURE,
+    error
+});
+
+export const addKeyWords = (body: IAddKeyWords) => (dispatch: Dispatch) => {
+    dispatch(addKeyWordsRequest());
+
+    return companiesService
+        .addKeyWords(body)
+        .then(
+            resp => dispatch(addKeyWordsSuccess(resp.data)),
+            error => handleError(dispatch, error, addKeyWordsFailure)
+        );
+};
+
+const addToSuggestRequest = () => ({
+    type: ADD_TO_SUGGESTS_REQUEST
+});
+
+const addToSuggestSuccess = (company: ICompany) => ({
+    type: ADD_TO_SUGGESTS_SUCCESS,
+    company
+});
+
+const addToSuggestFailure = (error: IError) => ({
+    type: ADD_KEY_WORDS_FAILURE,
+    error
+});
+
+export const addToSuggest = (body: IAddToSuggest) => (dispatch: Dispatch) => {
+    dispatch(addToSuggestRequest());
+
+    return companiesService
+        .addToSuggest(body)
+        .then(
+            resp => dispatch(addToSuggestSuccess(resp.data)),
+            error => handleError(dispatch, error, addToSuggestFailure)
         );
 }

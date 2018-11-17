@@ -1,6 +1,8 @@
 import { apiGet, apiPost, apiPut } from "../Api/api";
 import { ICreateCompany } from "../Actions/Companies/ICreateCompany";
 import { IEditCompany } from '../Actions/Companies/IEditCompany';
+import { IAddKeyWords } from '../Actions/Companies/IAddKeyWords';
+import { IAddToSuggest } from '../Actions/Companies/IAddToSuggest';
 
 export default {
     fetchCompanies() {
@@ -20,5 +22,11 @@ export default {
     },
     editCompany(body: IEditCompany) {
         return apiPut('/api/companies/edit', body);
+    },
+    addKeyWords(body: IAddKeyWords) {
+        return apiPut('/api/companies/addKeyWords', body);
+    },
+    addToSuggest(body: IAddToSuggest) {
+        return apiPut('/api/companies/addToSuggest', body);
     }
 }

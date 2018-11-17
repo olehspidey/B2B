@@ -91,6 +91,7 @@ const styles = (theme: Theme) => createStyles({
         padding: '5rem 1rem',
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'flex-start'
         // minHeight: '100vh'
     },
     link: {

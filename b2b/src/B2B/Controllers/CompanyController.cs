@@ -181,9 +181,31 @@ namespace B2B.Controllers
             return StatusCode(403);
         }
 
+        [HttpPut("addKeyWords")]
+        public async Task<IActionResult> AddKeyWords([FromBody] AddKeyWordsDto wordsDto)
+        {
+            var companyResult = await _userCompanyService.AddKeyWordsAsync(wordsDto.Id, wordsDto.Words);
+
+            if (companyResult == null)
+                return BadRequest($"Can't update company with id {wordsDto.Id}");
+
+            return Ok(_mapper.Map<Company, CompanyDto>(companyResult));
+        }
+
+        [HttpPut("addToSuggest")]
+        public async Task<IActionResult> AddToSuggests([FromBody] AddToSuggestsDto suggestsDto)
+        {
+            var companyResult = await _userCompanyService.AddToSuggestAsync(suggestsDto.Id);
+
+            if (companyResult == null)
+                return BadRequest($"Cant update company with id {suggestsDto.Id} or company already in suggests list");
+
+            return Ok(_mapper.Map<Company, CompanyDto>(companyResult));
+        }
+
         #endregion
 
-        private Company MapEdit(Company company, EditCompanyDto companyDto)
+        private static Company MapEdit(Company company, EditCompanyDto companyDto)
         {
             company.Address.City = companyDto.Address.City;
             company.Address.CityId = companyDto.Address.CityId;
