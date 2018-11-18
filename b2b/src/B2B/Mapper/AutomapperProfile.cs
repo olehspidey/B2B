@@ -12,7 +12,7 @@ namespace B2B.Mapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<CreateRegistrationUserFormDto, RegistrationUserForm>();
+            CreateMap<CreateApplicationFormDto, ApplicationForm>();
 
             CreateMap<CreateCompanyDto, Company>();
 

@@ -4,7 +4,7 @@ using B2B.Core.Models.DomainModels.Subscriptions;
 
 namespace B2B.Core.Models.DomainModels
 {
-    public class RegistrationUserForm : IEntity<int>
+    public class ApplicationForm : IEntity<int>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

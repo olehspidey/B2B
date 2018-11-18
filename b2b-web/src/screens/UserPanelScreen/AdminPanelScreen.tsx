@@ -1,7 +1,8 @@
 import * as React from 'react';
-import UserPanelLayout from '../../layouts/UserPanelLayout';
+import AdminPanelLayout from '../../layouts/AdminPanelLayout';
 import NotFound from '../../components/common/NotFound';
 import Forbid from '../../components/common/Forbid';
+import ApplicationFormsContainer from '../../containers/Admin/ApplicationFormsContainer';
 
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -30,13 +31,14 @@ class AdminPanelScreen extends React.Component<IUserPanelScreenProps> {
         const { userState } = this.props;
 
         return (
-            <UserPanelLayout userLoading={userState.loading} user={userState.currentUser}>
+            <AdminPanelLayout userLoading={userState.loading} user={userState.currentUser}>
                 <Switch>
+                    <Route exact path="/admin/application-forms" component={ApplicationFormsContainer} />
                     <Route path="/admin/notFound" component={NotFound} />
                     <Route path="/admin/forbid" component={Forbid} />
                     <Route component={NotFound} />
                 </Switch>
-            </UserPanelLayout>
+            </AdminPanelLayout>
         )
     }
 }

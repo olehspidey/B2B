@@ -26,7 +26,12 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
     }
 
     public componentWillMount() {
-        this.props.fetchCurrentUser();
+        this.props.fetchCurrentUser()
+            .then((resp) => {
+                if ((resp.currentUser.userRoles as string[]).some(role => role === 'Admin')) {
+                    window.location.replace('/admin/application-froms');
+                }
+            })
     }
 
     public renderUserSettingsContainer = () => (

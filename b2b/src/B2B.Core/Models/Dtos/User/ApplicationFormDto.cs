@@ -2,7 +2,7 @@
 
 namespace B2B.Core.Models.Dtos.User
 {
-    public class RegistrationUserFormDto
+    public class ApplicationFormDto
     {
         public int Id { get; set; }
 

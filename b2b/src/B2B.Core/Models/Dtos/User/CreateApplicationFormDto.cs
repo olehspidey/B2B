@@ -3,7 +3,7 @@ using B2B.Core.Models.DomainModels.Subscriptions;
 
 namespace B2B.Core.Models.Dtos.User
 {
-    public class CreateRegistrationUserFormDto
+    public class CreateApplicationFormDto
     {
         [Required]
         [MinLength(2)]

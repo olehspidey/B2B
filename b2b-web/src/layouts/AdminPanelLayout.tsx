@@ -12,10 +12,10 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import CompanyIcon from '@material-ui/icons/Work';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalanceWallet';
+// import AccountBalanceIcon from '@material-ui/icons/AccountBalanceWallet';
 import ListItemText from '@material-ui/core/ListItemText';
-import SettingsIcon from '@material-ui/icons/Tune';
-import SearchIcon from '@material-ui/icons/Search';
+// import SettingsIcon from '@material-ui/icons/Tune';
+// import SearchIcon from '@material-ui/icons/Search';
 import Spinner from '../components/common/Spinner';
 import Button from '@material-ui/core/Button';
 
@@ -106,31 +106,13 @@ const styles = (theme: Theme) => createStyles({
     }
 });
 
-class UserPanelLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLayoutState> {
+class AdminPanelLayout extends React.Component<IUserPanelLayoutProps, IUserPanelLayoutState> {
     constructor(props: IUserPanelLayoutProps) {
         super(props);
 
         this.state = {
             open: false
         };
-    }
-
-    public renderUserInfo = () => {
-        const { user, userLoading } = this.props;
-
-        if (user !== null && !userLoading) {
-            return (
-                <Typography variant="title" color="inherit" noWrap>
-                    {`${user.name} ${user.lastName}`}
-                </Typography>
-            );
-        }
-
-        if (userLoading) {
-            return (<Spinner flex={true} color="secondary" />);
-        }
-
-        return null;
     }
 
     public render() {
@@ -176,36 +158,12 @@ class UserPanelLayout extends React.Component<IUserPanelLayoutProps, IUserPanelL
                     </div>
                     <Divider />
                     <List>
-                        <Link to={`/user/companies`} className={classes.link}>
+                        <Link to={`/admin/application-forms`} className={classes.link}>
                             <ListItem button>
                                 <ListItemIcon>
                                     <CompanyIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="My Companies" />
-                            </ListItem>
-                        </Link>
-                        <Link to={`/user/search`} className={classes.link}>
-                            <ListItem button>
-                                <ListItemIcon>
-                                    <SearchIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Search Companies" />
-                            </ListItem>
-                        </Link>
-                        <Link to={`/user/subscription`} className={classes.link}>
-                            <ListItem button>
-                                <ListItemIcon>
-                                    <AccountBalanceIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="My Subscription" />
-                            </ListItem>
-                        </Link>
-                        <Link to={`/user/settings`} className={classes.link}>
-                            <ListItem button>
-                                <ListItemIcon>
-                                    <SettingsIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Settings" />
+                                <ListItemText primary="Application Forms" />
                             </ListItem>
                         </Link>
                     </List>
@@ -220,6 +178,24 @@ class UserPanelLayout extends React.Component<IUserPanelLayoutProps, IUserPanelL
         );
     }
 
+    private renderUserInfo = () => {
+        const { user, userLoading } = this.props;
+
+        if (user !== null && !userLoading) {
+            return (
+                <Typography variant="title" color="inherit" noWrap>
+                    {`${user.name} ${user.lastName}`}
+                </Typography>
+            );
+        }
+
+        if (userLoading) {
+            return (<Spinner flex={true} color="secondary" />);
+        }
+
+        return null;
+    }
+
     private handleDrawerOpen = () => this.setState({ open: true });
 
     private handleDrawerClose = () => this.setState({ open: false });
@@ -227,4 +203,4 @@ class UserPanelLayout extends React.Component<IUserPanelLayoutProps, IUserPanelL
     private onLogout = () => logOut();
 }
 
-export default withStyles(styles)(UserPanelLayout);
+export default withStyles(styles)(AdminPanelLayout);

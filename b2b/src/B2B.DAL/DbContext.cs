@@ -13,7 +13,7 @@ namespace B2B.DAL
             Database.EnsureCreated();
         }
 
-        public DbSet<RegistrationUserForm> RegistrationUserForms { get; set; }
+        public DbSet<ApplicationForm> RegistrationUserForms { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseLazyLoadingProxies();

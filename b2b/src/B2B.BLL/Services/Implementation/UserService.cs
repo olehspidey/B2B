@@ -10,11 +10,11 @@ namespace B2B.BLL.Services.Implementation
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
-        private readonly IRepository<RegistrationUserForm, int> _registrationUserFormRepository;
+        private readonly IRepository<ApplicationForm, int> _registrationUserFormRepository;
         private readonly IPasswordRandomizerService _passwordRandomizerService;
 
         public UserService(UserManager<User> userManager,
-            IRepository<RegistrationUserForm, int> registrationUserFormRepository,
+            IRepository<ApplicationForm, int> registrationUserFormRepository,
             IPasswordRandomizerService passwordRandomizerService)
         {
             _userManager = userManager;
@@ -39,7 +39,7 @@ namespace B2B.BLL.Services.Implementation
             return user;
         }
 
-        private static User GetUserFromForm(RegistrationUserForm userForm)
+        private static User GetUserFromForm(ApplicationForm userForm)
         {
             var user = new User
             {
