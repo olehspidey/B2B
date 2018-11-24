@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using B2B.Mapper;
 
 namespace B2B
 {
@@ -25,10 +27,21 @@ namespace B2B
             services.AddMvc(options => { options.Filters.Add<ModelStateFilter>(); })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowCredentials();
+            }));
+
+            services.AddAutoMapper(mapper => mapper.AddProfile(new AutoMapperProfile()));
             services.AddDbContext(Configuration, Environment);
             services.AddServices();
             services.AddIdentity();
             services.AddBearerAuthentication(Configuration);
+            services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,7 +52,10 @@ namespace B2B
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("CorsPolicy");
             app.UseAuthentication();
+            app.UseSwagger();
+            app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "B2B API V1"); });
             app.UseMvc();
         }
     }
