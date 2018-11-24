@@ -3,10 +3,12 @@ export interface ICustomSnackBarProps {
         success: string,
         icon: string,
         iconVariant: string,
-        message: string
+        message: string,
+        error: string
     },
     open: boolean,
     onClose: () => void,
     message: string,
-    autoHideDuration?: number
+    autoHideDuration?: number,
+    type?: "alert" | "error"
 }

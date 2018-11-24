@@ -12,9 +12,22 @@ export const handleError = (dispatch: Dispatch, error: any, failFunc: (e: IError
         } as IError;
     }
     if (error.response) {
-        errorVal = {
-            message: error.response.data,
-            status: error.response.status
+        if (error.response.data.length) {
+            const message = error
+                .response
+                .data
+                .map((d: any) => d.code)
+                .join('. ');
+            errorVal = {
+                message,
+                status: error.response.status
+            }
+        }
+        else {
+            errorVal = {
+                message: error.response.data,
+                status: error.response.status
+            }
         }
     }
     else {

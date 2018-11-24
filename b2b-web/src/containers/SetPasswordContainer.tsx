@@ -109,7 +109,7 @@ class SetPasswordContainer extends BaseContainer<ISetPasswordContainerProps, ISe
             .then((resp) => {
                 this.setState({
                     canRenderAlertMessage: true,
-                    alertMessage: 'Success'
+                    alertMessage: 'Success changed password'
                 });
 
                 if (resp.currentUser) {

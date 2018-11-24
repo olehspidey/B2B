@@ -14,6 +14,9 @@ const styles = (theme: Theme) => createStyles({
     success: {
         backgroundColor: green[600]
     },
+    error: {
+        backgroundColor: theme.palette.error.main
+    },
     icon: {
         fontSize: 20,
     },
@@ -27,9 +30,20 @@ const styles = (theme: Theme) => createStyles({
     }
 });
 
+const typeToClass = (type: string, { classes }: ICustomSnackBarProps) => {
+    if (type === 'alert') {
+        return classes.success;
+    }
+    if (type === 'error') {
+        return classes.error
+    };
+
+    return classes.success;
+}
+
 class CustomSnackBar extends React.Component<ICustomSnackBarProps> {
     public render() {
-        const { classes, open, message, autoHideDuration } = this.props;
+        const { classes, open, message, autoHideDuration, type } = this.props;
 
         return (
             <Snackbar
@@ -38,7 +52,7 @@ class CustomSnackBar extends React.Component<ICustomSnackBarProps> {
                 onClose={this.onClose}
                 autoHideDuration={autoHideDuration || 5000} >
                 <SnackBarContent
-                    className={classes.success}
+                    className={type ? typeToClass(type, this.props) : classes.success}
                     message={<span
                         className={classes.message}
                         id="message-id">
