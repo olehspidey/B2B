@@ -6,7 +6,8 @@ export interface ILoginFormProps {
         textField: string,
         button: string,
         formElems: string,
-        link: string
+        link: string,
+        linkBox: string
     },
     loading: boolean,
     onLogin(body: IFetchToken): void

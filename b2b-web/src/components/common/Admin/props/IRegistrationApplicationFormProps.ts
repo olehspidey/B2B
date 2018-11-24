@@ -4,7 +4,9 @@ import { IApplicationFormResponseAction } from '../../../../Actions/ApplicationF
 export interface IRegistrationApplicationFormProps {
     classes: {
         root: string,
-        butBox: string
+        butBox: string,
+        link: string,
+        haveAccountBox: string
     },
     onCreateApplicationForm: (body: ICreateApplicationFrom) => Promise<IApplicationFormResponseAction | void>
 }

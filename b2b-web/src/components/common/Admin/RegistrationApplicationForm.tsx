@@ -3,10 +3,12 @@ import * as React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SubscriptionSelect from '../../common/SubscriptionSelect';
+import Typography from '@material-ui/core/Typography';
 
 import { createStyles, withStyles, Theme } from '@material-ui/core';
 import { IRegistrationApplicationFormProps } from './props/IRegistrationApplicationFormProps';
 import { IRegistrationApplicationFormState } from './states/IRegistrationApplicationFormState';
+import { Link } from 'react-router-dom';
 
 const styles = (theme: Theme) => createStyles({
     root: {
@@ -15,7 +17,18 @@ const styles = (theme: Theme) => createStyles({
         padding: '2rem 20%'
     },
     butBox: {
-        marginTop: theme.spacing.unit
+        marginTop: theme.spacing.unit,
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    link: {
+        color: theme.palette.primary.main
+    },
+    haveAccountBox: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        margin: theme.spacing.unit
     }
 });
 
@@ -72,8 +85,16 @@ class RegistrationApplicationForm extends React.Component<IRegistrationApplicati
                     <Button
                         variant="contained"
                         color="primary"
-                        type="submit">Send</Button>
+                        type="submit">Registration</Button>
                 </div>
+                <Typography
+                    className={classes.haveAccountBox}
+                    variant="subtitle1">
+                    <div>If you already have account:</div>
+                    <Link
+                        className={classes.link}
+                        to="/login">Log in</Link>
+                </Typography>
             </form>
         );
     }

@@ -19,13 +19,7 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
         super(props);
     }
 
-    public componentDidUpdate(nextProps: ILoginContainerProps, nextState: ILoginContainerState) {
-        // super.componentWillUpdate(nextProps, nextState);
-    }
-
     public onLogin = (body: IFetchToken) => {
-        console.log(this.state.errorMessage);
-
         this.props.fetchToken(body)
             .then((resp) => {
                 logIn(resp.token.accessToken);
@@ -35,18 +29,20 @@ class LoginContainer extends BaseContainer<ILoginContainerProps, ILoginContainer
     }
 
     public render() {
-        
+
         if (this.state.canRedirect === true) {
             return (<Redirect to="/user/settings" />)
         }
 
         return (
-            <div>
-                <LoginForm loading={this.props.accessToken.loading} onLogin={this.onLogin} />
+            <>
+                <LoginForm
+                    loading={this.props.accessToken.loading}
+                    onLogin={this.onLogin} />
                 {
                     super.render()
                 }
-            </div>
+            </>
         )
     }
 }
