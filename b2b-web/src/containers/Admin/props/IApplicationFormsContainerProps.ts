@@ -2,6 +2,9 @@ import { IApplicationFormsState } from '../../../Reducers/ApplicationForms/IAppl
 import { IApplicationFormsResponseAction } from '../../../Actions/ApplicationForms/IApplicationFormsResponseAction';
 
 export interface IApplicationFormsContainerProps {
+    classes: {
+        root: string
+    }
     applicationFormsState: IApplicationFormsState,
     fetchApplicationForms: () => Promise<IApplicationFormsResponseAction>
 }

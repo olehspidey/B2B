@@ -58,7 +58,7 @@ export default withStyles(styles)(({ classes, companyState, renderCreateBut, emp
 
     if (!companyState.loading && companyState.companies.length > 0) {
         return (
-            <div>
+            <>
                 {
                     renderCreateBut && renderCreateCompanyBut(classes.link, classes.createBut, classes.but)
                 }
@@ -80,7 +80,7 @@ export default withStyles(styles)(({ classes, companyState, renderCreateBut, emp
                             ))
                     }
                 </List>
-            </div>
+            </>
         );
     }
 

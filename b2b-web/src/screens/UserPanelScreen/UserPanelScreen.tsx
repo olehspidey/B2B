@@ -29,7 +29,7 @@ class UserPanelScreen extends React.Component<IUserPanelScreenProps> {
         this.props.fetchCurrentUser()
             .then((resp) => {
                 if ((resp.currentUser.userRoles as string[]).some(role => role === 'Admin')) {
-                    window.location.replace('/admin/application-froms');
+                    window.location.replace('/admin/application-forms');
                 }
             })
     }

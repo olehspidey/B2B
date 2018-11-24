@@ -7,6 +7,7 @@ using B2B.Core.Models.DomainModels;
 using B2B.Core.Models.Dtos.User;
 using B2B.Extensions;
 using B2B.Filters.AuthorizationFilters;
+using B2B.MessageTemplates;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -134,25 +135,27 @@ namespace B2B.Controllers
         }
 
         [JwtAuthorize(Roles = "Admin")]
-        [HttpPost("createUserFromForm/{formId:int}")]
-        public async Task<IActionResult> CreateUserFromForm([FromRoute]int formId)
+        [HttpPost("createUserByForm")]
+        public async Task<IActionResult> CreateUserByForm([FromBody] CreateUserFromFormDto dto)
         {
             User user;
 
             try
             {
-                user = await _userService.CreateUserFromFormAsync(formId);
+                user = await _userService.CreateUserFromFormAsync(dto.FormId);
             }
             catch (ApplicationException)
             {
-                return NotFound("From with this id was not found");
+                return NotFound("Form with this id was not found");
             }
 
             if (user == null)
                 return BadRequest("Can't create user");
 
             var resetPassToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-            await _emailSendService.SendAsync(user.Email, "Subject", resetPassToken);
+            await _emailSendService.SendAsync(user.Email,
+                "Registration in B2B",
+                EmailTemplates.GetCreateUserFromForm(user, $"{dto.RedirectUrl}/{resetPassToken}", dto.ServiceUrl));
 
             return Created(Url.GetEntityByIdUrl(nameof(Get), "User", user.Id, Request.Scheme), _mapper.Map<User, ExternalUserDto>(user));
         }

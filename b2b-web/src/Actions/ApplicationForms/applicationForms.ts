@@ -10,6 +10,10 @@ export const FETCH_APPLICATION_FORMS_REQUEST = 'FETCH_APPLICATION_FORMS_REQUEST'
 export const FETCH_APPLICATION_FORMS_SUCCESS = 'FETCH_APPLICATION_FORMS_SUCCESS';
 export const FETCH_APPLICATION_FORMS_FAILURE = 'FETCH_APPLICATION_FORMS_FAILURE';
 
+export const FETCH_APPLICATION_FORM_REQUEST = 'FETCH_APPLICATION_FORM_REQUEST';
+export const FETCH_APPLICATION_FORM_SUCCESS = 'FETCH_APPLICATION_FORM_SUCCESS';
+export const FETCH_APPLICATION_FORM_FAILURE = 'FETCH_APPLICATION_FORM_FAILURE';
+
 export const CREATE_APPLICATION_FORM_REQUEST = 'CREATE_APPLICATION_FORM_REQUEST';
 export const CREATE_APPLICATION_FORM_SUCCESS = 'CREATE_APPLICATION_FORM_SUCCESS';
 export const CREATE_APPLICATION_FORM_FAILURE = 'CREATE_APPLICATION_FORM_FAILURE';
@@ -61,5 +65,30 @@ export const createApplicationForm = (body: ICreateApplicationFrom) => (dispatch
         .then(
             resp => dispatch(createApplicationFormSuccess(resp.data)),
             error => handleError(dispatch, error, createApplicationFormFailure)
+        );
+};
+
+const fetchApplicationFormRequest = () => ({
+    type: FETCH_APPLICATION_FORM_REQUEST
+});
+
+const fetchApplicationFormSuccess = (applicationForm: IApplicationForm) => ({
+    type: FETCH_APPLICATION_FORM_SUCCESS,
+    applicationForm
+});
+
+const fetchApplicationFormFailure = (error: IError) => ({
+    type: FETCH_APPLICATION_FORM_FAILURE,
+    error
+});
+
+export const fetchApplicationForm = (id: string) => (dispatch: Dispatch) => {
+    dispatch(fetchApplicationFormRequest());
+
+    return applicationFormsService
+        .getApplicationForm(id)
+        .then(
+            resp => dispatch(fetchApplicationFormSuccess(resp.data)),
+            error => handleError(dispatch, error, fetchApplicationFormFailure)
         );
 }

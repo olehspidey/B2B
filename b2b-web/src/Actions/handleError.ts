@@ -11,6 +11,12 @@ export const handleError = (dispatch: Dispatch, error: any, failFunc: (e: IError
             status: 0
         } as IError;
     }
+    if (error.response) {
+        errorVal = {
+            message: error.response.data,
+            status: error.response.status
+        }
+    }
     else {
         errorVal = {
             message: error.data,

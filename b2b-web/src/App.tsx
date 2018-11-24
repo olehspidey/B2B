@@ -6,6 +6,7 @@ import AdminPanelScreen from './screens/UserPanelScreen/AdminPanelScreen';
 import NotFound from './components/common/NotFound';
 import Forbid from './components/common/Forbid';
 import RegistrationScreen from './screens/Registration/RegistrationScreen';
+import SetPasswordScreen from './screens/SetPasswordScreen/SetPasswordScreen';
 
 import {
   BrowserRouter as Router,
@@ -16,6 +17,7 @@ import {
 export default () => (
   <Router>
     <Switch>
+      <Route path="/" component={SetPasswordScreen} />
       <Route exact path="/registration" component={RegistrationScreen} />
       <Route exact path="/login" component={LoginScreen} />
       <Route path="/user" component={UserPanelScreen} />

@@ -28,7 +28,13 @@ namespace B2B.BLL.Services.Implementation
         {
             try
             {
-                await _smtpClient.SendMailAsync(new MailMessage(_configuration["EmailCredential:Email"], emailTo, subject, message));
+                var mailMessage = new MailMessage(_configuration["EmailCredential:Email"], emailTo, subject, message)
+                {
+                    IsBodyHtml = true
+                };
+
+                await _smtpClient.SendMailAsync(mailMessage);
+
                 return true;
             }
             catch (Exception)

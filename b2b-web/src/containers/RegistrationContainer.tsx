@@ -11,21 +11,40 @@ import { Action } from 'redux';
 import { createApplicationForm } from '../Actions/ApplicationForms/applicationForms';
 import { IRegistrationContainerProps } from './props/IRegistrationContainerProps';
 import { IError } from '../Actions/IError';
+import Spinner from '../components/common/Spinner';
 
 class RegistrationContainer extends BaseContainer<IRegistrationContainerProps> {
     public render() {
         return (
-            <RegistrationApplicationForm onCreateApplicationForm={this.onCreateApplicationForm} />
+            <>
+                {
+                    this.props.applicationFormsState.loading ?
+                        <Spinner /> :
+                        <RegistrationApplicationForm onCreateApplicationForm={this.onCreateApplicationForm} />
+                }
+                {
+                    super.render()
+                }
+            </>
         )
     }
 
-    private onCreateApplicationForm = (body: ICreateApplicationFrom) => {
+    private onCreateApplicationForm = (body: ICreateApplicationFrom) =>
         this.props.createApplicationForm(body)
-            .catch((error: IError) => this.setState({
-                canRenderErrorMessage: true,
-                errorMessage: error.message
-            }));
-    }
+            .then((resp) => {
+                this.setState({
+                    canRenderAlertMessage: true,
+                    alertMessage: 'Application form succeed created'
+                });
+                return Promise.resolve(resp);
+            })
+            .catch((error: IError) => {
+                this.setState({
+                    canRenderErrorMessage: true,
+                    errorMessage: error.message
+                });
+                Promise.reject(error);
+            });
 }
 
 export default connect(

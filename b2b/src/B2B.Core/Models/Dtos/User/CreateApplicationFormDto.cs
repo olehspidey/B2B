@@ -13,8 +13,8 @@ namespace B2B.Core.Models.Dtos.User
         [MinLength(2)]
         public string LastName { get; set; }
 
-        [Required]
-        public SubscriptionType? SubscriptionType { get; set; }
+        [Range((int)SubscriptionType.Lite, (int)SubscriptionType.Gold)]
+        public SubscriptionType SubscriptionType { get; set; }
 
         [Required]
         [EmailAddress]

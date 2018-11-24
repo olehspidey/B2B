@@ -43,12 +43,14 @@ const subTypeToClass = (subscriptionType: number, classes: ISubscriptionComponen
     return -1;
 }
 
-export default withStyles(styles)(({ subscriptionType, text, variant, classes }: ISubscriptionComponentProps) => (
+export default withStyles(styles)(({ subscriptionType, text, variant, classes, subTypePadding }: ISubscriptionComponentProps) => (
     <div className={classes.root}>
         <Typography
             component="h1"
             variant={variant}>{text}</Typography>
-        <div className={classNames(classes.subType, subTypeToClass(subscriptionType, classes))}>
+        <div style={subTypePadding ? {
+            padding: subTypePadding
+        } : {}} className={classNames(classes.subType, subTypeToClass(subscriptionType, classes))}>
             {mapSubscriptionType(subscriptionType)}
         </div>
     </div>

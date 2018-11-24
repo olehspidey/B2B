@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using B2B.Core.Models.DomainModels;
 using B2B.Core.Models.DomainModels.Companies;
 using B2B.Core.Models.Dtos.Person;
 

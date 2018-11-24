@@ -9,7 +9,11 @@ import {
 
     CHANGE_EMAIL_REQUEST,
     CHANGE_EMAIL_SUCCESS,
-    CHANGE_EMAIL_FAILURE
+    CHANGE_EMAIL_FAILURE,
+
+    CREATE_USER_BY_FORM_REQUEST,
+    CREATE_USER_BY_FORM_SUCCESS,
+    CREATE_USER_BY_FORM_FAILURE
 } from '../../Actions/User/user';
 import { IUserState } from './IUserState';
 import { IUserAction } from '../../Actions/User/IUserAction';
@@ -25,6 +29,7 @@ const userState: IUserState = {
 export default (state = userState, action: IUserAction): IUserState => {
     switch (action.type) {
         case FETCH_CURRENT_USER_REQUEST:
+        case CREATE_USER_BY_FORM_REQUEST:
             return {
                 ...state,
                 loading: true
@@ -47,7 +52,14 @@ export default (state = userState, action: IUserAction): IUserState => {
                 ...state,
                 editLoading: false
             };
+        case CREATE_USER_BY_FORM_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                user: action.user
+            };
         case FETCH_CURRENT_USER_FAILURE:
+        case CREATE_USER_BY_FORM_FAILURE:
             return {
                 ...state,
                 loading: false,

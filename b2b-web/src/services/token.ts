@@ -1,9 +1,9 @@
-import { authApi } from '../Api/api';
+import { publicApi } from '../Api/api';
 import { IFetchToken } from '../Actions/Token/IFetchToken';
 
 export default {
     fetchToken(body: IFetchToken) {
-        return authApi
+        return publicApi
             .post('/api/token', body);
     }
 }

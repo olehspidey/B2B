@@ -5,6 +5,7 @@ import userService from '../../services/user';
 import { handleError } from '../handleError';
 import { ISendEmailToken } from './ISendEmailToken';
 import { IChangeEmail } from './IChangeEmail';
+import { ICreateUserByForm } from './ICreateUserByForm';
 
 export const FETCH_CURRENT_USER_REQUEST = 'FETCH_CURRENT_USER_REQUEST';
 export const FETCH_CURRENT_USER_SUCCESS = 'FETCH_CURRENT_USER_SUCCESS';
@@ -17,6 +18,10 @@ export const SEND_RESET_EMAIL_TOKEN_FAILURE = 'SEND_RESET_EMAIL_TOKEN_FAILURE';
 export const CHANGE_EMAIL_REQUEST = 'CHANGE_EMAIL_REQUEST';
 export const CHANGE_EMAIL_SUCCESS = 'CHANGE_EMAIL_SUCCESS';
 export const CHANGE_EMAIL_FAILURE = 'CHANGE_EMAIL_FAILURE';
+
+export const CREATE_USER_BY_FORM_REQUEST = 'CREATE_USER_BY_FORM_REQUEST';
+export const CREATE_USER_BY_FORM_SUCCESS = 'CREATE_USER_BY_FORM_SUCCESS';
+export const CREATE_USER_BY_FORM_FAILURE = 'CREATE_USER_BY_FORM_FAILURE';
 
 const fetchCurrentUserRequest = () => ({
     type: FETCH_CURRENT_USER_REQUEST
@@ -90,4 +95,29 @@ export const changeEmail = (body: IChangeEmail) => async (dispatch: Dispatch) =>
             resp => dispatch(changeEmailSuccess(resp.data)),
             error => handleError(dispatch, error, changeEmailFailure)
         );
-}
+};
+
+const createUserByFormRequest = () => ({
+    type: CREATE_USER_BY_FORM_REQUEST
+});
+
+const createUserByFormSuccess = (user: IUser) => ({
+    type: CREATE_USER_BY_FORM_SUCCESS,
+    user
+});
+
+const createUserByFormFailure = (error: IError) => ({
+    type: CREATE_USER_BY_FORM_FAILURE,
+    error
+});
+
+export const createUserByForm = (body: ICreateUserByForm) => (dispatch: Dispatch) => {
+    dispatch(createUserByFormRequest());
+
+    return userService
+        .createUserByApplicationForm(body)
+        .then(
+            resp => dispatch(createUserByFormSuccess(resp.data)),
+            error => handleError(dispatch, error, createUserByFormFailure)
+        );
+};

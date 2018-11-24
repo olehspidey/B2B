@@ -52,7 +52,7 @@ const getPrivateApi = () => {
     }
 };
 
-export const authApi = api.create(
+export const publicApi = api.create(
     {
         baseURL: API_URL
     }

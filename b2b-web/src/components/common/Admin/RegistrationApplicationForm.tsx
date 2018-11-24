@@ -42,18 +42,21 @@ class RegistrationApplicationForm extends React.Component<IRegistrationApplicati
                     label="Name"
                     placeholder="Input your name"
                     required
+                    onChange={this.onNameChange}
                     value={this.state.name}
                 />
                 <TextField
                     label="Last name"
                     placeholder="Input your last name"
                     required
+                    onChange={this.onChangeLastName}
                     value={this.state.lastName}
                 />
                 <TextField
                     label="Email"
                     placeholder="Input your email"
                     required
+                    onChange={this.onChangeEmail}
                     type="email"
                     value={this.state.email}
                 />
@@ -61,6 +64,7 @@ class RegistrationApplicationForm extends React.Component<IRegistrationApplicati
                     label="Phone number"
                     placeholder="Input your phone number"
                     required
+                    onChange={this.onChangePhone}
                     value={this.state.phoneNumber}
                 />
                 <SubscriptionSelect onSelect={this.onSubscriptionTypeSelect} />
@@ -74,11 +78,30 @@ class RegistrationApplicationForm extends React.Component<IRegistrationApplicati
         );
     }
 
+    private onNameChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => this.setState({ name: target.value });
+
+    private onChangeLastName = ({ target }: React.ChangeEvent<HTMLInputElement>) => this.setState({ lastName: target.value });
+
+    private onChangeEmail = ({ target }: React.ChangeEvent<HTMLInputElement>) => this.setState({ email: target.value });
+
+    private onChangePhone = ({ target }: React.ChangeEvent<HTMLInputElement>) => this.setState({ phoneNumber: target.value });
+
     private onSubscriptionTypeSelect = (subscriptionType: number) => this.setState({ subscriptionType });
 
     private onSend = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        this.props.onCreateApplicationForm(this.state);
+        this
+            .props
+            .onCreateApplicationForm(this.state)
+            .then(() => {
+                this.setState({
+                    name: '',
+                    lastName: '',
+                    email: '',
+                    phoneNumber: '',
+                    subscriptionType: -1
+                });
+            })
     }
 }
 
