@@ -36,6 +36,13 @@ namespace B2B.BLL.Services.Implementation
             if (!creatingResult.Succeeded)
                 return null;
 
+            userForm.Status = ApplicationFormStatus.Confirmed;
+
+            var updatedFormResult = await _registrationUserFormRepository.UpdateAsync(userForm);
+
+            if (updatedFormResult <= 0)
+                throw new ApplicationException("Can't update user form");
+
             return user;
         }
 

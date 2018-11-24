@@ -3,6 +3,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Spinner from '../Spinner';
+import Typography from '@material-ui/core/Typography';
+import ApplicationFromsStatus from '../../../components/common/ApplicationFormStatus';
 
 import { withStyles, createStyles, Theme } from '@material-ui/core';
 import { IApplicationFormsState } from '../../../Reducers/ApplicationForms/IApplicationFormsState';
@@ -12,7 +14,8 @@ import { Link } from 'react-router-dom';
 interface IApplicationFormsListProps {
     classes: {
         list: string,
-        link: string
+        link: string,
+        emptyListText: string
     },
     applicationFormsState: IApplicationFormsState
 }
@@ -24,12 +27,23 @@ const styles = (theme: Theme) => createStyles({
     },
     link: {
         textDecoration: 'none'
+    },
+    emptyListText: {
+        textAlign: 'center'
     }
 });
 
 export default withStyles(styles)(({ classes, applicationFormsState }: IApplicationFormsListProps) => {
     if (applicationFormsState.loading) {
         return (<Spinner />);
+    }
+
+    if (!applicationFormsState.loading && !applicationFormsState.applicationForms.length) {
+        return (
+            <div className={classes.emptyListText}>
+                <Typography variant="title">No application forms yet</Typography>
+            </div>
+        );
     }
 
     if (!applicationFormsState.loading) {
@@ -40,12 +54,13 @@ export default withStyles(styles)(({ classes, applicationFormsState }: IApplicat
                         .applicationForms as IApplicationForm[])
                         .map(appForm => (
                             <Link
+                                key={appForm.id}
                                 className={classes.link}
                                 to={`/admin/application-form/${appForm.id}`}>
                                 <ListItem
-                                    key={appForm.id}
                                     button>
                                     <ListItemText primary={appForm.name} />
+                                    <ApplicationFromsStatus status={appForm.status} />
                                 </ListItem>
                             </Link>
                         ))

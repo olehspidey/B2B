@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import SubscriptionConmponent from '../../components/common/SubscriptionComponent';
 import Spinner from '../../components/common/Spinner';
 import Button from '@material-ui/core/Button';
+import ApplicationFormStatus from '../../components/common/ApplicationFormStatus';
 
 import { withStyles, createStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -17,6 +18,7 @@ import { IError } from '../../Actions/IError';
 import { ICreateUserByForm } from '../../Actions/User/ICreateUserByForm';
 import { createUserByForm } from '../../Actions/User/user';
 import { IUserState } from '../../Reducers/User/IUserState';
+import { mapApplicationFromStatus } from '../../utils/mappers/applicationFromsMapper';
 
 const styles = createStyles({
     root: {
@@ -61,11 +63,11 @@ class ApplicationFormContainer extends BaseContainer<IApplicationFormContainerPr
                         <Spinner flex /> :
                         <>
                             <Paper className={classes.paper}>
+                                {this.renderAppFormStatus(applicationFormsState)}
+                            </Paper>
+                            <Paper className={classes.paper}>
                                 {
                                     this.renderBody(applicationFormsState, classes.editButBox)
-                                }
-                                {
-                                    super.render()
                                 }
                             </Paper>
                             <Paper className={classes.paper}>
@@ -73,11 +75,13 @@ class ApplicationFormContainer extends BaseContainer<IApplicationFormContainerPr
                                     this.renderSubscription(applicationFormsState)
                                 }
                             </Paper>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={this.onRegisterClick}>Register</Button>
+                            {
+                                this.renderRegisterButton(applicationFormsState)
+                            }
                         </>
+                }
+                {
+                    super.render()
                 }
             </div>
         );
@@ -94,13 +98,16 @@ class ApplicationFormContainer extends BaseContainer<IApplicationFormContainerPr
             .props
             .createUserByForm({
                 formId: Number(id),
-                redirectUrl: `${origin}/user/set-password`,
+                redirectUrl: `${origin}/confirm/set-password`,
                 serviceUrl: origin
             })
-            .then(() => this.setState({
-                canRenderAlertMessage: true,
-                alertMessage: 'The user has been successfully registered'
-            }))
+            .then(() => {
+                this.setState({
+                    canRenderAlertMessage: true,
+                    alertMessage: 'The user has been successfully registered'
+                });
+                this.props.fetchApplicationForm(id);
+            })
             .catch((error: IError) => this.setState({
                 canRenderErrorMessage: true,
                 errorMessage: error.message
@@ -139,6 +146,25 @@ class ApplicationFormContainer extends BaseContainer<IApplicationFormContainerPr
                     variant="title"
                     subTypePadding=".5rem 1rem" />
             );
+        }
+
+        return null;
+    }
+
+    private renderRegisterButton = ({ applicationForm }: IApplicationFormsState) => {
+        if (applicationForm && applicationForm.status !== 1) {
+            return (<Button
+                variant="contained"
+                color="primary"
+                onClick={this.onRegisterClick}>Register</Button>)
+        }
+
+        return null;
+    }
+
+    private renderAppFormStatus = ({ applicationForm }: IApplicationFormsState) => {
+        if (applicationForm) {
+            return (<ApplicationFormStatus text={`Status: ${mapApplicationFromStatus(applicationForm.status)}`} status={applicationForm.status} />)
         }
 
         return null;

@@ -1,7 +1,8 @@
-import { apiGet, apiPost } from '../Api/api';
+import { apiGet, apiPost, publicApi } from '../Api/api';
 import { ISendEmailToken } from '../Actions/User/ISendEmailToken';
 import { IChangeEmail } from '../Actions/User/IChangeEmail';
 import { ICreateUserByForm } from '../Actions/User/ICreateUserByForm';
+import { IResetPassword } from '../Actions/User/IResetPassword';
 
 export default {
     fetchCurrentUser() {
@@ -15,5 +16,8 @@ export default {
     },
     createUserByApplicationForm(body: ICreateUserByForm) {
         return apiPost('/api/users/createUserByForm', body);
+    },
+    resetPassword(body: IResetPassword) {
+        return publicApi.post('/api/users/resetPassword', body);
     }
 }

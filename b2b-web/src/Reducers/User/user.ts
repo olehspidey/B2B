@@ -13,7 +13,11 @@ import {
 
     CREATE_USER_BY_FORM_REQUEST,
     CREATE_USER_BY_FORM_SUCCESS,
-    CREATE_USER_BY_FORM_FAILURE
+    CREATE_USER_BY_FORM_FAILURE,
+
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAILURE
 } from '../../Actions/User/user';
 import { IUserState } from './IUserState';
 import { IUserAction } from '../../Actions/User/IUserAction';
@@ -30,6 +34,7 @@ export default (state = userState, action: IUserAction): IUserState => {
     switch (action.type) {
         case FETCH_CURRENT_USER_REQUEST:
         case CREATE_USER_BY_FORM_REQUEST:
+        case RESET_PASSWORD_REQUEST:
             return {
                 ...state,
                 loading: true
@@ -41,6 +46,7 @@ export default (state = userState, action: IUserAction): IUserState => {
                 editLoading: true
             };
         case FETCH_CURRENT_USER_SUCCESS:
+        case RESET_PASSWORD_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -60,6 +66,7 @@ export default (state = userState, action: IUserAction): IUserState => {
             };
         case FETCH_CURRENT_USER_FAILURE:
         case CREATE_USER_BY_FORM_FAILURE:
+        case RESET_PASSWORD_FAILURE:
             return {
                 ...state,
                 loading: false,

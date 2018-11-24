@@ -6,6 +6,7 @@ import { handleError } from '../handleError';
 import { ISendEmailToken } from './ISendEmailToken';
 import { IChangeEmail } from './IChangeEmail';
 import { ICreateUserByForm } from './ICreateUserByForm';
+import { IResetPassword } from './IResetPassword';
 
 export const FETCH_CURRENT_USER_REQUEST = 'FETCH_CURRENT_USER_REQUEST';
 export const FETCH_CURRENT_USER_SUCCESS = 'FETCH_CURRENT_USER_SUCCESS';
@@ -22,6 +23,10 @@ export const CHANGE_EMAIL_FAILURE = 'CHANGE_EMAIL_FAILURE';
 export const CREATE_USER_BY_FORM_REQUEST = 'CREATE_USER_BY_FORM_REQUEST';
 export const CREATE_USER_BY_FORM_SUCCESS = 'CREATE_USER_BY_FORM_SUCCESS';
 export const CREATE_USER_BY_FORM_FAILURE = 'CREATE_USER_BY_FORM_FAILURE';
+
+export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST';
+export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
+export const RESET_PASSWORD_FAILURE = 'RESET_PASSWORD_FAILURE';
 
 const fetchCurrentUserRequest = () => ({
     type: FETCH_CURRENT_USER_REQUEST
@@ -121,3 +126,28 @@ export const createUserByForm = (body: ICreateUserByForm) => (dispatch: Dispatch
             error => handleError(dispatch, error, createUserByFormFailure)
         );
 };
+
+const resetPasswordRequest = () => ({
+    type: RESET_PASSWORD_REQUEST
+});
+
+const resetPasswordSuccess = (currentUser: IUser) => ({
+    type: RESET_PASSWORD_SUCCESS,
+    currentUser
+});
+
+const resetPasswordFailure = (error: IError) => ({
+    type: RESET_PASSWORD_FAILURE,
+    error
+});
+
+export const resetPassword = (body: IResetPassword) => (dispatch: Dispatch) => {
+    dispatch(resetPasswordRequest());
+
+    return userService
+        .resetPassword(body)
+        .then(
+            resp => dispatch(resetPasswordSuccess(resp.data)),
+            error => handleError(dispatch, error, resetPasswordFailure)
+        );
+}

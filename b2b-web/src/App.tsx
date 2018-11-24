@@ -17,7 +17,7 @@ import {
 export default () => (
   <Router>
     <Switch>
-      <Route path="/" component={SetPasswordScreen} />
+      <Route path="/confirm" component={SetPasswordScreen} />
       <Route exact path="/registration" component={RegistrationScreen} />
       <Route exact path="/login" component={LoginScreen} />
       <Route path="/user" component={UserPanelScreen} />

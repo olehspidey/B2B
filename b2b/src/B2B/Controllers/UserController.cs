@@ -82,7 +82,6 @@ namespace B2B.Controllers
 
         #region POST
 
-        [JwtAuthorize(Roles = "Admin")]
         [HttpPost("resetPassword")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetUserPasswordDto resetUserPasswordDto)
         {
@@ -153,9 +152,10 @@ namespace B2B.Controllers
                 return BadRequest("Can't create user");
 
             var resetPassToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
             await _emailSendService.SendAsync(user.Email,
                 "Registration in B2B",
-                EmailTemplates.GetCreateUserFromForm(user, $"{dto.RedirectUrl}/{resetPassToken}", dto.ServiceUrl));
+                EmailTemplates.GetCreateUserFromForm(user, $"{dto.RedirectUrl}/{resetPassToken}/{user.Id}", dto.ServiceUrl));
 
             return Created(Url.GetEntityByIdUrl(nameof(Get), "User", user.Id, Request.Scheme), _mapper.Map<User, ExternalUserDto>(user));
         }

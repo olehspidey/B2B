@@ -28,5 +28,8 @@ namespace B2B.Core.Models.DomainModels
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
+
+        [Range((int)ApplicationFormStatus.New, (int)ApplicationFormStatus.Rejected)]
+        public ApplicationFormStatus Status { get; set; }
     }
 }

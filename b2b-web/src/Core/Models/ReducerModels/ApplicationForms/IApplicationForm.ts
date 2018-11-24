@@ -4,5 +4,6 @@ export interface IApplicationForm {
     lastName: string,
     subscriptionType: number,
     email: string,
-    phoneNumber: string
+    phoneNumber: string,
+    status: number
 }
