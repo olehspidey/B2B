@@ -50,7 +50,7 @@ namespace B2B.Controllers
             var singInRes = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
 
             if (!singInRes.Succeeded)
-                return BadRequest("Incorrect password");
+                return Unauthorized();
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
