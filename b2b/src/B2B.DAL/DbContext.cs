@@ -1,4 +1,5 @@
 ﻿using B2B.Core.Models.DomainModels;
+using B2B.Core.Models.DomainModels.Companies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,20 @@ namespace B2B.DAL
             Database.EnsureCreated();
         }
 
+        public DbSet<ApplicationForm> RegistrationUserForms { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseLazyLoadingProxies();
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Company>()
+                .HasOne(company => company.Owner)
+                .WithOne(person => person.Company)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(builder);
+        }
     }
 }

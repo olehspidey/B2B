@@ -23,9 +23,7 @@ namespace B2B.DAL
         protected virtual DbSet<TEntity> Entities => _entities ?? (_entities = _context.Set<TEntity>());
 
         public virtual async Task<TEntity> GetByIdAsync(TKey id)
-        {
-            return await Entities.FindAsync(id);
-        }
+            => await Entities.FindAsync(id);
 
         public virtual async Task<int> InsertAsync(IEnumerable<TEntity> entities)
         {
