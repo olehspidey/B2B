@@ -24,6 +24,7 @@ import { withStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { IUserPanelLayoutProps } from './Props/IUserPanelLayoutProps';
 import { IUserPanelLayoutState } from './States/IUserPanelLayoutState';
+import Logo from '../components/common/Logo';
 
 const drawerWidth = 240;
 
@@ -82,13 +83,13 @@ const styles = (theme: Theme) => createStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        padding: '0 8px',
+        padding: '.5rem 8px',
         ...theme.mixins.toolbar,
     },
     content: {
         width: '100%',
         backgroundColor: theme.palette.background.default,
-        padding: '5rem 1rem',
+        padding: '6rem 1rem',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-start'
@@ -152,6 +153,10 @@ class UserPanelLayout extends React.Component<IUserPanelLayoutProps, IUserPanelL
                             <MenuIcon />
                         </IconButton>
                         <div className={classes.toolbarActions}>
+                            <Logo
+                                width="7rem"
+                                height="4rem"
+                                url="/user/settings" />
                             {
                                 this.renderUserInfo()
                             }

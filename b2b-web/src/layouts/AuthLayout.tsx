@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { withStyles, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Logo from '../components/common/Logo';
+
 import { IAuthLayoutProps } from './Props/IAuthLayoutProps';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 
 const styles = createStyles({
     root: {
@@ -20,7 +22,10 @@ class AuthLayout extends React.Component<IAuthLayoutProps> {
                 <AppBar position="static">
                     <Toolbar variant="dense">
                         <Typography variant="title" color="inherit">
-                            B2B
+                            <Logo
+                                url="/"
+                                height="4rem"
+                                width="7rem" />
                         </Typography>
                     </Toolbar>
                 </AppBar>
