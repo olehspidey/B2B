@@ -11,7 +11,7 @@ namespace B2B.Filters.ActionFilters
         {
             if (!context.ModelState.IsValid)
             {
-                context.Result = new BadRequestObjectResult(Message);
+                context.Result = new BadRequestObjectResult(new { Message, State = context.ModelState });
             }
         }
     }
