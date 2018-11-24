@@ -2,6 +2,7 @@
 using B2B.Core.Models.DomainModels;
 using B2B.Core.Models.DomainModels.Companies;
 using B2B.Core.Models.DomainModels.Persons;
+using B2B.Core.Models.Dtos.ApplicationForm;
 using B2B.Core.Models.Dtos.Company;
 using B2B.Core.Models.Dtos.Person;
 using B2B.Core.Models.Dtos.User;

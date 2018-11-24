@@ -10,6 +10,8 @@ namespace B2B.BLL.Services
 
         Task<ApplicationForm> CreateApplicationFormAsync(ApplicationForm applicationForm);
 
+        Task<ApplicationForm> RejectAsync(int id);
+
         Task<ICollection<ApplicationForm>> GetApplicationFormsAsync();
     }
 }

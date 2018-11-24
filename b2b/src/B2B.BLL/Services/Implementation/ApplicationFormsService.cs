@@ -26,5 +26,19 @@ namespace B2B.BLL.Services.Implementation
             => await _applicationFormsRepository
                 .Table
                 .ToListAsync();
+
+        public async Task<ApplicationForm> RejectAsync(int id)
+        {
+            var applicationForm = await _applicationFormsRepository.GetByIdAsync(id);
+
+            if (applicationForm == null)
+                return null;
+
+            applicationForm.Status = ApplicationFormStatus.Rejected;
+
+            var updatedStatus = await _applicationFormsRepository.UpdateAsync(applicationForm);
+
+            return updatedStatus >= 0 ? applicationForm : null;
+        }
     }
 }

@@ -5,6 +5,7 @@ import { IError } from '../IError';
 import { Dispatch } from 'redux';
 import { handleError } from '../handleError';
 import { ICreateApplicationFrom } from './ICreateApplicationFrom';
+import { IRejectApplicationForm } from './IRejectApplicationForm';
 
 export const FETCH_APPLICATION_FORMS_REQUEST = 'FETCH_APPLICATION_FORMS_REQUEST';
 export const FETCH_APPLICATION_FORMS_SUCCESS = 'FETCH_APPLICATION_FORMS_SUCCESS';
@@ -17,6 +18,10 @@ export const FETCH_APPLICATION_FORM_FAILURE = 'FETCH_APPLICATION_FORM_FAILURE';
 export const CREATE_APPLICATION_FORM_REQUEST = 'CREATE_APPLICATION_FORM_REQUEST';
 export const CREATE_APPLICATION_FORM_SUCCESS = 'CREATE_APPLICATION_FORM_SUCCESS';
 export const CREATE_APPLICATION_FORM_FAILURE = 'CREATE_APPLICATION_FORM_FAILURE';
+
+export const REJECT_APPLICATION_FORM_REQUEST = 'REJECT_APPLICATION_FORM_REQUEST';
+export const REJECT_APPLICATION_FORM_SUCCESS = 'REJECT_APPLICATION_FORM_SUCCESS';
+export const REJECT_APPLICATION_FORM_FAILURE = 'REJECT_APPLICATION_FORM_FAILURE';
 
 const fetchApplicationFormsRequest = () => ({
     type: FETCH_APPLICATION_FORMS_REQUEST
@@ -90,5 +95,30 @@ export const fetchApplicationForm = (id: string) => (dispatch: Dispatch) => {
         .then(
             resp => dispatch(fetchApplicationFormSuccess(resp.data)),
             error => handleError(dispatch, error, fetchApplicationFormFailure)
+        );
+};
+
+const rejectApplicationFormRequest = () => ({
+    type: REJECT_APPLICATION_FORM_REQUEST
+});
+
+const rejectApplicationFormSuccess = (applicationForm: IApplicationForm) => ({
+    type: REJECT_APPLICATION_FORM_SUCCESS,
+    applicationForm
+});
+
+const rejectApplicationFormFailure = (error: IError) => ({
+    type: REJECT_APPLICATION_FORM_FAILURE,
+    error
+});
+
+export const rejectApplicationForm = (body: IRejectApplicationForm) => (dispatch: Dispatch) => {
+    dispatch(rejectApplicationFormRequest());
+
+    return applicationFormsService
+        .rejectApplicationForm(body)
+        .then(
+            resp => dispatch(rejectApplicationFormSuccess(resp.data)),
+            error => handleError(dispatch, error, rejectApplicationFormFailure)
         );
 }

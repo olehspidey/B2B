@@ -10,6 +10,10 @@ import {
     CREATE_APPLICATION_FORM_REQUEST,
     CREATE_APPLICATION_FORM_SUCCESS,
     CREATE_APPLICATION_FORM_FAILURE,
+
+    REJECT_APPLICATION_FORM_REQUEST,
+    REJECT_APPLICATION_FORM_SUCCESS,
+    REJECT_APPLICATION_FORM_FAILURE
 } from '../../Actions/ApplicationForms/applicationForms';
 import { IApplicationFormsState } from './IApplicationFormsState';
 import { IApplicationFormsAction } from '../../Actions/ApplicationForms/IApplicationFormsAction';
@@ -26,6 +30,7 @@ export default (state = initState, action: IApplicationFormsAction): IApplicatio
         case FETCH_APPLICATION_FORMS_REQUEST:
         case FETCH_APPLICATION_FORM_REQUEST:
         case CREATE_APPLICATION_FORM_REQUEST:
+        case REJECT_APPLICATION_FORM_REQUEST:
             return {
                 ...state,
                 loading: true
@@ -38,6 +43,7 @@ export default (state = initState, action: IApplicationFormsAction): IApplicatio
             };
         case FETCH_APPLICATION_FORM_SUCCESS:
         case CREATE_APPLICATION_FORM_SUCCESS:
+        case REJECT_APPLICATION_FORM_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -46,6 +52,7 @@ export default (state = initState, action: IApplicationFormsAction): IApplicatio
         case FETCH_APPLICATION_FORMS_FAILURE:
         case FETCH_APPLICATION_FORM_FAILURE:
         case CREATE_APPLICATION_FORM_FAILURE:
+        case REJECT_APPLICATION_FORM_FAILURE:
             return {
                 ...state,
                 loading: false,

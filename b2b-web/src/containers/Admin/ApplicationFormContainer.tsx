@@ -7,11 +7,11 @@ import Spinner from '../../components/common/Spinner';
 import Button from '@material-ui/core/Button';
 import ApplicationFormStatus from '../../components/common/ApplicationFormStatus';
 
-import { withStyles, createStyles } from '@material-ui/core';
+import { withStyles, createStyles, Theme } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { IApplicationFormsState } from '../../Reducers/ApplicationForms/IApplicationFormsState';
 import { ThunkDispatch } from 'redux-thunk';
-import { fetchApplicationForm } from '../../Actions/ApplicationForms/applicationForms';
+import { fetchApplicationForm, rejectApplicationForm } from '../../Actions/ApplicationForms/applicationForms';
 import { Action } from 'redux';
 import { IApplicationFormContainerProps } from './props/IApplicationFormContainerProps';
 import { IError } from '../../Actions/IError';
@@ -19,8 +19,9 @@ import { ICreateUserByForm } from '../../Actions/User/ICreateUserByForm';
 import { createUserByForm } from '../../Actions/User/user';
 import { IUserState } from '../../Reducers/User/IUserState';
 import { mapApplicationFromStatus } from '../../utils/mappers/applicationFromsMapper';
+import { IRejectApplicationForm } from '../../Actions/ApplicationForms/IRejectApplicationForm';
 
-const styles = createStyles({
+const styles = (theme: Theme) => createStyles({
     root: {
         width: '100%',
         padding: '0 20%'
@@ -33,6 +34,9 @@ const styles = createStyles({
         width: '100%',
         display: 'flex',
         justifyContent: 'flex-end'
+    },
+    rejectBut: {
+        marginLeft: theme.spacing.unit
     }
 });
 
@@ -115,6 +119,30 @@ class ApplicationFormContainer extends BaseContainer<IApplicationFormContainerPr
         console.log(window.location);
     }
 
+    private onRejectClick = () => {
+        const { id } = this.props.match.params;
+
+        const body = {
+            id: Number(id)
+        };
+
+        this
+            .props
+            .rejectApplicationForm(body)
+            .then(() => {
+                this.setState({
+                    canRenderAlertMessage: true,
+                    alertMessage: 'The application form was successfully rejected'
+                });
+
+                this.props.fetchApplicationForm(id);
+            })
+            .catch((error: IError) => this.setState({
+                canRenderErrorMessage: true,
+                errorMessage: error.message
+            }));
+    }
+
     private renderBody = ({ applicationForm }: IApplicationFormsState, editButBox: string) => {
         if (applicationForm) {
             return (
@@ -152,11 +180,20 @@ class ApplicationFormContainer extends BaseContainer<IApplicationFormContainerPr
     }
 
     private renderRegisterButton = ({ applicationForm }: IApplicationFormsState) => {
-        if (applicationForm && applicationForm.status !== 1) {
-            return (<Button
-                variant="contained"
-                color="primary"
-                onClick={this.onRegisterClick}>Register</Button>)
+        if (applicationForm && applicationForm.status !== 1 && applicationForm.status !== 2) {
+            return (
+                <>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.onRegisterClick}>Register</Button>
+                    <Button
+                        className={this.props.classes.rejectBut}
+                        variant="contained"
+                        color="secondary"
+                        onClick={this.onRejectClick}>Reject</Button>
+                </>
+            );
         }
 
         return null;
@@ -164,7 +201,9 @@ class ApplicationFormContainer extends BaseContainer<IApplicationFormContainerPr
 
     private renderAppFormStatus = ({ applicationForm }: IApplicationFormsState) => {
         if (applicationForm) {
-            return (<ApplicationFormStatus text={`Status: ${mapApplicationFromStatus(applicationForm.status)}`} status={applicationForm.status} />)
+            return (<ApplicationFormStatus
+                text={`Status: ${mapApplicationFromStatus(applicationForm.status)}`}
+                status={applicationForm.status} />)
         }
 
         return null;
@@ -178,6 +217,7 @@ export default withStyles(styles)(connect(
     }),
     (dispatch: ThunkDispatch<IApplicationFormsState, void, Action>) => ({
         fetchApplicationForm: (id: string) => dispatch(fetchApplicationForm(id)),
-        createUserByForm: (body: ICreateUserByForm) => dispatch(createUserByForm(body))
+        createUserByForm: (body: ICreateUserByForm) => dispatch(createUserByForm(body)),
+        rejectApplicationForm: (body: IRejectApplicationForm) => dispatch(rejectApplicationForm(body))
     })
 )(ApplicationFormContainer));

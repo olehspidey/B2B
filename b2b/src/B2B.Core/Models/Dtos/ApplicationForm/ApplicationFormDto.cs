@@ -1,7 +1,7 @@
 ﻿using B2B.Core.Models.DomainModels;
 using B2B.Core.Models.DomainModels.Subscriptions;
 
-namespace B2B.Core.Models.Dtos.User
+namespace B2B.Core.Models.Dtos.ApplicationForm
 {
     public class ApplicationFormDto
     {

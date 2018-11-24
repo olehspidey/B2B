@@ -1,5 +1,6 @@
-import { apiGet, publicApi } from '../Api/api';
+import { apiGet, publicApi, apiPut } from '../Api/api';
 import { ICreateApplicationFrom } from '../Actions/ApplicationForms/ICreateApplicationFrom';
+import { IRejectApplicationForm } from '../Actions/ApplicationForms/IRejectApplicationForm';
 
 export default {
     getApplicationForms() {
@@ -11,5 +12,8 @@ export default {
     createApplicationForm(body: ICreateApplicationFrom) {
         return publicApi
             .post('/api/applicationForms/create', body);
+    },
+    rejectApplicationForm(body: IRejectApplicationForm) {
+        return apiPut('/api/applicationForms/reject', body);
     }
 }
