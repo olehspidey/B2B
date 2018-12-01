@@ -7,7 +7,8 @@ namespace B2B.MessageTemplates
         public static string GetCreateUserFromForm(User user, string redirectUrl, string serviceUrl)
             => $@"
             {InDivTag($"Your application form for registration in our B2B service {serviceUrl} has been approved.")}
-            {InDivTag("Below are your personal data:")}          
+            {InDivTag("Below are your personal data:")}    
+            {InDivTag($"Name: {user.Name}")}
             {InDivTag($"Last name: {user.LastName}")}
             {InDivTag($"Email: {user.Email}")}
             {InDivTag($"Phone: {user.PhoneNumber}")}
