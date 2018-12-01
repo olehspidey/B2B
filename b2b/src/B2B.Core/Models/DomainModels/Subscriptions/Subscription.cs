@@ -13,7 +13,7 @@ namespace B2B.Core.Models.DomainModels.Subscriptions
         [Required]
         public DateTime? End { get; set; }
 
-        [Range((int)SubscriptionType.Lite, (int)SubscriptionType.Gold)]
+        [Range((int)SubscriptionType.Lite, (int)SubscriptionType.Free)]
         public SubscriptionType SubscriptionType { get; set; }
 
         public virtual User User { get; set; }

@@ -64,7 +64,7 @@ class EditCompanyForm extends React.Component<IEditCompanyFormProps, IEditCompan
     public componentWillReceiveProps({ companiesState }: IEditCompanyFormProps) {
         const { company } = companiesState;
 
-        if (this.props.companiesState.loading && !companiesState.loading && company !== null) {
+        if (this.props.companiesState.loading && !companiesState.loading && company !== null) {     
             this.setState({
                 address: company.address,
                 fullName: company.fullName,
@@ -127,7 +127,9 @@ class EditCompanyForm extends React.Component<IEditCompanyFormProps, IEditCompan
                         label="Email"
                         value={this.state.owner.email}
                         onChange={this.onChangeOwnerEmail} />
-                    <PersonTypeSelect onChange={this.onChangePersonType} />
+                    <PersonTypeSelect
+                        onChange={this.onChangePersonType}
+                        value={this.state.owner.personType} />
                 </div>
                 <div className={classes.info}>
                     <CountryAutocomplateComponent

@@ -57,7 +57,7 @@ namespace B2B.BLL.Services.Implementation
                 Subscription = new Subscription
                 {
                     SubscriptionType = userForm.SubscriptionType,
-                    End = DateTime.UtcNow.AddDays(30)
+                    End = userForm.SubscriptionType == SubscriptionType.Free ? DateTime.UtcNow.AddDays(14) : DateTime.UtcNow.AddDays(30)
                 }
             };
             user.UserName = user.Id;

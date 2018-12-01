@@ -15,7 +15,7 @@ class CompanyCategorySelect extends React.Component<ICompanyCategorySelectProps,
         super(props);
 
         this.state = {
-            category: -1
+            category: props.value !== undefined ? props.value : -1
         }
     }
 

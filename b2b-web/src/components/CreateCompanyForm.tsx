@@ -10,6 +10,7 @@ import { ICreateCompanyComponentProps } from '../components/Props/ICreateCompany
 import { withStyles, createStyles } from '@material-ui/core';
 import { ICreateCompany } from '../Actions/Companies/ICreateCompany';
 import { IPlace } from '../Core/Models/ReducerModels/Companies/IPlace';
+import Spinner from './common/Spinner';
 
 const styles = createStyles({
     root: {
@@ -123,6 +124,10 @@ class CreateCompanyForm extends React.Component<ICreateCompanyComponentProps, IC
 
     public render() {
         const { classes, loading } = this.props;
+
+        if (loading){
+            return (<Spinner flex />);
+        }
 
         return (
             <form className={classes.root} onSubmit={this.onSubmit}>

@@ -6,6 +6,8 @@ export const mapSubscriptionType = (type: number) => {
             return 'Base';
         case 2:
             return 'Gold';
+        case 3:
+            return 'Free';
         default:
             return 'None';
     }

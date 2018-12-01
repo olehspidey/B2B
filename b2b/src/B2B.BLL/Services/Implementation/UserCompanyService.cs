@@ -16,6 +16,7 @@ namespace B2B.BLL.Services.Implementation
         private const int BaseSubscriptionCompaniesCount = 3;
         private const int LiteSubscriptionCompaniesCount = 8;
         private const int GoldSubscriptionCompaniesCount = 15;
+        private const int FreeSubscriptionCompaniesCount = 1;
 
         public UserCompanyService(IRepository<Company, int> companyRepository)
         {
@@ -42,7 +43,7 @@ namespace B2B.BLL.Services.Implementation
         public async Task<ICollection<Company>> GetByCategoryAsync(CompanyCategory category)
             => await _companyRepository
                 .Table
-                .Where(company => company.User.Subscription.End >= DateTime.Now
+                .Where(company => company.User.Subscription.End >= DateTime.UtcNow
                                   && company.Category == category)
                 .ToListAsync();
 
@@ -63,12 +64,14 @@ namespace B2B.BLL.Services.Implementation
                 .Subscription
                 .SubscriptionType;
 
+            if(subscriptionType == SubscriptionType.Free && suggestionsCount == FreeSubscriptionCompaniesCount)
+                throw new ApplicationException($"Suscription type {SubscriptionType.Free} can have only {FreeSubscriptionCompaniesCount} company suggestions");
             if (subscriptionType == SubscriptionType.Base && suggestionsCount == BaseSubscriptionCompaniesCount)
-                throw new ApplicationException($"{SubscriptionType.Base} can have only {BaseSubscriptionCompaniesCount} company suggestions");
+                throw new ApplicationException($"Suscription type {SubscriptionType.Base} can have only {BaseSubscriptionCompaniesCount} company suggestions");
             if (subscriptionType == SubscriptionType.Lite && suggestionsCount == LiteSubscriptionCompaniesCount)
-                throw new ApplicationException($"{SubscriptionType.Lite} can have only {LiteSubscriptionCompaniesCount} company suggestions");
+                throw new ApplicationException($"Suscription type {SubscriptionType.Lite} can have only {LiteSubscriptionCompaniesCount} company suggestions");
             if (subscriptionType == SubscriptionType.Gold && suggestionsCount == GoldSubscriptionCompaniesCount)
-                throw new ApplicationException($"{SubscriptionType.Gold} can have only {GoldSubscriptionCompaniesCount} company suggestions");
+                throw new ApplicationException($"Suscription type {SubscriptionType.Gold} can have only {GoldSubscriptionCompaniesCount} company suggestions");
 
             company.Suggestion = true;
 

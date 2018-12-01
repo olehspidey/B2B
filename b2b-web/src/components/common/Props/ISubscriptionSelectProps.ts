@@ -6,6 +6,7 @@ export interface ISubscriptionSelectProps {
         lite: string,
         base: string,
         gold: string,
+        green: string,
         paddingTop: string,
         margin: string
     },

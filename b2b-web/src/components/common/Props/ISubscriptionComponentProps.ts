@@ -3,7 +3,8 @@ export interface ISubscriptionComponentPropsClasses {
     subType: string,
     lite: string,
     base: string,
-    gold: string
+    gold: string,
+    free: string
 }
 
 export interface ISubscriptionComponentProps {

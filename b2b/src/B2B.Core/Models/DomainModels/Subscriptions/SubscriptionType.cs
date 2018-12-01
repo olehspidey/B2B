@@ -4,6 +4,7 @@
     {
         Lite,
         Base,
-        Gold
+        Gold,
+        Free
     }
 }

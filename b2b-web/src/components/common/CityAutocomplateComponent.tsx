@@ -33,9 +33,9 @@ class CityAutocomplateComponent extends React.Component<ICityAutocomplateCompone
         super(props);
 
         this.state = {
-            cityName: '',
+            cityName: props.city !== undefined ? props.city.structured_formatting.main_text : '',
             suggestions: [],
-            selected: null
+            selected: props.city !== undefined ? { ...props.city } : null
         }
     }
 

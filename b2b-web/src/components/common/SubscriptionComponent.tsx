@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import classNames from 'classnames';
+import green from '@material-ui/core/colors/green';
 
 import { ISubscriptionComponentProps, ISubscriptionComponentPropsClasses } from './Props/ISubscriptionComponentProps';
 import { mapSubscriptionType } from '../../utils/mappers/userMappers';
@@ -26,6 +27,9 @@ const styles = (theme: Theme) => createStyles({
     },
     gold: {
         background: '#FFD700'
+    },
+    free:{
+        background: green[500]
     }
 });
 
@@ -38,6 +42,9 @@ const subTypeToClass = (subscriptionType: number, classes: ISubscriptionComponen
     }
     if (subscriptionType === 2) {
         return classes.gold;
+    }
+    if(subscriptionType === 3){
+        return classes.free
     }
 
     return -1;

@@ -7,6 +7,7 @@ import BatteryChargingIconFull from '@material-ui/icons/BatteryChargingFull';
 import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
 import CheckIcon from '@material-ui/icons/Check';
+import green from '@material-ui/core/colors/green';
 
 import { withStyles, createStyles, Theme } from '@material-ui/core';
 import { ISubscriptionSelectProps } from './Props/ISubscriptionSelectProps';
@@ -25,7 +26,10 @@ const styles = (theme: Theme) => createStyles({
         flexDirection: 'column',
         alignItems: 'center',
         cursor: 'pointer',
-        width: '10rem'
+        width: '8rem',
+        '&:hover': {
+            transform: 'scale(1.05)'
+        }
     },
     icon: {
         fontSize: '3rem'
@@ -38,6 +42,9 @@ const styles = (theme: Theme) => createStyles({
     },
     gold: {
         border: '2px #FFD700 solid'
+    },
+    green: {
+        border: `2px ${green[500]} solid`
     },
     paddingTop: {
         paddingTop: '3rem'
@@ -53,6 +60,7 @@ class SubscriptionSelect extends React.Component<ISubscriptionSelectProps, ISubs
 
         this.state = {
             selects: [
+                false,
                 false,
                 false,
                 false
@@ -126,6 +134,26 @@ class SubscriptionSelect extends React.Component<ISubscriptionSelectProps, ISubs
                             className={classes.margin}
                             variant="outlined">More info</Button>
                     </Paper>
+                    <Paper className={classNames(classes.paper, classes.green, !selects[3] ? classes.paddingTop : '')}>
+                        {
+                            selects[3] && <CheckIcon className={classes.icon} />
+                        }
+                        <Typography
+                            variant="title"
+                            color="textPrimary">Free</Typography>
+                        <BatteryChargingIconFull className={classes.icon} />
+                        <Typography
+                            variant="headline"
+                            color="textSecondary">0$</Typography>
+                        <Button
+                            className={classes.margin}
+                            variant="contained"
+                            color="primary"
+                            onClick={this.onClickFree}>Select<CheckIcon /></Button>
+                        <Button
+                            className={classes.margin}
+                            variant="outlined">More info</Button>
+                    </Paper>
                 </div>
             )
         );
@@ -136,6 +164,7 @@ class SubscriptionSelect extends React.Component<ISubscriptionSelectProps, ISubs
             selects[0] = !selects[0];
             selects[1] = false;
             selects[2] = false;
+            selects[3] = false;
 
             return { selects };
         });
@@ -147,6 +176,7 @@ class SubscriptionSelect extends React.Component<ISubscriptionSelectProps, ISubs
             selects[0] = false;
             selects[1] = !selects[1];
             selects[2] = false;
+            selects[3] = false;
 
             return { selects };
         });
@@ -158,10 +188,23 @@ class SubscriptionSelect extends React.Component<ISubscriptionSelectProps, ISubs
             selects[0] = false;
             selects[1] = false;
             selects[2] = !selects[2];
+            selects[3] = false;
 
             return { selects };
         });
         this.props.onSelect(2);
+    }
+
+    private onClickFree = () => {
+        this.setState(({ selects }) => {
+            selects[0] = false;
+            selects[1] = false;
+            selects[2] = false;
+            selects[3] = !selects[3];
+
+            return { selects };
+        });
+        this.props.onSelect(3);
     }
 }
 

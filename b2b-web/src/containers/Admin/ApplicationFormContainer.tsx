@@ -116,7 +116,6 @@ class ApplicationFormContainer extends BaseContainer<IApplicationFormContainerPr
                 canRenderErrorMessage: true,
                 errorMessage: error.message
             }));
-        console.log(window.location);
     }
 
     private onRejectClick = () => {

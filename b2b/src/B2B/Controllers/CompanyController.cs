@@ -138,30 +138,6 @@ namespace B2B.Controllers
                 _mapper.Map<Company, CompanyDto>(createdCompany));
         }
 
-        [HttpPost("createSuggestion")]
-        public async Task<IActionResult> CreateSuggestion([FromBody] CreateSuggestionDto suggestionDto)
-        {
-            var user = await _userManager.GetByIdentityAsync(this);
-
-            if (user == null)
-                return Unauthorized();
-            Company company;
-
-            try
-            {
-                company = await _userCompanyService.CreateSuggestionAsync(suggestionDto.CompanyId, user);
-            }
-            catch (ApplicationException e)
-            {
-                return BadRequest(e.Message);
-            }
-
-            if (company == null)
-                return BadRequest("Can't create suggestion");
-
-            return Ok(_mapper.Map<Company, CompanyDto>(company));
-        }
-
         #endregion
 
         #region PUT
@@ -209,12 +185,25 @@ namespace B2B.Controllers
         [HttpPut("addToSuggest")]
         public async Task<IActionResult> AddToSuggests([FromBody] AddToSuggestsDto suggestsDto)
         {
-            var companyResult = await _userCompanyService.AddToSuggestAsync(suggestsDto.Id);
+            var user = await _userManager.GetByIdentityAsync(this);
 
-            if (companyResult == null)
-                return BadRequest($"Cant update company with id {suggestsDto.Id} or company already in suggests list");
+            if (user == null)
+                return Unauthorized();
+            Company company;
 
-            return Ok(_mapper.Map<Company, CompanyDto>(companyResult));
+            try
+            {
+                company = await _userCompanyService.CreateSuggestionAsync(suggestsDto.Id, user);
+            }
+            catch (ApplicationException e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            if (company == null)
+                return BadRequest("Can't create suggestion");
+
+            return Ok(_mapper.Map<Company, CompanyDto>(company));
         }
 
         #endregion

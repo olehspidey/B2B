@@ -33,9 +33,9 @@ class CountryAutocomplateComponent extends React.Component<ICountryAutocomplateC
         super(props);
 
         this.state = {
-            countryName: '',
+            countryName: props.country !== undefined ? props.country.structured_formatting.main_text : '',
             suggestions: [],
-            selected: null
+            selected: props.country !== undefined ? {...props.country} : null
         }
     }
 

@@ -24,6 +24,7 @@ class BaseContainer<P = P, S extends IBaseContainerState = IBaseContainerState>
                     message={this.state.errorMessage}
                     onClose={this.onCloseErrorMessage}
                     open={this.state.canRenderErrorMessage}
+                    autoHideDuration={7000}
                     type="error" />
                 <CustomSnackBar
                     message={this.state.alertMessage}

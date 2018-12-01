@@ -13,7 +13,7 @@ namespace B2B.Core.Models.Dtos.ApplicationForm
         [MinLength(2)]
         public string LastName { get; set; }
 
-        [Range((int)SubscriptionType.Lite, (int)SubscriptionType.Gold)]
+        [Range((int)SubscriptionType.Lite, (int)SubscriptionType.Free)]
         public SubscriptionType SubscriptionType { get; set; }
 
         [Required]
