@@ -26,7 +26,6 @@ namespace B2B
         {
             services.AddMvc(options => { options.Filters.Add<ModelStateFilter>(); })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
             {
                 builder
