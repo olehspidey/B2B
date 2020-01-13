@@ -3,7 +3,7 @@ import CustomSnackBar from '../components/common/CustomSnackBar';
 
 import { IBaseContainerState } from './states/IBaseContainerState';
 
-class BaseContainer<P, S extends IBaseContainerState = IBaseContainerState>
+class BaseContainer<P = P, S extends IBaseContainerState = IBaseContainerState>
     extends React.Component<P, S> {
     constructor(props: P) {
         super(props);
